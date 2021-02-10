@@ -28,3 +28,7 @@ Proponha uma arquitetura em Layer. Onde teremos as camadas GUI, BUSINESS e DATA.
 Tenha certeza que tenha instalado em sua máquina o JDK 12.0.2, caso não tenha instalado, clique [aqui](https://www.oracle.com/br/java/technologies/javase/jdk12-archive-downloads.html)
 ### Adicionando projeto no Eclipse
 Clone o projeto do repositório remoto, se já estiver em sua máquina, lembre-se sempre de atualizá-lo com um ``` git pull ```. Em seguida, no Eclipse, siga File > Open Projects from File System > local_do_projeto :) Feito isso, para testar o ambiente, rode o Main e veja se o Hello, world! está sendo printado.
+### Usando o GIT corretamente
+1. Sempre atualizar o seu repositório local antes de começar a trabalhar. Utilize o comando ```git pull```
+1. teste
+1. teste
