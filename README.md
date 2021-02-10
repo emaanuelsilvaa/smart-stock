@@ -22,3 +22,5 @@ Projeto da disciplina DIM0138 - PROJETO DETALHADO DE SOFTWARE de 2020.2
 
 ## Arquitetura do projeto
 Proponha uma arquitetura em Layer. Onde teremos as camadas GUI, BUSINESS e DATA. Aplicando os conceitos também do padrão Facade.
+
+## !IMPORTANTE! Configuração do ambiente de desenvolvimento e utilização correta do GIT
