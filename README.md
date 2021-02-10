@@ -23,7 +23,7 @@ Projeto da disciplina DIM0138 - PROJETO DETALHADO DE SOFTWARE de 2020.2
 ## Arquitetura do projeto
 Proponha uma arquitetura em Layer. Onde teremos as camadas GUI, BUSINESS e DATA. Aplicando os conceitos também do padrão Facade.
 
-## !IMPORTANTE! Configuração do ambiente de desenvolvimento e utilização correta do GIT
+## **IMPORTANTE** Configuração do ambiente de desenvolvimento e utilização correta do GIT
 ### JDK
 Tenha certeza que tenha instalado em sua máquina o JDK 12.0.2, caso não tenha instalado, clique [aqui](https://www.oracle.com/br/java/technologies/javase/jdk12-archive-downloads.html)
 ### Adicionando projeto no Eclipse
