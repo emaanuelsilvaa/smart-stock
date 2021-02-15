@@ -5,6 +5,7 @@ import BUSINESS.ClienteService;
 import DATA.ClienteDAO;
 import BUSINESS.MateriaPrima;
 import BUSINESS.MateriaPrimaService;
+import DATA.MateriaPrimaDAO;
 import BUSINESS.Fornecedor;
 
 public class Main {
@@ -50,10 +51,11 @@ public class Main {
 		MateriaPrima mp2 = new MateriaPrima(2, "queijo", "alimento", 1.0F, f, true, 3, "kg", d);
 		
 		MateriaPrima[] materiasPrimas = {mp1, mp2};
-		MateriaPrimaService serviçoMP = new MateriaPrimaService(materiasPrimas);
+		MateriaPrimaDAO mpDAO = new MateriaPrimaDAO(materiasPrimas);
+		MateriaPrimaService serviçoMP = new MateriaPrimaService(mpDAO);
 		serviçoMP.validarCadastroMateriaPrima(1);
 		serviçoMP.listarMateriasPrimas();
-		System.out.println(">>> Consulta nome matéria prima 2: " + serviçoMP.consultarMateriaPrima(2).getNome() + "\n");
+		System.out.println(">>> Consulta nome matéria prima 2: " + serviçoMP.consultarMateriaPrimaPeloId(2).getNome() + "\n");
 		
 		System.out.print("//==================================//\n\n\n");
 		//==================================//
