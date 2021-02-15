@@ -1,77 +1,38 @@
 package BUSINESS;
+import DATA.ClienteDAO;
 
 public class ClienteService {
-	protected Cliente[] clientes;
+	protected ClienteDAO clientes;
 	
 	// Construtores
 	public ClienteService() {
 		
 	}
 	
-	public ClienteService(Cliente[] clientes) {
+	public ClienteService(ClienteDAO clientes) {
 		super();
 		this.clientes = clientes;
 	}
 	
 	// Getters e Setters
-	public Cliente[] getCliente() {
+	public ClienteDAO getCliente() {
 		return clientes;
 	}
 
-	public void setCliente(Cliente[] clientes) {
+	public void setCliente(ClienteDAO clientes) {
 		this.clientes = clientes;
 	}
 
 	// Regras de Negócio	
 	public void validarCadastroCliente(int idCliente) {
-		// Checagem se cliente existe
-		Cliente cliente = consultarCliente(idCliente);
-		
-		if(cliente == null) {
-			System.out.println(">> Cliente de ID=" + idCliente + " não cadastrado.");
-		}
-		else {	
-			// Validação de CPF (Padrão: 11 dígitos.)
-			if(cliente.getCpf().length() != 11) {
-				System.out.println(">> CPF do cliente " + cliente.getIdCliente() + " cadastrado incorretamente. "
-						+ "Insira novamente!");
-			}
-			
-			// Validação de Telefone (Padrão: DDD-8números ou DDD-9números. Exemplo: 89-33332222)
-			if((cliente.getTelefone().length() != 11 && 
-			   cliente.getTelefone().length() != 12) ||
-			   cliente.getTelefone().toCharArray()[2] != '-') {
-				System.out.println(">> Telefone do cliente " + cliente.getIdCliente() + " cadastrado incorretamente. "
-						+ "Insira novamente!");
-			}
-		}
-		
-		System.out.println("\n");
+		this.clientes.validarCadastroCliente(idCliente);
 	}
 	
-	public Cliente consultarCliente(int idCliente) {
-		for(Cliente c : this.clientes) {
-			if(c.getIdCliente() == idCliente) {
-				Cliente cliente = c;
-				return cliente;
-			}
-		}
-		return null;
+	public Cliente consultarClientePeloId(int idCliente) {
+		return this.clientes.consultarClientePeloId(idCliente);
 	}
 	
 	public void listarClientes() {
-		
-		System.out.println(">>> Clientes cadastrados:");
-		
-		for(Cliente c : this.clientes) {
-			System.out.println("- - - - - - - - - -");
-			System.out.println(">> Cliente ID=" + c.getIdCliente() + ": ");
-			System.out.println("> Nome: " + c.getNome());
-			System.out.println("> CPF: " + c.getCpf());
-			System.out.println("> Endereço: " + c.getEndereço());
-			System.out.println("> Telefone: " + c.getTelefone());
-		}
-		
-		System.out.println("\n");
+		this.clientes.listarClientes();
 	}
 }

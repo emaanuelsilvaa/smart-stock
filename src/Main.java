@@ -2,6 +2,7 @@ import java.util.Date;
 
 import BUSINESS.Cliente;
 import BUSINESS.ClienteService;
+import DATA.ClienteDAO;
 import BUSINESS.MateriaPrima;
 import BUSINESS.MateriaPrimaService;
 import BUSINESS.Fornecedor;
@@ -25,11 +26,12 @@ public class Main {
 		Cliente cliente2 = new Cliente(2, "João", "11122233344", "Rua dos Poetas, 255", "84-44445555");
 		
 		Cliente[] clientes = {cliente1, cliente2};		
-		ClienteService serviçoCliente = new ClienteService();
-		serviçoCliente.setCliente(clientes);
+		ClienteDAO clienteDAO = new ClienteDAO();	
+		clienteDAO.setClienteDAO(clientes);
+		ClienteService serviçoCliente = new ClienteService(clienteDAO);
 		serviçoCliente.validarCadastroCliente(1);
 		serviçoCliente.listarClientes();
-		System.out.println(">>> Consulta nome cliente 2: " + serviçoCliente.consultarCliente(2).getNome() + "\n");
+		System.out.println(">>> Consulta nome cliente 2: " + serviçoCliente.consultarClientePeloId(2).getNome() + "\n");
 		
 		System.out.print("//=============================//\n\n\n");
 		//=============================//
