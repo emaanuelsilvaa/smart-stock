@@ -4,12 +4,14 @@ import java.util.Date;
 import BUSINESS.Cliente;
 import BUSINESS.ClienteService;
 import DATA.ClienteDAO;
-import BUSINESS.Fornecedor;
-import BUSINESS.FornecedorService;
-import DATA.FornecedorDAO;
+
 import BUSINESS.MateriaPrima;
 import BUSINESS.MateriaPrimaService;
 import DATA.MateriaPrimaDAO;
+
+import BUSINESS.Fornecedor;
+import BUSINESS.FornecedorService;
+import DATA.FornecedorDAO;
 
 public class Main {
 
@@ -38,7 +40,7 @@ public class Main {
 		
 		ArrayList<Cliente> clientes = clienteService.procuraTodos();
 		
-		System.out.println(">>> Clientes cadastrados:");
+		System.out.println("\n>>> Clientes cadastrados:");
 		for(Cliente c : clientes) {
 			System.out.println("- - - - - - - - - -");
 			System.out.println(">> Cliente ID=" + c.getId() + ": ");
@@ -67,35 +69,35 @@ public class Main {
 		System.out.print(">>> Cadastrando a Matéria Prima 2...\n");
 		MateriaPrima mp2 = new MateriaPrima(2, "queijo", "alimento", 1.0F, f, true, 3, "kg", d);
 		
-		MateriaPrima[] materiasPrimas = {mp1, mp2};
-		MateriaPrimaDAO mpDAO = new MateriaPrimaDAO(materiasPrimas);
-		MateriaPrimaService serviçoMP = new MateriaPrimaService(mpDAO);
-		serviçoMP.validarCadastroMateriaPrima(1);
-		serviçoMP.listarMateriasPrimas();
-		System.out.println(">>> Consulta nome matéria prima 2: " + serviçoMP.consultarMateriaPrimaPeloId(2).getNome() + "\n");
+		MateriaPrimaDAO materiaPrimaDAO = new MateriaPrimaDAO();
+		materiaPrimaDAO.inserir(mp1);
 		
-		System.out.print("//===================================//\n\n\n");
-		//==================================//
+		MateriaPrimaService materiaPrimaService = new MateriaPrimaService(materiaPrimaDAO);
+		materiaPrimaService.inserir(mp2);
+		materiaPrimaService.remover(mp2.getId());
 		
-		//===== Teste FornecedorService ====//
-		System.out.print("//==== Teste FornecedorService ====//\n");
+		ArrayList<MateriaPrima> materiasPrimas = materiaPrimaService.procuraTodos();
 		
-		System.out.print(">>> Cadastrando o Fornecedor 1...\n");
-		Fornecedor f1 = new Fornecedor(1, "Nordestão", "12345678912345", "Rua Teste, 12", "88-922221111", "emailerrado", materiasPrimas);
+		System.out.println("\n>>> Matérias Primas cadastradas:");
+		for(MateriaPrima m : materiasPrimas) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> Matéria Prima ID=" + m.getId() + ": ");
+			System.out.println("> Nome: " + m.getNome());
+			System.out.println("> Tipo: " + m.getTipo());
+			System.out.println("> Preço: " + m.getPreço());
+			System.out.println("> Fornecedor: " + m.getFornecedor());
+			System.out.println("> Perecivel: " + m.isPerecivel());
+			System.out.println("> Quantidade: " + m.getQuantidade());
+			System.out.println("> Unidade de Medida: " + m.getUnMedida());
+			System.out.println("> Validade: " + m.getValidade());
+		}
+		System.out.println("\n");
 		
-		System.out.print(">>> Cadastrando o Fornecedor 2...\n");
-		Fornecedor f2 = new Fornecedor(2, "Extra", "123", "Rua teste, 34", "81-99998888", "email@email.com", materiasPrimas);
-		
-		Fornecedor[] fornecedores = {f1, f2};
-		FornecedorDAO fDAO = new FornecedorDAO(fornecedores);
-		FornecedorService serviçoF = new FornecedorService(fDAO);
-		serviçoF.validarCadastroFornecedor(1);
-		serviçoF.validarCadastroFornecedor(2);
-		serviçoF.listarFornecedores();
-		System.out.println(">>> Consulta nome fornecedor 2: " + serviçoF.consultarFornecedorPeloId(2).getNome() + "\n");
-		
+		System.out.println(">>> Consulta nome matéria prima 1: " + materiaPrimaService.procuraPeloId(1).getNome() + "\n");
+	
 		System.out.print("//=================================//\n\n\n");
 		//===================================//
+		
 	}
 
 }

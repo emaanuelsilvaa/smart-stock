@@ -1,39 +1,55 @@
 package BUSINESS;
 
+import java.util.ArrayList;
+
+import DATA.IMateriaPrimaDAO;
 import DATA.MateriaPrimaDAO;
 
-public class MateriaPrimaService {
-	protected MateriaPrimaDAO materiasPrimas;
+public class MateriaPrimaService implements IMateriaPrimaService {
+	protected IMateriaPrimaDAO materiaPrimaDAO;
 	
 	// Construtores
 	public MateriaPrimaService() {
-		
+		this.materiaPrimaDAO = new MateriaPrimaDAO();
 	}
 
-	public MateriaPrimaService(MateriaPrimaDAO materiasPrimas) {
+	public MateriaPrimaService(IMateriaPrimaDAO materiasPrimas) {
 		super();
-		this.materiasPrimas = materiasPrimas;
+		this.materiaPrimaDAO = materiasPrimas;
+	}
+	
+	@Override
+	public int inserir(MateriaPrima materiaPrima) {
+		if (this.materiaPrimaDAO.procuraPeloId(materiaPrima.getId()) != null) {
+			return -1;
+		}
+		this.materiaPrimaDAO.inserir(materiaPrima);
+		return -1;
 	}
 
-	// Getters e Setters
-	public MateriaPrimaDAO getMateriasPrimas() {
-		return materiasPrimas;
+	@Override
+	public int remover(int id) {
+		if (this.materiaPrimaDAO.procuraPeloId(id) != null) {
+			this.materiaPrimaDAO.remover(id);
+			return 0;
+		}
+		return -1;
+	}
+	
+	@Override
+	public int alterar() {
+		// TODO things
+		return 0;
 	}
 
-	public void setMateriasPrimas(MateriaPrimaDAO materiasPrimas) {
-		this.materiasPrimas = materiasPrimas;
+	@Override
+	public MateriaPrima procuraPeloId(int id) {
+		return this.materiaPrimaDAO.procuraPeloId(id);
 	}
-	
-	// Regras de Negócio
-	public void validarCadastroMateriaPrima(int idMateriaPrima) {
-		this.materiasPrimas.validarCadastroMateriaPrima(idMateriaPrima);
+
+	@Override
+	public ArrayList<MateriaPrima> procuraTodos() {
+		return this.materiaPrimaDAO.procuraTodos();
 	}
-	
-	public MateriaPrima consultarMateriaPrimaPeloId(int idMateriaPrima) {
-		return this.materiasPrimas.consultarMateriaPrimaPeloId(idMateriaPrima);
-	}
-	
-	public void listarMateriasPrimas() {
-		this.materiasPrimas.listarMateriasPrimas();
-	}
+
 }

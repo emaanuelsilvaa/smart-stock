@@ -2,7 +2,7 @@ package BUSINESS;
 import java.util.Date;
 
 public class MateriaPrima {
-	protected int idMateriaPrima;
+	protected int id;
 	protected String nome;
 	protected String tipo;
 	protected float preço;
@@ -18,10 +18,10 @@ public class MateriaPrima {
 		
 	}
 
-	public MateriaPrima(int idMateriaPrima, String nome, String tipo, float preço, Fornecedor fornecedor,
+	public MateriaPrima(int id, String nome, String tipo, float preço, Fornecedor fornecedor,
 			boolean perecivel, float quantidade, String unMedida, Date validade) {
 		super();
-		this.idMateriaPrima = idMateriaPrima;
+		this.id = id;
 		this.nome = nome;
 		this.tipo = tipo;
 		this.preço = preço;
@@ -33,12 +33,12 @@ public class MateriaPrima {
 	}
 
 	// Getters e Setters
-	public int getIdMateriaPrima() {
-		return idMateriaPrima;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdMateriaPrima(int idMateriaPrima) {
-		this.idMateriaPrima = idMateriaPrima;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {
