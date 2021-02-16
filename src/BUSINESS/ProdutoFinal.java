@@ -5,23 +5,33 @@ public class ProdutoFinal {
 	protected String nome;
 	protected float preço;
 	protected MateriaPrima[] listaMateriaPrima;
+	protected int unidades;
 
 	// Construtores
 	public ProdutoFinal() {
 
 	}
 
-	public ProdutoFinal(int idProdutoFinal, String nome, float preço, MateriaPrima[] listaMateriaPrima) {
+	public ProdutoFinal(int idProdutoFinal, String nome, float preço, MateriaPrima[] listaMateriaPrima, int unidades) {
 		super();
 		this.id = idProdutoFinal;
 		this.nome = nome;
 		this.preço = preço;
 		this.listaMateriaPrima = listaMateriaPrima;
+		this.unidades = unidades;
 	}
 
 	// Getters e Setters
 	public int getId() {
 		return id;
+	}
+
+	public int getUnidades() {
+		return unidades;
+	}
+
+	public void setUnidades(int unidades) {
+		this.unidades = unidades;
 	}
 
 	public void setId(int idProdutoFinal) {

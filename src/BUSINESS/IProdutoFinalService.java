@@ -6,9 +6,9 @@ public interface IProdutoFinalService {
 
 	int inserir(ProdutoFinal produto);
 
-	int remover(ProdutoFinal produto);
+	int remover(int id);
 
-	ProdutoFinal procuraUm(ProdutoFinal produto);
+	ProdutoFinal procuraUm(int id);
 
 	ArrayList<ProdutoFinal> procuraTodos();
 
