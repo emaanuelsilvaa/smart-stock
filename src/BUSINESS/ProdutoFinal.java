@@ -1,31 +1,31 @@
 package BUSINESS;
 
 public class ProdutoFinal {
-	protected int idProdutoFinal;
+	protected int id;
 	protected String nome;
 	protected float preço;
 	protected MateriaPrima[] listaMateriaPrima;
-	
+
 	// Construtores
 	public ProdutoFinal() {
-		
+
 	}
 
 	public ProdutoFinal(int idProdutoFinal, String nome, float preço, MateriaPrima[] listaMateriaPrima) {
 		super();
-		this.idProdutoFinal = idProdutoFinal;
+		this.id = idProdutoFinal;
 		this.nome = nome;
 		this.preço = preço;
 		this.listaMateriaPrima = listaMateriaPrima;
 	}
 
 	// Getters e Setters
-	public int getIdProdutoFinal() {
-		return idProdutoFinal;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdProdutoFinal(int idProdutoFinal) {
-		this.idProdutoFinal = idProdutoFinal;
+	public void setId(int idProdutoFinal) {
+		this.id = idProdutoFinal;
 	}
 
 	public String getNome() {

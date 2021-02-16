@@ -12,21 +12,24 @@ public class ProdutoFinalDAO {
 		this.produtos = new ArrayList<ProdutoFinal>();
 	}
 
-	public void inserir(ProdutoFinal produto) {
+	public int inserir(ProdutoFinal produto) {
 		this.produtos.add(produto);
+		return 0;
 	}
 
-	public void remover(ProdutoFinal produto) {
+	public int remover(ProdutoFinal produto) {
 		this.produtos.remove(produto);
+		return 0;
 	}
 
-	public void alterar() {
+	public int alterar() {
 		//TODO things
+		return 0;
 	}
 
 	public ProdutoFinal procuraPeloId(int id) {
 		for (ProdutoFinal produto : this.produtos) {
-			if (produto.getIdProdutoFinal() == id) {
+			if (produto.getId() == id) {
 				return produto;
 			}
 		}

@@ -11,7 +11,6 @@ public class EstoqueService {
 		// TODO Auto-generated constructor stub
 	}
 	public MateriaPrimaDAO getDados() {
-		return null;
+		return null;	
 	};
-
 }
