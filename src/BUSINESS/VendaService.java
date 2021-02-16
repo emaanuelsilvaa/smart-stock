@@ -3,10 +3,10 @@ package BUSINESS;
 public class VendaService implements IVendaService {
 	
 	EstoqueService estoqueService = new EstoqueService();
-	ProdutoFinal [] listaDeProdutos  = {};
+	Venda vendaAtual = new Venda();
 	
-	public VendaService (ProdutoFinal [] produtosSelecionados) {
-		listaDeProdutos = produtosSelecionados;
+	public VendaService (Venda serviçoAtual) {
+		vendaAtual = serviçoAtual;
 	};
 	
 	public void realizarVenda () {
