@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import DATA.ProdutoFinalDAO;
 
-public class ProdutoFinalService {
+public class ProdutoFinalService implements IProdutoFinalService {
 	ProdutoFinalDAO produtoFinalDAO;
 
 	public ProdutoFinalService() {
@@ -12,6 +12,7 @@ public class ProdutoFinalService {
 		this.produtoFinalDAO = new ProdutoFinalDAO();
 	}
 
+	@Override
 	public int inserir(ProdutoFinal produto) {
 		// Aqui temos uma decisão de projeto. Como será a inserção de um produto?
 		// Desta maneira o proprio usuário qm seta o ID, mas vc pode fzr uma função p
@@ -25,6 +26,7 @@ public class ProdutoFinalService {
 		return -1;
 	}
 
+	@Override
 	public int remover(ProdutoFinal produto) {
 		if (produtoFinalDAO.procuraPeloId(produto.getId()) != null) {
 			produtoFinalDAO.remover(produto);
@@ -33,14 +35,17 @@ public class ProdutoFinalService {
 		return -1;
 	}
 
+	@Override
 	public ProdutoFinal procuraUm(ProdutoFinal produto) {
 		return produtoFinalDAO.procuraPeloId(produto.getId());
 	}
 
+	@Override
 	public ArrayList<ProdutoFinal> procuraTodos() {
 		return produtoFinalDAO.procuraTodos();
 	}
 
+	@Override
 	public int alterar() {
 		// TODO things
 		return 0;
