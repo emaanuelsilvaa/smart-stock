@@ -2,11 +2,10 @@ package BUSINESS;
 
 import java.util.ArrayList;
 
-import DATA.IProdutoFinalDAO;
 import DATA.ProdutoFinalDAO;
 
 public class ProdutoFinalService implements IProdutoFinalService {
-	IProdutoFinalDAO produtoFinalDAO;
+	protected ProdutoFinalDAO produtoFinalDAO;
 
 	public ProdutoFinalService() {
 		// TODO Auto-generated constructor stub
@@ -20,7 +19,7 @@ public class ProdutoFinalService implements IProdutoFinalService {
 		// pegar
 		// o próximo ID disponível e salvar na memória.
 		if (produtoFinalDAO.procuraPeloId(produto.getId()) != null) {
-			// ID está cadastraso
+			// ID está cadastrado
 			return -1;
 		}
 		produtoFinalDAO.inserir(produto);
@@ -35,9 +34,15 @@ public class ProdutoFinalService implements IProdutoFinalService {
 		}
 		return -1;
 	}
+	
+	@Override
+	public int alterar() {
+		// TODO things
+		return 0;
+	}
 
 	@Override
-	public ProdutoFinal procuraUm(int id) {
+	public ProdutoFinal procuraPeloId(int id) {
 		return produtoFinalDAO.procuraPeloId(id);
 	}
 
@@ -46,9 +51,4 @@ public class ProdutoFinalService implements IProdutoFinalService {
 		return produtoFinalDAO.procuraTodos();
 	}
 
-	@Override
-	public int alterar() {
-		// TODO things
-		return 0;
-	}
 }

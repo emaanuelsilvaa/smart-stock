@@ -7,11 +7,11 @@ public interface IProdutoFinalService {
 	int inserir(ProdutoFinal produto);
 
 	int remover(int id);
+	
+	int alterar();
 
-	ProdutoFinal procuraUm(int id);
+	ProdutoFinal procuraPeloId(int id);
 
 	ArrayList<ProdutoFinal> procuraTodos();
-
-	int alterar();
 
 }

@@ -1,10 +1,12 @@
 package BUSINESS;
 
+import java.util.ArrayList;
+
 public class ProdutoFinal {
 	protected int id;
 	protected String nome;
 	protected float preço;
-	protected MateriaPrima[] listaMateriaPrima;
+	protected ArrayList<MateriaPrima> listaMateriaPrima;
 	protected int unidades;
 
 	// Construtores
@@ -12,7 +14,7 @@ public class ProdutoFinal {
 
 	}
 
-	public ProdutoFinal(int idProdutoFinal, String nome, float preço, MateriaPrima[] listaMateriaPrima, int unidades) {
+	public ProdutoFinal(int idProdutoFinal, String nome, float preço, ArrayList<MateriaPrima> listaMateriaPrima, int unidades) {
 		super();
 		this.id = idProdutoFinal;
 		this.nome = nome;
@@ -54,11 +56,11 @@ public class ProdutoFinal {
 		this.preço = preço;
 	}
 
-	public MateriaPrima[] getListaMateriaPrima() {
+	public ArrayList<MateriaPrima> getListaMateriaPrima() {
 		return listaMateriaPrima;
 	}
 
-	public void setListaMateriaPrima(MateriaPrima[] listaMateriaPrima) {
+	public void setListaMateriaPrima(ArrayList<MateriaPrima> listaMateriaPrima) {
 		this.listaMateriaPrima = listaMateriaPrima;
 	}
 

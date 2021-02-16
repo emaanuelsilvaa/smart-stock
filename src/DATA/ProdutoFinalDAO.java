@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import BUSINESS.ProdutoFinal;
 
 public class ProdutoFinalDAO implements IProdutoFinalDAO {
-	ArrayList<ProdutoFinal> produtos;
+	protected ArrayList<ProdutoFinal> produtos;
 
 	public ProdutoFinalDAO() {
 		// TODO Auto-generated constructor stub
@@ -20,11 +20,14 @@ public class ProdutoFinalDAO implements IProdutoFinalDAO {
 
 	@Override
 	public int remover(int id) {
+		ProdutoFinal aux = new ProdutoFinal();
 		for (ProdutoFinal p: this.produtos) {
 			if(p.getId() == id) {
-				produtos.remove(p);
+				aux = p;
+				break;
 			}
 		}
+		this.produtos.remove(aux);
 		return 0;
 	}
 
