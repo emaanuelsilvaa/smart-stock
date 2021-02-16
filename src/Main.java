@@ -3,10 +3,12 @@ import java.util.Date;
 import BUSINESS.Cliente;
 import BUSINESS.ClienteService;
 import DATA.ClienteDAO;
+import BUSINESS.Fornecedor;
+import BUSINESS.FornecedorService;
+import DATA.FornecedorDAO;
 import BUSINESS.MateriaPrima;
 import BUSINESS.MateriaPrimaService;
 import DATA.MateriaPrimaDAO;
-import BUSINESS.Fornecedor;
 
 public class Main {
 
@@ -17,8 +19,8 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n\n");
 		
-		//==== Teste ClienteService ===//
-		System.out.print("//==== Teste ClienteService ===//\n");
+		//==== Teste ClienteService ====//
+		System.out.print("//==== Teste ClienteService ====//\n");
 		
 		System.out.print(">>> Cadastrando o cliente 1...\n");
 		Cliente cliente1 = new Cliente(1, "Maria", "123", "Rua Palmares, 180", "84-3332222");
@@ -34,12 +36,12 @@ public class Main {
 		serviçoCliente.listarClientes();
 		System.out.println(">>> Consulta nome cliente 2: " + serviçoCliente.consultarClientePeloId(2).getNome() + "\n");
 		
-		System.out.print("//=============================//\n\n\n");
-		//=============================//
+		System.out.print("//==============================//\n\n\n");
+		//==============================//
 
 		
-		//==== Teste MateriaPrimaService ===//
-		System.out.print("//==== Teste MateriaPrimaService ===//\n");
+		//==== Teste MateriaPrimaService ====//
+		System.out.print("//==== Teste MateriaPrimaService ====//\n");
 
 		Fornecedor f = new Fornecedor();
 		Date d = new Date();
@@ -57,8 +59,28 @@ public class Main {
 		serviçoMP.listarMateriasPrimas();
 		System.out.println(">>> Consulta nome matéria prima 2: " + serviçoMP.consultarMateriaPrimaPeloId(2).getNome() + "\n");
 		
-		System.out.print("//==================================//\n\n\n");
+		System.out.print("//===================================//\n\n\n");
 		//==================================//
+		
+		//===== Teste FornecedorService ====//
+		System.out.print("//==== Teste FornecedorService ====//\n");
+		
+		System.out.print(">>> Cadastrando o Fornecedor 1...\n");
+		Fornecedor f1 = new Fornecedor(1, "Nordestão", "12345678912345", "Rua Teste, 12", "88-922221111", "emailerrado", materiasPrimas);
+		
+		System.out.print(">>> Cadastrando o Fornecedor 2...\n");
+		Fornecedor f2 = new Fornecedor(2, "Extra", "123", "Rua teste, 34", "81-99998888", "email@email.com", materiasPrimas);
+		
+		Fornecedor[] fornecedores = {f1, f2};
+		FornecedorDAO fDAO = new FornecedorDAO(fornecedores);
+		FornecedorService serviçoF = new FornecedorService(fDAO);
+		serviçoF.validarCadastroFornecedor(1);
+		serviçoF.validarCadastroFornecedor(2);
+		serviçoF.listarFornecedores();
+		System.out.println(">>> Consulta nome fornecedor 2: " + serviçoF.consultarFornecedorPeloId(2).getNome() + "\n");
+		
+		System.out.print("//=================================//\n\n\n");
+		//===================================//
 	}
 
 }
