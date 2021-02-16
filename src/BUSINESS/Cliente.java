@@ -1,7 +1,7 @@
 package BUSINESS;
 
 public class Cliente {
-	protected int idCliente;
+	protected int id;
 	protected String nome;
 	protected String cpf;
 	protected String endereço;
@@ -12,9 +12,9 @@ public class Cliente {
 		
 	}
 	
-	public Cliente(int idCliente, String nome, String cpf, String endereço, String telefone) {
+	public Cliente(int id, String nome, String cpf, String endereço, String telefone) {
 		super();
-		this.idCliente = idCliente;
+		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.endereço = endereço;
@@ -22,12 +22,12 @@ public class Cliente {
 	}
 
 	// Getters e Setters
-	public int getIdCliente() {
-		return idCliente;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {

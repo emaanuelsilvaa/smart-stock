@@ -1,38 +1,53 @@
 package BUSINESS;
+import java.util.ArrayList;
+
 import DATA.ClienteDAO;
 
-public class ClienteService {
-	protected ClienteDAO clientes;
+public class ClienteService implements IClienteService {
+	protected ClienteDAO clienteDAO;
 	
 	// Construtores
 	public ClienteService() {
-		
+		this.clienteDAO = new ClienteDAO();
 	}
-	
-	public ClienteService(ClienteDAO clientes) {
+
+	public ClienteService(ClienteDAO clienteDAO) {
 		super();
-		this.clientes = clientes;
-	}
-	
-	// Getters e Setters
-	public ClienteDAO getCliente() {
-		return clientes;
+		this.clienteDAO = clienteDAO;
 	}
 
-	public void setCliente(ClienteDAO clientes) {
-		this.clientes = clientes;
+	@Override
+	public int inserir(Cliente cliente) {
+		if (this.clienteDAO.procuraPeloId(cliente.getId()) != null) {
+			return -1;
+		}
+		this.clienteDAO.inserir(cliente);
+		return -1;
 	}
 
-	// Regras de Negócio	
-	public void validarCadastroCliente(int idCliente) {
-		this.clientes.validarCadastroCliente(idCliente);
+	@Override
+	public int remover(int id) {
+		if (this.clienteDAO.procuraPeloId(id) != null) {
+			this.clienteDAO.remover(id);
+			return 0;
+		}
+		return -1;
 	}
 	
-	public Cliente consultarClientePeloId(int idCliente) {
-		return this.clientes.consultarClientePeloId(idCliente);
+	@Override
+	public int alterar() {
+		// TODO things
+		return 0;
 	}
-	
-	public void listarClientes() {
-		this.clientes.listarClientes();
+
+	@Override
+	public Cliente procuraPeloId(int id) {
+		return this.clienteDAO.procuraPeloId(id);
 	}
+
+	@Override
+	public ArrayList<Cliente> procuraTodos() {
+		return this.clienteDAO.procuraTodos();
+	}
+
 }

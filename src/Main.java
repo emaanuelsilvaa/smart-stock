@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 import BUSINESS.Cliente;
@@ -28,13 +29,27 @@ public class Main {
 		System.out.print(">>> Cadastrando o cliente 2...\n");
 		Cliente cliente2 = new Cliente(2, "João", "11122233344", "Rua dos Poetas, 255", "84-44445555");
 		
-		Cliente[] clientes = {cliente1, cliente2};		
-		ClienteDAO clienteDAO = new ClienteDAO();	
-		clienteDAO.setClienteDAO(clientes);
-		ClienteService serviçoCliente = new ClienteService(clienteDAO);
-		serviçoCliente.validarCadastroCliente(1);
-		serviçoCliente.listarClientes();
-		System.out.println(">>> Consulta nome cliente 2: " + serviçoCliente.consultarClientePeloId(2).getNome() + "\n");
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.inserir(cliente1);
+		
+		ClienteService clienteService = new ClienteService(clienteDAO);
+		clienteService.inserir(cliente2);
+		clienteService.remover(cliente2.getId());
+		
+		ArrayList<Cliente> clientes = clienteService.procuraTodos();
+		
+		System.out.println(">>> Clientes cadastrados:");
+		for(Cliente c : clientes) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> Cliente ID=" + c.getId() + ": ");
+			System.out.println("> Nome: " + c.getNome());
+			System.out.println("> CPF: " + c.getCpf());
+			System.out.println("> Endereço: " + c.getEndereço());
+			System.out.println("> Telefone: " + c.getTelefone());
+		}
+		System.out.println("\n");
+		
+		System.out.println(">>> Consulta nome cliente 1: " + clienteService.procuraPeloId(1).getNome() + "\n");
 		
 		System.out.print("//==============================//\n\n\n");
 		//==============================//

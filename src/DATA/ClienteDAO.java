@@ -1,79 +1,60 @@
 package DATA;
 
+import java.util.ArrayList;
+
 import BUSINESS.Cliente;
 
-public class ClienteDAO {
-	protected Cliente[] clientes;
-	
+public class ClienteDAO implements IClienteDAO {
+	protected ArrayList<Cliente> clientes;
+
 	// Construtores
 	public ClienteDAO() {
-		
+		this.clientes = new ArrayList<Cliente>();
 	}
 	
-	public ClienteDAO(Cliente[] clientes) {
+	public ClienteDAO(ArrayList<Cliente> clientes) {
 		super();
 		this.clientes = clientes;
 	}
-	
-	// Getters e Setters
-	public Cliente[] getClienteDAO() {
-		return clientes;
+
+	@Override
+	public int inserir(Cliente cliente) {
+		this.clientes.add(cliente);
+		return 0;
 	}
 
-	public void setClienteDAO(Cliente[] clientes) {
-		this.clientes = clientes;
+	@Override
+	public int remover(int id) {
+		Cliente aux = new Cliente();
+		for (Cliente c: this.clientes) {
+			if(c.getId() == id) {
+				aux = c;
+				break;
+			}
+		}
+		this.clientes.remove(aux);
+		return 0;
 	}
 
-	// Regras de Negócio	
-	public void validarCadastroCliente(int idCliente) {
-		// Checagem se cliente existe
-		Cliente cliente = consultarClientePeloId(idCliente);
+	@Override
+	public int alterar() {
+		//TODO things
 		
-		if(cliente == null) {
-			System.out.println(">> Cliente de ID=" + idCliente + " não cadastrado.");
-		}
-		else {	
-			// Validação de CPF (Padrão: 11 dígitos.)
-			if(cliente.getCpf().length() != 11) {
-				System.out.println(">> CPF do cliente " + cliente.getIdCliente() + " cadastrado incorretamente. "
-						+ "Insira novamente!");
-			}
-			
-			// Validação de Telefone (Padrão: DDD-8números ou DDD-9números. Exemplo: 89-33332222)
-			if((cliente.getTelefone().length() != 11 && 
-			   cliente.getTelefone().length() != 12) ||
-			   cliente.getTelefone().toCharArray()[2] != '-') {
-				System.out.println(">> Telefone do cliente " + cliente.getIdCliente() + " cadastrado incorretamente. "
-						+ "Insira novamente!");
-			}
-		}
-		
-		System.out.println("\n");
+		return 0;
 	}
-	
-	public Cliente consultarClientePeloId(int idCliente) {
-		for(Cliente c : this.clientes) {
-			if(c.getIdCliente() == idCliente) {
-				Cliente cliente = c;
-				return cliente;
+
+	@Override
+	public Cliente procuraPeloId(int id) {
+		for (Cliente c : this.clientes) {
+			if (c.getId() == id) {
+				return c;
 			}
 		}
 		return null;
 	}
-	
-	public void listarClientes() {
-		
-		System.out.println(">>> Clientes cadastrados:");
-		
-		for(Cliente c : this.clientes) {
-			System.out.println("- - - - - - - - - -");
-			System.out.println(">> Cliente ID=" + c.getIdCliente() + ": ");
-			System.out.println("> Nome: " + c.getNome());
-			System.out.println("> CPF: " + c.getCpf());
-			System.out.println("> Endereço: " + c.getEndereço());
-			System.out.println("> Telefone: " + c.getTelefone());
-		}
-		
-		System.out.println("\n");
+
+	@Override
+	public ArrayList<Cliente> procuraTodos(){
+		return this.clientes;
 	}
 }
