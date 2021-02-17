@@ -1,23 +1,25 @@
 package BUSINESS;
 
+import java.util.ArrayList;
+
 public class Fornecedor {
-	protected int idFornecedor;
+	protected int id;
 	protected String nome;
 	protected String cnpj;
 	protected String endereço;
 	protected String telefone;
 	protected String email;
-	protected MateriaPrima[] listaProdutos;
+	protected ArrayList<MateriaPrima> listaProdutos;
 
 	// Construtores
 	public Fornecedor() {
 		
 	}
 	
-	public Fornecedor(int idFornecedor, String nome, String cnpj, String endereço, String telefone, String email,
-			MateriaPrima[] listaProdutos) {
+	public Fornecedor(int id, String nome, String cnpj, String endereço, String telefone, String email,
+			ArrayList<MateriaPrima> listaProdutos) {
 		super();
-		this.idFornecedor = idFornecedor;
+		this.id = id;
 		this.nome = nome;
 		this.cnpj = cnpj;
 		this.endereço = endereço;
@@ -27,12 +29,12 @@ public class Fornecedor {
 	}
 
 	// Getters e Setters
-	public int getIdFornecedor() {
-		return idFornecedor;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdFornecedor(int idFornecedor) {
-		this.idFornecedor = idFornecedor;
+	public void setId(int id) {
+		this.id= id;
 	}
 
 	public String getNome() {
@@ -75,11 +77,11 @@ public class Fornecedor {
 		this.email = email;
 	}
 
-	public MateriaPrima[] getListaProdutos() {
+	public ArrayList<MateriaPrima> getListaProdutos() {
 		return listaProdutos;
 	}
 
-	public void setListaProdutos(MateriaPrima[] listaProdutos) {
+	public void setListaProdutos(ArrayList<MateriaPrima> listaProdutos) {
 		this.listaProdutos = listaProdutos;
 	}
 

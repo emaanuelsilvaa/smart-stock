@@ -60,14 +60,14 @@ public class Main {
 		//==== Teste MateriaPrimaService ====//
 		System.out.print("//==== Teste MateriaPrimaService ====//\n");
 
-		Fornecedor f = new Fornecedor();
+		Fornecedor fncd = new Fornecedor();
 		Date d = new Date();
 		
 		System.out.print(">>> Cadastrando a Matéria Prima 1...\n");
-		MateriaPrima mp1 = new MateriaPrima(1, "batata", "comida", 1.3F, f, true, 3, "kg", d);
+		MateriaPrima mp1 = new MateriaPrima(1, "batata", "comida", 1.3F, fncd, true, 3, "kg", d);
 		
 		System.out.print(">>> Cadastrando a Matéria Prima 2...\n");
-		MateriaPrima mp2 = new MateriaPrima(2, "queijo", "alimento", 1.0F, f, true, 3, "kg", d);
+		MateriaPrima mp2 = new MateriaPrima(2, "queijo", "alimento", 1.0F, fncd, true, 3, "kg", d);
 		
 		MateriaPrimaDAO materiaPrimaDAO = new MateriaPrimaDAO();
 		materiaPrimaDAO.inserir(mp1);
@@ -98,6 +98,46 @@ public class Main {
 		System.out.print("//=================================//\n\n\n");
 		//===================================//
 		
+		//===== Teste FornecedorService ====//
+		System.out.print("//==== Teste FornecedorService ====//\n");
+
+		System.out.print(">>> Cadastrando o Fornecedor 1...\n");
+		Fornecedor f1 = new Fornecedor(1, "Nordestão", "12345678912345", "Rua Teste, 12", "88-922221111", "emailerrado", materiasPrimas);
+
+		System.out.print(">>> Cadastrando o Fornecedor 2...\n");
+		Fornecedor f2 = new Fornecedor(2, "Extra", "123", "Rua teste, 34", "81-99998888", "email@email.com", materiasPrimas);
+
+		FornecedorDAO fornecedorDAO = new FornecedorDAO();
+		fornecedorDAO.inserir(f1);
+		
+		FornecedorService fornecedorService = new FornecedorService(fornecedorDAO);
+		fornecedorService.inserir(f2);
+		fornecedorService.remover(f2.getId());
+		
+		ArrayList<Fornecedor> fornecedores = fornecedorService.procuraTodos();
+
+		System.out.println("\n>>> Fornecedores cadastrados:");
+		for(Fornecedor f : fornecedores) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> Fornecedor ID=" + f.getId() + ": ");
+			System.out.println("> Nome: " + f.getNome());
+			System.out.println("> CNPJ: " + f.getCnpj());
+			System.out.println("> Endereço: " + f.getEndereço());
+			System.out.println("> Telefone: " + f.getTelefone());
+			System.out.println("> Email: " + f.getEmail());
+			System.out.println("> Lista de Produtos: ");
+			int contador = 0;
+			for(MateriaPrima m : f.getListaProdutos()) {
+				contador += 1;
+				System.out.println("\t" + contador + ". " + m.getNome());
+			}
+		}
+		System.out.println("\n");
+		
+		System.out.println(">>> Consulta nome forcenedor1: " + fornecedorService.procuraPeloId(1).getNome() + "\n");
+
+		System.out.print("//=================================//\n\n\n");
+		//===================================//
 	}
 
 }

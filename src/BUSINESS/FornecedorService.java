@@ -1,40 +1,55 @@
 package BUSINESS;
 
-import DATA.FornecedorDAO;
+import java.util.ArrayList;
 
-public class FornecedorService {
-	protected FornecedorDAO fornecedores;
+import DATA.FornecedorDAO;
+import DATA.IFornecedorDAO;
+
+public class FornecedorService implements IFornecedorService {
+	protected IFornecedorDAO fornecedorDAO;
 	
 	// Construtores
 	public FornecedorService() {
-		
+		this.fornecedorDAO = new FornecedorDAO();
 	}
 
-	public FornecedorService(FornecedorDAO fornecedores) {
+	public FornecedorService(IFornecedorDAO fornecedorDAO) {
 		super();
-		this.fornecedores = fornecedores;
+		this.fornecedorDAO = fornecedorDAO;
 	}
 
-	// Getters e Setters
-	public FornecedorDAO getFornecedores() {
-		return fornecedores;
+	@Override
+	public int inserir(Fornecedor fornecedor) {
+		if (this.fornecedorDAO.procuraPeloId(fornecedor.getId()) != null) {
+			return -1;
+		}
+		this.fornecedorDAO.inserir(fornecedor);
+		return -1;
 	}
 
-	public void setFornecedores(FornecedorDAO fornecedores) {
-		this.fornecedores = fornecedores;
+	@Override
+	public int remover(int id) {
+		if (this.fornecedorDAO.procuraPeloId(id) != null) {
+			this.fornecedorDAO.remover(id);
+			return 0;
+		}
+		return -1;
 	}
-	
-	// Regras de Negócio
-	public void validarCadastroFornecedor(int idFornecedor) {
-		this.fornecedores.validarCadastroFornecedor(idFornecedor);
+
+	@Override
+	public int alterar() {
+		// TODO things
+		return 0;
 	}
-	
-	public Fornecedor consultarFornecedorPeloId(int idFornecedor) {
-		return this.fornecedores.consultarFornecedorPeloId(idFornecedor);
+
+	@Override
+	public Fornecedor procuraPeloId(int id) {
+		return this.fornecedorDAO.procuraPeloId(id);
 	}
-	
-	public void listarFornecedores() {
-		this.fornecedores.listarFornecedores();
+
+	@Override
+	public ArrayList<Fornecedor> procuraTodos() {
+		return this.fornecedorDAO.procuraTodos();
 	}
 	
 }
