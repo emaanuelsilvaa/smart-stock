@@ -236,7 +236,7 @@ public class Main {
 			System.out.println("- - - - - - - - - -");
 			System.out.println(">> Materia Prima ID = "+ m.getId());
 			System.out.println(">> Nome = "+ m.getNome());
-			System.out.println(">> Quantidade = "+ m.getQuantidade());
+			System.out.println(">> Quantidade = "+ m.getQuantidade() + m.getUnMedida());
 		}
 		//===================================//
 	}
