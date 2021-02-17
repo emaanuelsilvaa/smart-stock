@@ -14,4 +14,6 @@ public interface IFornecedorService {
 
 	ArrayList<Fornecedor> procuraTodos();
 
+	public int validarCadastro(int id);
+	
 }

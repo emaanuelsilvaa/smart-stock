@@ -112,6 +112,9 @@ public class Main {
 		
 		FornecedorService fornecedorService = new FornecedorService(fornecedorDAO);
 		fornecedorService.inserir(f2);
+		if(fornecedorService.validarCadastro(f2.getId()) == -1) {
+			System.out.println(">>> Fornecedor 2 possui dados inválidos! \n");
+		}
 		fornecedorService.remover(f2.getId());
 		
 		ArrayList<Fornecedor> fornecedores = fornecedorService.procuraTodos();
