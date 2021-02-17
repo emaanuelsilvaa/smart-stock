@@ -24,6 +24,7 @@ public class VendaDAO implements IVendaDAO {
 		for(Venda venda : this.vendas) {
 			if(venda.getId() == id) {
 				aux = venda;
+				temVendaCompativel = true;
 				break;
 			}
 		};
@@ -44,6 +45,7 @@ public class VendaDAO implements IVendaDAO {
 		for(Venda venda : this.vendas) {
 			if(venda.getId() == id) {
 				aux = venda;
+				temVendaCompativel = true;
 				break;
 			}
 		};
