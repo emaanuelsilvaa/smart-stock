@@ -3,6 +3,7 @@ package DATA;
 import java.util.ArrayList;
 
 import BUSINESS.MateriaPrima;
+import BUSINESS.ProdutoFinal;
 
 public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 	protected ArrayList<MateriaPrima> materiasPrimas;
@@ -41,6 +42,17 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 		//TODO things
 		
 		return 0;
+	}
+	public int alterarQuantidade(int id, float quantidade) {
+		float quantidadeAtual;
+		for(MateriaPrima m : this.materiasPrimas) {
+			if(m.getId() == id) {
+				quantidadeAtual = m.getQuantidade();
+				m.setQuantidade(quantidadeAtual+quantidade);
+				return 0;
+			}
+		}
+		return -1;
 	}
 
 	@Override

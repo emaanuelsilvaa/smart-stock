@@ -6,11 +6,17 @@ import DATA.ProdutoFinalDAO;
 
 public class EstoqueService {
 	
-	IProdutoFinalDAO produtoDAO = new ProdutoFinalDAO();
-	MateriaPrimaDAO materia_primaDAO = new MateriaPrimaDAO();
+	ProdutoFinalDAO produtoDAO;
+	MateriaPrimaDAO materiaPrimaDAO;
 
 	public EstoqueService() {
 		// TODO Auto-generated constructor stub
+		produtoDAO = new ProdutoFinalDAO();
+		materiaPrimaDAO = new MateriaPrimaDAO();
+	}
+	public EstoqueService(ProdutoFinalDAO produtoDAO, MateriaPrimaDAO materiaPrimaDAO) {
+		this.produtoDAO = produtoDAO;
+		this.materiaPrimaDAO = materiaPrimaDAO;
 	}
 
 	public int baixaProdutoFinal(int id, int quantidade) {
@@ -24,7 +30,7 @@ public class EstoqueService {
 
 	public int baixaMateriaPrima(int id, float quantidade) {
 		if (verificaDisponibilidadeMateriaPrima(id, quantidade)) {
-			// materia_primaDAO.alterarQuantidade(id, -1 * quantidade);
+			materiaPrimaDAO.alterarQuantidade(id, -1 * quantidade);
 			return 0;
 		} else {
 			return -1;
@@ -40,11 +46,10 @@ public class EstoqueService {
 	}
 
 	public boolean verificaDisponibilidadeMateriaPrima(int id, float quantidade) {
-//		if(materia_primaDAO.procuraPeloId(id).getQuantidade() >= quantidade) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-		return true;
+		if(materiaPrimaDAO.procuraPeloId(id).getQuantidade() >= quantidade) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
