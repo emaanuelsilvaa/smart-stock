@@ -3,12 +3,18 @@ import java.util.Date;
 
 import BUSINESS.Cliente;
 import BUSINESS.ClienteService;
+import BUSINESS.EstoqueService;
 import DATA.ClienteDAO;
 
 import BUSINESS.MateriaPrima;
 import BUSINESS.MateriaPrimaService;
+import BUSINESS.ProdutoFinal;
+import BUSINESS.ProdutoFinalService;
+import BUSINESS.Venda;
+import BUSINESS.VendaService;
 import DATA.MateriaPrimaDAO;
-
+import DATA.ProdutoFinalDAO;
+import DATA.VendaDAO;
 import BUSINESS.Fornecedor;
 import BUSINESS.FornecedorService;
 import DATA.FornecedorDAO;
@@ -25,21 +31,21 @@ public class Main {
 		//==== Teste ClienteService ====//
 		System.out.print("//==== Teste ClienteService ====//\n");
 		
-		System.out.print(">>> Cadastrando o cliente 1...\n");
+		System.out.print(">>> Criando o cliente 1...\n");
 		Cliente cliente1 = new Cliente(1, "Maria", "123", "Rua Palmares, 180", "84-3332222");
 		
-		System.out.print(">>> Cadastrando o cliente 2...\n");
+		System.out.print(">>> Criando o cliente 2...\n");
 		Cliente cliente2 = new Cliente(2, "João", "11122233344", "Rua dos Poetas, 255", "84-44445555");
 		
+		System.out.print(">>> Criando o cliente 3...\n");
+		Cliente cliente3 = new Cliente(3, "Yago", "12538500460", "Rua Jacaranda, 255", "84-44445555");
+		
 		ClienteDAO clienteDAO = new ClienteDAO();
-		clienteDAO.inserir(cliente1);
 		
 		ClienteService clienteService = new ClienteService(clienteDAO);
+		clienteService.inserir(cliente1);
 		clienteService.inserir(cliente2);
-		clienteService.remover(cliente2.getId());
-		if(clienteService.validarCadastro(cliente1.getId()) == -1) {
-			System.out.println(">>> Cliente 1 possui dados inválidos! \n");
-		}
+		clienteService.inserir(cliente3);
 		
 		ArrayList<Cliente> clientes = clienteService.procuraTodos();
 		
@@ -54,8 +60,6 @@ public class Main {
 		}
 		System.out.println("\n");
 		
-		System.out.println(">>> Consulta nome cliente 1: " + clienteService.procuraPeloId(1).getNome() + "\n");
-		
 		System.out.print("//==============================//\n\n\n");
 		//==============================//
 
@@ -66,21 +70,17 @@ public class Main {
 		Fornecedor fncd = new Fornecedor();
 		Date d = new Date();
 		
-		System.out.print(">>> Cadastrando a Matéria Prima 1...\n");
-		MateriaPrima mp1 = new MateriaPrima(1, "batata", "comida", 1.3F, fncd, true, 3, "kg", d);
+		System.out.print(">>> Criando a Matéria Prima 1...\n");
+		MateriaPrima mp1 = new MateriaPrima(1, "batata", "alimento", 1.3F, fncd, true, 3, "kg", d);
 		
-		System.out.print(">>> Cadastrando a Matéria Prima 2...\n");
+		System.out.print(">>> Criando a Matéria Prima 2...\n");
 		MateriaPrima mp2 = new MateriaPrima(2, "queijo", "alimento", 1.0F, fncd, true, 3, "kg", d);
 		
 		MateriaPrimaDAO materiaPrimaDAO = new MateriaPrimaDAO();
-		materiaPrimaDAO.inserir(mp1);
 		
 		MateriaPrimaService materiaPrimaService = new MateriaPrimaService(materiaPrimaDAO);
+		materiaPrimaService.inserir(mp1);
 		materiaPrimaService.inserir(mp2);
-		materiaPrimaService.remover(mp2.getId());
-		if(materiaPrimaService.validarCadastro(mp1.getId()) == -1) {
-			System.out.println(">>> Matéria prima 1 possui dados inválidos! \n");
-		}
 		
 		ArrayList<MateriaPrima> materiasPrimas = materiaPrimaService.procuraTodos();
 		
@@ -107,21 +107,18 @@ public class Main {
 		//===== Teste FornecedorService ====//
 		System.out.print("//==== Teste FornecedorService ====//\n");
 
-		System.out.print(">>> Cadastrando o Fornecedor 1...\n");
-		Fornecedor f1 = new Fornecedor(1, "Nordestão", "12345678912345", "Rua Teste, 12", "88-922221111", "emailerrado", materiasPrimas);
+		System.out.print(">>> Criando o Fornecedor 1...\n");
+		Fornecedor f1 = new Fornecedor(1, "Nordestão", "12345678912345", "Rua Teste, 12", "88-922221111", "email@email.com", materiasPrimas);
 
-		System.out.print(">>> Cadastrando o Fornecedor 2...\n");
+		System.out.print(">>> Criando o Fornecedor 2...\n");
 		Fornecedor f2 = new Fornecedor(2, "Extra", "123", "Rua teste, 34", "81-99998888", "email@email.com", materiasPrimas);
 
 		FornecedorDAO fornecedorDAO = new FornecedorDAO();
-		fornecedorDAO.inserir(f1);
 		
 		FornecedorService fornecedorService = new FornecedorService(fornecedorDAO);
+		
+		fornecedorService.inserir(f1);
 		fornecedorService.inserir(f2);
-		if(fornecedorService.validarCadastro(f2.getId()) == -1) {
-			System.out.println(">>> Fornecedor 2 possui dados inválidos! \n");
-		}
-		fornecedorService.remover(f2.getId());
 		
 		ArrayList<Fornecedor> fornecedores = fornecedorService.procuraTodos();
 
@@ -143,9 +140,104 @@ public class Main {
 		}
 		System.out.println("\n");
 		
-		System.out.println(">>> Consulta nome forcenedor1: " + fornecedorService.procuraPeloId(1).getNome() + "\n");
-
-		System.out.print("//=================================//\n\n\n");
+		// Teste ProdutoFinal
+		System.out.print("//========== Teste Produto Final ===========//\n\n\n");
+		
+		ArrayList<MateriaPrima> receita = new ArrayList<MateriaPrima>();		
+		MateriaPrima r1 = new MateriaPrima(1, "Farinha de Trigo", "Alimento", 0.01f, fncd, true, 10, "gm", d);
+		MateriaPrima r2 = new MateriaPrima(2, "Carne", "Alimento", 0.5f, fncd, true, 25, "gm", d);
+		
+		receita.add(r1);
+		receita.add(r2);
+		
+		ProdutoFinal p1 = new ProdutoFinal(1, "Esfirra", 0.5f, receita, 50);
+		ProdutoFinal p2 = new ProdutoFinal(2, "Empada", 1f, receita, 50);
+		
+		ProdutoFinalDAO produtoFinalDAO = new ProdutoFinalDAO();
+		
+		ProdutoFinalService produtoFinalService = new ProdutoFinalService(produtoFinalDAO);
+		System.out.print(">>> Cadastrando Produtos");
+		
+		produtoFinalService.inserir(p1);
+		produtoFinalService.inserir(p2);
+		
+		ArrayList<ProdutoFinal> produtos = new ArrayList<ProdutoFinal>();
+		produtos = produtoFinalService.procuraTodos();
+		
+		for (ProdutoFinal p : produtos) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> ProdutoFInal ID=" + p.getId() + ": ");
+			System.out.println("> Nome: " + p.getNome());
+			System.out.println("> Preço: " + p.getPreço());
+			System.out.println("> Receita: " + p.getListaMateriaPrima());
+			System.out.println("> Unidades: " + p.getUnidades());
+		}
+		
+		System.out.print("//========== Teste Venda ===========//\n\n\n");
+		
+		ArrayList<ProdutoFinal> listProdutos = new ArrayList<ProdutoFinal>();
+		
+		ProdutoFinal pro1 = new ProdutoFinal(1, "Esfirra", 0.5f, receita, 10);
+		ProdutoFinal pro2 = new ProdutoFinal(2, "Empada", 1f, receita, 20);
+		
+		listProdutos.add(pro1);
+		listProdutos.add(pro2);
+		
+		VendaDAO vendaDAO = new VendaDAO();
+		
+		EstoqueService estoqueService = new EstoqueService(produtoFinalDAO, materiaPrimaDAO);
+		VendaService vendaService = new VendaService(vendaDAO, estoqueService);
+		
+		System.out.println(">>> Realizando Venda1");
+		
+		vendaService.realizarVenda(listProdutos, cliente3);
+		
+		ArrayList<ProdutoFinal> listProdutos2 = new ArrayList<ProdutoFinal>();
+		
+		ProdutoFinal pro3 = new ProdutoFinal(1, "Esfirra", 0.5f, receita, 13);
+		ProdutoFinal pro4 = new ProdutoFinal(2, "Empada", 1f, receita, 30);
+		
+		listProdutos2.add(pro3);
+		listProdutos2.add(pro4);
+		
+		System.out.println(">>> Realizando Venda2");
+		vendaService.realizarVenda(listProdutos2, cliente1);
+		
+		ArrayList<Venda> vendas = new ArrayList<Venda>();
+		
+		vendas = vendaService.procuraTodos();
+		
+		for (Venda v : vendas) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> Venda ID= " + v.getId());
+			System.out.println("> Valor: " + v.getValor() + "R$");
+			System.out.println("> Cliente: " + v.getCliente().getNome());
+			System.out.println("> Data: " + v.getData());
+			System.out.println("> Lista de Produtos: ");
+			int contador = 0;
+			for(ProdutoFinal p : v.getListProdutoFinal()) {
+				contador += 1;
+				System.out.println("\t" + contador + ". " + p.getNome() + ": "+ p.getUnidades() + " Unidades");
+			}			
+		}
+		System.out.print("//========== Teste Estoque ===========//\n\n\n");
+		
+		ArrayList<ProdutoFinal> produtosEstoque = estoqueService.procuraTodosProdutos();
+		ArrayList<MateriaPrima> materiaPrimaEstoque = estoqueService.procuraTodasMaterias();
+		System.out.println("Produto Final");
+		for (ProdutoFinal p : produtosEstoque) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> Produto ID = "+ p.getId());
+			System.out.println(">> Nome = "+ p.getNome());
+			System.out.println(">> Quantidade = "+ p.getUnidades());
+		}
+		System.out.println("\nMateria Prima");
+		for (MateriaPrima m : materiaPrimaEstoque) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> Materia Prima ID = "+ m.getId());
+			System.out.println(">> Nome = "+ m.getNome());
+			System.out.println(">> Quantidade = "+ m.getQuantidade());
+		}
 		//===================================//
 	}
 

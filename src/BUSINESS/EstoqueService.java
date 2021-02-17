@@ -1,5 +1,7 @@
 package BUSINESS;
 
+import java.util.ArrayList;
+
 import DATA.IProdutoFinalDAO;
 import DATA.MateriaPrimaDAO;
 import DATA.ProdutoFinalDAO;
@@ -17,6 +19,12 @@ public class EstoqueService {
 	public EstoqueService(ProdutoFinalDAO produtoDAO, MateriaPrimaDAO materiaPrimaDAO) {
 		this.produtoDAO = produtoDAO;
 		this.materiaPrimaDAO = materiaPrimaDAO;
+	}
+	public ArrayList<ProdutoFinal> procuraTodosProdutos(){
+		return this.produtoDAO.procuraTodos();
+	}
+	public ArrayList<MateriaPrima> procuraTodasMaterias(){
+		return this.materiaPrimaDAO.procuraTodos();
 	}
 
 	public int baixaProdutoFinal(int id, int quantidade) {

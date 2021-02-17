@@ -11,7 +11,9 @@ public class ProdutoFinalService implements IProdutoFinalService {
 		// TODO Auto-generated constructor stub
 		this.produtoFinalDAO = new ProdutoFinalDAO();
 	}
-
+	public ProdutoFinalService(ProdutoFinalDAO produtoFinalDAO) {
+		this.produtoFinalDAO = produtoFinalDAO;
+	}
 	@Override
 	public int inserir(ProdutoFinal produto) {
 		// Aqui temos uma decisão de projeto. Como será a inserção de um produto?

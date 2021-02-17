@@ -38,6 +38,9 @@ public class VendaDAO implements IVendaDAO {
 			return false;
 		}
 	};
+	public ArrayList<Venda> procuraTodos(){
+		return this.vendas;
+	}
 	
 	public Venda procuraPeloID(int id) {
 		boolean temVendaCompativel = false;
@@ -62,8 +65,10 @@ public class VendaDAO implements IVendaDAO {
 	//Cria um novo ID Baseado no ID do último elemento, sempre criando um ID novo {Solução temporária}
 	public int getNextID() {
 		int length = this.vendas.size();
-		int nextID = this.vendas.get( length -1 ).getId() + 1;
-		
+		if (this.vendas.isEmpty()) {
+			return 1;
+		}
+		int nextID = this.vendas.get(length-1).getId() + 1;
 		return nextID;
 	}
 	
