@@ -13,5 +13,7 @@ public interface IClienteService {
 	Cliente procuraPeloId(int id);
 
 	ArrayList<Cliente> procuraTodos();
+	
+	public int validarCadastro(int id);
 
 }
