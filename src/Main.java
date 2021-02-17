@@ -75,6 +75,9 @@ public class Main {
 		MateriaPrimaService materiaPrimaService = new MateriaPrimaService(materiaPrimaDAO);
 		materiaPrimaService.inserir(mp2);
 		materiaPrimaService.remover(mp2.getId());
+		if(materiaPrimaService.validarCadastro(mp1.getId()) == -1) {
+			System.out.println(">>> Matéria prima 1 possui dados inválidos! \n");
+		}
 		
 		ArrayList<MateriaPrima> materiasPrimas = materiaPrimaService.procuraTodos();
 		
