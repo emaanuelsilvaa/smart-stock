@@ -2,6 +2,6 @@ package BUSINESS;
 
 public interface IVendaService {
 	
-	public void realizarVenda ();
+	public boolean realizarVenda ();
 	
 }
