@@ -1,24 +1,29 @@
 package BUSINESS;
 
 import java.util.ArrayList;
+import java.util.Date;
+import DATA.VendaDAO;
 
 public class VendaService implements IVendaService {
 	
-	EstoqueService estoqueService = new EstoqueService();
-	Venda vendaAtual = new Venda();
+	protected VendaDAO vendaDAO;
+	protected EstoqueService estoqueService;
 	
-	public VendaService (Venda serviçoAtual) {
-		vendaAtual = serviçoAtual;
+	public VendaService () {
+		this.vendaDAO = new VendaDAO();
+		this.estoqueService = new EstoqueService();
 	};
 	
-	public boolean realizarVenda () {
+	public boolean realizarVenda (ArrayList <ProdutoFinal> listaDeProdutos, Cliente comprador) {
+		Date data = new Date();
 		boolean temMateriaPrimaSuficiente = true;
-		ArrayList <ProdutoFinal> listaDeProdutos = vendaAtual.getListProdutoFinal();
+		float valorDaVenda = 0;
 		
 		for(int i=0; i<listaDeProdutos.size(); i++) {
 			if(!estoqueService.verificaDisponibilidadeProduto(listaDeProdutos.get(i).getId(), listaDeProdutos.get(i).getUnidades())) {
 				temMateriaPrimaSuficiente = false;
 			};
+			valorDaVenda += listaDeProdutos.get(i).getPreço();
 			
 		};
 		
@@ -28,6 +33,9 @@ public class VendaService implements IVendaService {
 				estoqueService.baixaProdutoFinal(listaDeProdutos.get(i).getId(), listaDeProdutos.get(i).getUnidades());
 			}
 			
+			//Gerando um ID automaticamente para a nova venda
+			int newID = vendaDAO.getNextID();
+			this.vendaDAO.inserir(new Venda(newID, valorDaVenda, comprador, listaDeProdutos, data));
 			return true;
 		}
 		
