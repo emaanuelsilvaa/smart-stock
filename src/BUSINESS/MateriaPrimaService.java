@@ -51,5 +51,23 @@ public class MateriaPrimaService implements IMateriaPrimaService {
 	public ArrayList<MateriaPrima> procuraTodos() {
 		return this.materiaPrimaDAO.procuraTodos();
 	}
+	
+	@Override
+	public int validarCadastro(int id) {
+		// Checagem se matéria prima existe		
+		if(this.materiaPrimaDAO.procuraPeloId(id) == null) {
+			return -1;
+		}
+		else {	
+			MateriaPrima materiaPrima = this.materiaPrimaDAO.procuraPeloId(id);
+			// Validação de Tipo (Padrão: Alimento ou Embalagem.)
+			if(materiaPrima.getTipo().toLowerCase() != "alimento" &&
+			   materiaPrima.getTipo().toLowerCase() != "embalagem") {
+				return -1;
+			}
+		}
+		
+		return 0;
+	}
 
 }

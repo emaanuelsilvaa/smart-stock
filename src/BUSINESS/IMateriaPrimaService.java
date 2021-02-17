@@ -13,5 +13,7 @@ public interface IMateriaPrimaService {
 	MateriaPrima procuraPeloId(int id);
 
 	ArrayList<MateriaPrima> procuraTodos();
+	
+	public int validarCadastro(int id);
 
 }

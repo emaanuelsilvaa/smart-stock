@@ -50,4 +50,27 @@ public class ClienteService implements IClienteService {
 		return this.clienteDAO.procuraTodos();
 	}
 
+	@Override
+	public int validarCadastro(int id) {
+		// Checagem se cliente existe
+		if(this.clienteDAO.procuraPeloId(id) == null) {
+			return -1;
+		}
+		else {
+			Cliente cliente = this.clienteDAO.procuraPeloId(id);
+			// Validação de CPF (Padrão: 11 dígitos.)
+			if(cliente.getCpf().length() != 11) {
+				return -1;
+			}
+			
+			// Validação de Telefone (Padrão: DDD-8números ou DDD-9números. Exemplo: 89-33332222)
+			if((cliente.getTelefone().length() != 11 && 
+			   cliente.getTelefone().length() != 12) ||
+			   cliente.getTelefone().toCharArray()[2] != '-') {
+				return -1;
+			}
+		}
+		
+		return 0;
+	}
 }

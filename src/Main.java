@@ -37,6 +37,9 @@ public class Main {
 		ClienteService clienteService = new ClienteService(clienteDAO);
 		clienteService.inserir(cliente2);
 		clienteService.remover(cliente2.getId());
+		if(clienteService.validarCadastro(cliente1.getId()) == -1) {
+			System.out.println(">>> Cliente 1 possui dados inválidos! \n");
+		}
 		
 		ArrayList<Cliente> clientes = clienteService.procuraTodos();
 		
@@ -75,6 +78,9 @@ public class Main {
 		MateriaPrimaService materiaPrimaService = new MateriaPrimaService(materiaPrimaDAO);
 		materiaPrimaService.inserir(mp2);
 		materiaPrimaService.remover(mp2.getId());
+		if(materiaPrimaService.validarCadastro(mp1.getId()) == -1) {
+			System.out.println(">>> Matéria prima 1 possui dados inválidos! \n");
+		}
 		
 		ArrayList<MateriaPrima> materiasPrimas = materiaPrimaService.procuraTodos();
 		
