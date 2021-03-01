@@ -1,16 +1,11 @@
 package BUSINESS;
-import java.util.Date;
 
 public class MateriaPrima {
 	protected int id;
 	protected String nome;
 	protected String tipo;
-	protected float preço;
-	protected Fornecedor fornecedor;
 	protected boolean perecivel;
-	protected float quantidade;
 	protected String unMedida;
-	protected Date validade;
 	
 
 	// Construtores
@@ -18,18 +13,14 @@ public class MateriaPrima {
 		
 	}
 
-	public MateriaPrima(int id, String nome, String tipo, float preço, Fornecedor fornecedor,
-			boolean perecivel, float quantidade, String unMedida, Date validade) {
+	public MateriaPrima(int id, String nome, String tipo,
+			boolean perecivel, String unMedida) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.tipo = tipo;
-		this.preço = preço;
-		this.fornecedor = fornecedor;
 		this.perecivel = perecivel;
-		this.quantidade = quantidade;
 		this.unMedida = unMedida;
-		this.validade = validade;
 	}
 
 	// Getters e Setters
@@ -57,21 +48,6 @@ public class MateriaPrima {
 		this.tipo = tipo;
 	}
 
-	public float getPreço() {
-		return preço;
-	}
-
-	public void setPreço(float preço) {
-		this.preço = preço;
-	}
-
-	public Fornecedor getFornecedor() {
-		return fornecedor;
-	}
-
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
-	}
 
 	public boolean isPerecivel() {
 		return perecivel;
@@ -81,28 +57,12 @@ public class MateriaPrima {
 		this.perecivel = perecivel;
 	}
 
-	public float getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(float quantidade) {
-		this.quantidade = quantidade;
-	}
-
 	public String getUnMedida() {
 		return unMedida;
 	}
 
 	public void setUnMedida(String unMedida) {
 		this.unMedida = unMedida;
-	}
-
-	public Date getValidade() {
-		return validade;
-	}
-
-	public void setValidade(Date validade) {
-		this.validade = validade;
 	}
 
 }

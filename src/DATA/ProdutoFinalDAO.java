@@ -37,19 +37,7 @@ public class ProdutoFinalDAO implements IProdutoFinalDAO {
 		
 		return 0;
 	}
-	@Override
-	public int alterarQuantidade(int id, int unidades) {
-		int unidade_atual;
-		for(ProdutoFinal p : this.produtos) {
-			if(p.getId() == id) {
-				unidade_atual = p.getUnidades();
-				p.setUnidades(unidade_atual+unidades);
-				return 0;
-			}
-		}
-		return -1;
-	}
-
+	
 	@Override
 	public ProdutoFinal procuraPeloId(int id) {
 		for (ProdutoFinal produto : this.produtos) {

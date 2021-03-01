@@ -1,43 +1,31 @@
 package BUSINESS;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProdutoFinal {
 	protected int id;
 	protected String nome;
-	protected float preço;
-	protected ArrayList<MateriaPrima> listaMateriaPrima;
-	protected int unidades;
+	protected float preco;
+	protected HashMap<Integer, Float> receita;
 
 	// Construtores
 	public ProdutoFinal() {
-
 	}
 
-	public ProdutoFinal(int idProdutoFinal, String nome, float preço, ArrayList<MateriaPrima> listaMateriaPrima, int unidades) {
+	public ProdutoFinal(int id, String nome, float preco, HashMap<Integer, Float> receita) {
 		super();
-		this.id = idProdutoFinal;
+		this.id = id;
 		this.nome = nome;
-		this.preço = preço;
-		this.listaMateriaPrima = listaMateriaPrima;
-		this.unidades = unidades;
+		this.preco = preco;
+		this.receita = receita;
 	}
 
-	// Getters e Setters
 	public int getId() {
 		return id;
 	}
 
-	public int getUnidades() {
-		return unidades;
-	}
-
-	public void setUnidades(int unidades) {
-		this.unidades = unidades;
-	}
-
-	public void setId(int idProdutoFinal) {
-		this.id = idProdutoFinal;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -48,20 +36,21 @@ public class ProdutoFinal {
 		this.nome = nome;
 	}
 
-	public float getPreço() {
-		return preço;
+	public float getPreco() {
+		return preco;
 	}
 
-	public void setPreço(float preço) {
-		this.preço = preço;
+	public void setPreco(float preco) {
+		this.preco = preco;
 	}
 
-	public ArrayList<MateriaPrima> getListaMateriaPrima() {
-		return listaMateriaPrima;
+	public HashMap<Integer, Float> getReceita() {
+		return receita;
 	}
 
-	public void setListaMateriaPrima(ArrayList<MateriaPrima> listaMateriaPrima) {
-		this.listaMateriaPrima = listaMateriaPrima;
+	public void setReceita(HashMap<Integer, Float> receita) {
+		this.receita = receita;
 	}
+	
 
 }

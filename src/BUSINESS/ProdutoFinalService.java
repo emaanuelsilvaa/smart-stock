@@ -25,7 +25,7 @@ public class ProdutoFinalService implements IProdutoFinalService {
 			return -1;
 		}
 		produtoFinalDAO.inserir(produto);
-		return -1;
+		return 0;
 	}
 
 	@Override

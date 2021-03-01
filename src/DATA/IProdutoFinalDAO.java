@@ -12,8 +12,6 @@ public interface IProdutoFinalDAO {
 
 	int alterar();
 
-	int alterarQuantidade(int id, int unidades);
-
 	ProdutoFinal procuraPeloId(int id);
 
 	ArrayList<ProdutoFinal> procuraTodos();

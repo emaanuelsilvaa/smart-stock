@@ -1,78 +1,67 @@
 package BUSINESS;
-import java.util.ArrayList;
+
 import java.util.Date;
+import java.util.HashMap;
 
 public class Venda {
-	
+
 	protected int id;
 	protected float valor;
-	protected Cliente cliente;
-	protected ArrayList <ProdutoFinal> listProdutoFinal;
+	protected int idCliente;
+	protected HashMap<Integer, Integer> listaProdutos;
 	protected Date data;
-	
+
 	public Venda() {
-		
+
 	};
-	
-	public Venda(int id, float valor, Cliente cliente, ArrayList<ProdutoFinal> listProdutoFinal, Date data) {
+
+	public Venda(int id, float valor, int idCliente, HashMap<Integer, Integer> listaProdutos, Date data) {
+		super();
 		this.id = id;
 		this.valor = valor;
-		this.cliente = cliente;
-		this.listProdutoFinal = listProdutoFinal;
+		this.idCliente = idCliente;
+		this.listaProdutos = listaProdutos;
 		this.data = data;
 	}
-	
-	
+
 	public int getId() {
 		return id;
 	}
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
 	public float getValor() {
 		return valor;
 	}
-
 
 	public void setValor(float valor) {
 		this.valor = valor;
 	}
 
-
-	public Cliente getCliente() {
-		return cliente;
+	public int getIdCliente() {
+		return idCliente;
 	}
 
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
 	}
 
-
-	public ArrayList<ProdutoFinal> getListProdutoFinal() {
-		return listProdutoFinal;
+	public HashMap<Integer, Integer> getListaProdutos() {
+		return listaProdutos;
 	}
 
-
-	public void setListProdutoFinal(ArrayList<ProdutoFinal> listProdutoFinal) {
-		this.listProdutoFinal = listProdutoFinal;
+	public void setListaProdutos(HashMap<Integer, Integer> listaProdutos) {
+		this.listaProdutos = listaProdutos;
 	}
-
 
 	public Date getData() {
 		return data;
 	}
 
-
 	public void setData(Date data) {
 		this.data = data;
 	}
-
-
-	
 
 }

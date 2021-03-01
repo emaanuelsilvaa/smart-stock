@@ -43,17 +43,6 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 		
 		return 0;
 	}
-	public int alterarQuantidade(int id, float quantidade) {
-		float quantidadeAtual;
-		for(MateriaPrima m : this.materiasPrimas) {
-			if(m.getId() == id) {
-				quantidadeAtual = m.getQuantidade();
-				m.setQuantidade(quantidadeAtual+quantidade);
-				return 0;
-			}
-		}
-		return -1;
-	}
 
 	@Override
 	public MateriaPrima procuraPeloId(int id) {
