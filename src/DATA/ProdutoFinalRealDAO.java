@@ -2,9 +2,9 @@ package DATA;
 
 import java.util.ArrayList;
 
-import BUSINESS.ProdutoFinalReal;
+import ENTITY.ProdutoFinalReal;
 
-public class ProdutoFinalRealDAO {
+public class ProdutoFinalRealDAO implements IProdutoFinalRealDAO {
 	protected ArrayList<ProdutoFinalReal> produtos;
 	
 	public ProdutoFinalRealDAO() {
@@ -15,11 +15,13 @@ public class ProdutoFinalRealDAO {
 		this.produtos = produtos;
 	}
 	
+	@Override
 	public int inserir(ProdutoFinalReal produto) {
 		produtos.add(produto);
 		return 0;
 	}
 
+	@Override
 	public int remover(int id) {
 		ProdutoFinalReal aux = new ProdutoFinalReal();
 		for (ProdutoFinalReal p: this.produtos) {
@@ -32,12 +34,14 @@ public class ProdutoFinalRealDAO {
 		return 0;
 	}
 	
+	@Override
 	public int alterar() {
 		//TODO things
 		
 		return 0;
 	}
 
+	@Override
 	public ProdutoFinalReal procuraPeloId(int id) {
 		for (ProdutoFinalReal produto : this.produtos) {
 			if (produto.getId() == id) {
@@ -47,6 +51,7 @@ public class ProdutoFinalRealDAO {
 		return null;
 	}
 	
+	@Override
 	public int alterarQuantidade(int id, int unidades) {
 		int unidade_atual;
 		for(ProdutoFinalReal p : this.produtos) {
@@ -58,6 +63,7 @@ public class ProdutoFinalRealDAO {
 		}
 		return -1;
 	}
+	@Override
 	public ArrayList<ProdutoFinalReal> procuraPeloIdExterno(int id){
 		// Retorna todos os produtos de um mesmo tipo de ProdutoFinal
 		ArrayList<ProdutoFinalReal> produtosAux = new ArrayList<ProdutoFinalReal>();
@@ -68,6 +74,7 @@ public class ProdutoFinalRealDAO {
 		}
 		return produtosAux;
 	}
+	@Override
 	public ArrayList<ProdutoFinalReal> procuraTodos(){
 		return this.produtos;
 	}

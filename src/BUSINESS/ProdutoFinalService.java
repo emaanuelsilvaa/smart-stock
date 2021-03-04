@@ -2,18 +2,25 @@ package BUSINESS;
 
 import java.util.ArrayList;
 
+import DATA.IProdutoFinalDAO;
 import DATA.ProdutoFinalDAO;
+import ENTITY.ProdutoFinal;
 
-public class ProdutoFinalService implements IProdutoFinalService {
-	protected ProdutoFinalDAO produtoFinalDAO;
+public final class ProdutoFinalService implements IProdutoFinalService {
+	protected IProdutoFinalDAO produtoFinalDAO;
+	private static IProdutoFinalService instance;
 
-	public ProdutoFinalService() {
+	private ProdutoFinalService() {
 		// TODO Auto-generated constructor stub
 		this.produtoFinalDAO = new ProdutoFinalDAO();
 	}
-	public ProdutoFinalService(ProdutoFinalDAO produtoFinalDAO) {
-		this.produtoFinalDAO = produtoFinalDAO;
+	public static IProdutoFinalService getInstance() {
+		if(instance == null) {
+			instance = new ProdutoFinalService();
+		}
+		return instance;
 	}
+	
 	@Override
 	public int inserir(ProdutoFinal produto) {
 		// Aqui temos uma decisão de projeto. Como será a inserção de um produto?

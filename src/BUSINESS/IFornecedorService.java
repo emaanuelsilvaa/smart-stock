@@ -2,6 +2,8 @@ package BUSINESS;
 
 import java.util.ArrayList;
 
+import ENTITY.Fornecedor;
+
 public interface IFornecedorService {
 
 	int inserir(Fornecedor fornecedor);
@@ -14,6 +16,6 @@ public interface IFornecedorService {
 
 	ArrayList<Fornecedor> procuraTodos();
 
-	public int validarCadastro(int id);
-	
+	int validarCadastro(int id);
+
 }

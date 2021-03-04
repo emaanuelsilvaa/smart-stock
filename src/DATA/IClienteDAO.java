@@ -2,7 +2,7 @@ package DATA;
 
 import java.util.ArrayList;
 
-import BUSINESS.Cliente;
+import ENTITY.Cliente;
 
 public interface IClienteDAO {
 

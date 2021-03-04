@@ -2,7 +2,7 @@ package DATA;
 
 import java.util.ArrayList;
 
-import BUSINESS.Fornecedor;
+import ENTITY.Fornecedor;
 
 public interface IFornecedorDAO {
 

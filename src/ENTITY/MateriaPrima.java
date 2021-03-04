@@ -1,4 +1,4 @@
-package BUSINESS;
+package ENTITY;
 
 public class MateriaPrima {
 	protected int id;

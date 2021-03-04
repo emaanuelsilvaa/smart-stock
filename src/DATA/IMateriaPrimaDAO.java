@@ -2,7 +2,7 @@ package DATA;
 
 import java.util.ArrayList;
 
-import BUSINESS.MateriaPrima;
+import ENTITY.MateriaPrima;
 
 public interface IMateriaPrimaDAO {
 

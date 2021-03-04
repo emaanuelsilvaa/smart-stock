@@ -2,7 +2,7 @@ package DATA;
 
 import java.util.ArrayList;
 
-import BUSINESS.ProdutoFinal;
+import ENTITY.ProdutoFinal;
 
 public class ProdutoFinalDAO implements IProdutoFinalDAO {
 	protected ArrayList<ProdutoFinal> produtos;

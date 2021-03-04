@@ -2,27 +2,31 @@ package BUSINESS;
 
 import java.util.ArrayList;
 
+import DATA.IProdutoFinalRealDAO;
 import DATA.ProdutoFinalRealDAO;
+import ENTITY.ProdutoFinalReal;
 
-public class ProdutoFinalRealService {
+public final class ProdutoFinalRealService implements IProdutoFinalRealService {
 	
-	protected ProdutoFinalRealDAO produtoFinalRealDAO;
-	protected ProdutoFinalService produtoFinalService; // usado para as verificações genericas
+	protected IProdutoFinalRealDAO produtoFinalRealDAO;
+	protected IProdutoFinalService produtoFinalService; 
+	private static IProdutoFinalRealService instance;
 
 	public ProdutoFinalRealService() {
 		// TODO Auto-generated constructor stub
-		this.produtoFinalService = new ProdutoFinalService();
+		this.produtoFinalService =  ProdutoFinalService.getInstance();
 		this.produtoFinalRealDAO = new ProdutoFinalRealDAO();
 	}
 
-	public ProdutoFinalRealService(ProdutoFinalRealDAO produtoFinalRealDAO, ProdutoFinalService produtoFinalService) {
-		super();
-		this.produtoFinalRealDAO = produtoFinalRealDAO;
-		this.produtoFinalService = produtoFinalService;
+	public static IProdutoFinalRealService getInstance() {
+		if(instance == null) {
+			instance = new ProdutoFinalRealService();
+		}
+		return instance;
 	}
 
+	@Override
 	public int inserir(ProdutoFinalReal produto) {
-		System.out.println(produtoFinalRealDAO.procuraPeloId(1));
 		if (produtoFinalRealDAO.procuraPeloId(produto.getId()) != null) {
 			// ID ja está cadastrado
 			return -1;
@@ -35,6 +39,7 @@ public class ProdutoFinalRealService {
 		return 0;
 	}
 
+	@Override
 	public int remover(int id) {
 		if (produtoFinalRealDAO.procuraPeloId(id) != null) {
 			produtoFinalRealDAO.remover(id);
@@ -43,20 +48,25 @@ public class ProdutoFinalRealService {
 		return -1;
 	}
 
+	@Override
 	public int alterar() {
 		// TODO things
 		return 0;
 	}
+	@Override
 	public int alterarQuantidade(int id, int unidades) {
 		return this.produtoFinalRealDAO.alterarQuantidade(id, unidades);
 	}
+	@Override
 	public ProdutoFinalReal procuraPeloId(int id) {
 		return produtoFinalRealDAO.procuraPeloId(id);
 	}
+	@Override
 	public ArrayList<ProdutoFinalReal> procuraPeloIdExterno(int id){
 		return produtoFinalRealDAO.procuraPeloIdExterno(id);
 	}
 
+	@Override
 	public ArrayList<ProdutoFinalReal> procuraTodos() {
 		return produtoFinalRealDAO.procuraTodos();
 	}

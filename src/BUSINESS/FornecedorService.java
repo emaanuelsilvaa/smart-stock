@@ -4,18 +4,21 @@ import java.util.ArrayList;
 
 import DATA.FornecedorDAO;
 import DATA.IFornecedorDAO;
+import ENTITY.Fornecedor;
 
-public class FornecedorService implements IFornecedorService {
-	protected IFornecedorDAO fornecedorDAO;
+public final class FornecedorService implements IFornecedorService {
 	
-	// Construtores
+	protected IFornecedorDAO fornecedorDAO;
+	private static IFornecedorService instance;
+	
 	public FornecedorService() {
 		this.fornecedorDAO = new FornecedorDAO();
 	}
-
-	public FornecedorService(IFornecedorDAO fornecedorDAO) {
-		super();
-		this.fornecedorDAO = fornecedorDAO;
+	public static IFornecedorService getInstance() {
+		if(instance == null) {
+			instance = new FornecedorService();
+		}
+		return instance;
 	}
 
 	@Override

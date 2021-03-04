@@ -2,7 +2,7 @@ package DATA;
 
 import java.util.ArrayList;
 
-import BUSINESS.Fornecedor;
+import ENTITY.Fornecedor;
 
 public class FornecedorDAO implements IFornecedorDAO {
 	protected ArrayList<Fornecedor> fornecedores;

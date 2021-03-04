@@ -4,18 +4,22 @@ import java.util.ArrayList;
 
 import DATA.IMateriaPrimaDAO;
 import DATA.MateriaPrimaDAO;
+import ENTITY.MateriaPrima;
 
-public class MateriaPrimaService implements IMateriaPrimaService {
-	protected IMateriaPrimaDAO materiaPrimaDAO;
+public final class MateriaPrimaService implements IMateriaPrimaService {
 	
+	protected IMateriaPrimaDAO materiaPrimaDAO;
+	private static IMateriaPrimaService instance;
 	// Construtores
-	public MateriaPrimaService() {
+	private MateriaPrimaService() {
 		this.materiaPrimaDAO = new MateriaPrimaDAO();
 	}
 
-	public MateriaPrimaService(IMateriaPrimaDAO materiasPrimas) {
-		super();
-		this.materiaPrimaDAO = materiasPrimas;
+	public static IMateriaPrimaService getInstance() {
+		if(instance == null) {
+			instance = new MateriaPrimaService();
+		}
+		return instance;
 	}
 	
 	@Override

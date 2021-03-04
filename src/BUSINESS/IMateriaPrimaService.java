@@ -2,6 +2,8 @@ package BUSINESS;
 
 import java.util.ArrayList;
 
+import ENTITY.MateriaPrima;
+
 public interface IMateriaPrimaService {
 
 	int inserir(MateriaPrima materiaPrima);
@@ -13,7 +15,7 @@ public interface IMateriaPrimaService {
 	MateriaPrima procuraPeloId(int id);
 
 	ArrayList<MateriaPrima> procuraTodos();
-	
-	public int validarCadastro(int id);
+
+	int validarCadastro(int id);
 
 }

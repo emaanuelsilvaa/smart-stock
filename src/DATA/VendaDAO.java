@@ -1,6 +1,7 @@
 package DATA;
 import java.util.ArrayList;
-import BUSINESS.Venda;
+
+import ENTITY.Venda;
 
 public class VendaDAO implements IVendaDAO {
 	
@@ -12,12 +13,14 @@ public class VendaDAO implements IVendaDAO {
 	};
 	
 	
+	@Override
 	public void inserir(Venda venda) {
 		
 		this.vendas.add(venda);
 	};
 	
 	
+	@Override
 	public boolean remover(int id) {
 		boolean temVendaCompativel = false;
 		Venda aux = new Venda();
@@ -38,10 +41,12 @@ public class VendaDAO implements IVendaDAO {
 			return false;
 		}
 	};
+	@Override
 	public ArrayList<Venda> procuraTodos(){
 		return this.vendas;
 	}
 	
+	@Override
 	public Venda procuraPeloID(int id) {
 		boolean temVendaCompativel = false;
 		Venda aux = new Venda();
@@ -63,6 +68,7 @@ public class VendaDAO implements IVendaDAO {
 	};
 	
 	//Cria um novo ID Baseado no ID do último elemento, sempre criando um ID novo {Solução temporária}
+	@Override
 	public int getNextID() {
 		int length = this.vendas.size();
 		if (this.vendas.isEmpty()) {

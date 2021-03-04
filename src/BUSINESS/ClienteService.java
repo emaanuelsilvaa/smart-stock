@@ -2,18 +2,24 @@ package BUSINESS;
 import java.util.ArrayList;
 
 import DATA.ClienteDAO;
+import DATA.IClienteDAO;
+import ENTITY.Cliente;
 
-public class ClienteService implements IClienteService {
-	protected ClienteDAO clienteDAO;
+public final class ClienteService implements IClienteService {
+	
+	private static IClienteService instance;
+	protected IClienteDAO clienteDAO;
 	
 	// Construtores
-	public ClienteService() {
+	private ClienteService() {
 		this.clienteDAO = new ClienteDAO();
 	}
 
-	public ClienteService(ClienteDAO clienteDAO) {
-		super();
-		this.clienteDAO = clienteDAO;
+	public static IClienteService getInstance() {
+		if (instance == null) {
+			instance = new ClienteService();
+		}  
+		return instance;
 	}
 
 	@Override

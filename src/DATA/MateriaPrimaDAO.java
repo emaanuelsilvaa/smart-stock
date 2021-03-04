@@ -2,8 +2,8 @@ package DATA;
 
 import java.util.ArrayList;
 
-import BUSINESS.MateriaPrima;
-import BUSINESS.ProdutoFinal;
+import ENTITY.MateriaPrima;
+import ENTITY.ProdutoFinal;
 
 public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 	protected ArrayList<MateriaPrima> materiasPrimas;

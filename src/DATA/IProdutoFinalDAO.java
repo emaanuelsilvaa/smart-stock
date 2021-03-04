@@ -2,7 +2,7 @@ package DATA;
 
 import java.util.ArrayList;
 
-import BUSINESS.ProdutoFinal;
+import ENTITY.ProdutoFinal;
 
 public interface IProdutoFinalDAO {
 

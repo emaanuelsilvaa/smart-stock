@@ -5,35 +5,41 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
+import DATA.IVendaDAO;
 import DATA.VendaDAO;
+import ENTITY.Cliente;
+import ENTITY.ProdutoFinal;
+import ENTITY.ProdutoFinalReal;
+import ENTITY.Venda;
 
-public class VendaService implements IVendaService {
+public final class VendaService implements IVendaService {
 
-	protected VendaDAO vendaDAO;
-	protected EstoqueService estoqueService;
-	protected ProdutoFinalService produtoFinalService;
-	protected ProdutoFinalRealService produtoFinalRealService;
+	protected IVendaDAO vendaDAO;
+	protected IEstoqueService estoqueService;
+	protected IProdutoFinalService produtoFinalService;
+	protected IProdutoFinalRealService produtoFinalRealService;
+	private static IVendaService instance;
 	
-	public VendaService() {
+	private VendaService() {
 		this.vendaDAO = new VendaDAO();
-		this.estoqueService = new EstoqueService();
+		this.estoqueService =  EstoqueService.getInstance();
+		this.produtoFinalService = ProdutoFinalService.getInstance();
+		this.produtoFinalRealService = ProdutoFinalRealService.getInstance();
 	};
-
 	
-	public VendaService(VendaDAO vendaDAO, EstoqueService estoqueService, ProdutoFinalService produtoFinalService,
-			ProdutoFinalRealService produtoFinalRealService) {
-		super();
-		this.vendaDAO = vendaDAO;
-		this.estoqueService = estoqueService;
-		this.produtoFinalService = produtoFinalService;
-		this.produtoFinalRealService = produtoFinalRealService;
+	public static IVendaService getInstance() {
+		if(instance == null) {
+			instance = new VendaService();
+		}
+		return instance;
 	}
 
-
+	@Override
 	public ArrayList<Venda> procuraTodos(){
 		return vendaDAO.procuraTodos();
 	}
 
+	@Override
 	public boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) {
 		Date data = new Date();
 		boolean temMateriaPrimaSuficiente = true;

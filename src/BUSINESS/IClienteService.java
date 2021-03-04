@@ -2,6 +2,8 @@ package BUSINESS;
 
 import java.util.ArrayList;
 
+import ENTITY.Cliente;
+
 public interface IClienteService {
 
 	int inserir(Cliente cliente);
@@ -13,7 +15,7 @@ public interface IClienteService {
 	Cliente procuraPeloId(int id);
 
 	ArrayList<Cliente> procuraTodos();
-	
-	public int validarCadastro(int id);
+
+	int validarCadastro(int id);
 
 }

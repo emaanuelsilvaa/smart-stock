@@ -2,11 +2,11 @@ package DATA;
 
 import java.util.ArrayList;
 
-import BUSINESS.MateriaPrimaReal;
-import BUSINESS.ProdutoFinal;
-import BUSINESS.ProdutoFinalReal;
+import ENTITY.MateriaPrimaReal;
+import ENTITY.ProdutoFinal;
+import ENTITY.ProdutoFinalReal;
 
-public class MateriaPrimaRealDAO {
+public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 	
 	protected ArrayList<MateriaPrimaReal> materiasPrimas;
 	
@@ -17,10 +17,12 @@ public class MateriaPrimaRealDAO {
 	public MateriaPrimaRealDAO(ArrayList<MateriaPrimaReal> materiasPrimas) {
 		this.materiasPrimas = materiasPrimas;
 	}
+	@Override
 	public int inserir(MateriaPrimaReal materiaPrima) {
 		this.materiasPrimas.add(materiaPrima);
 		return 0;
 	}
+	@Override
 	public int remover(int id) {
 		MateriaPrimaReal aux = new MateriaPrimaReal();
 		for (MateriaPrimaReal m: this.materiasPrimas) {
@@ -32,11 +34,13 @@ public class MateriaPrimaRealDAO {
 		this.materiasPrimas.remove(aux);
 		return 0;
 	}
+	@Override
 	public int alterar() {
 		//TODO things
 		
 		return 0;
 	}
+	@Override
 	public int alterarQuantidade(int id, float quantidade) {
 		float quantidade_atual;
 		for(MateriaPrimaReal m : this.materiasPrimas) {
@@ -48,6 +52,7 @@ public class MateriaPrimaRealDAO {
 		}
 		return -1;
 	}
+	@Override
 	public MateriaPrimaReal procuraPeloId(int id) {
 		for (MateriaPrimaReal materiaPrima : this.materiasPrimas) {
 			if (materiaPrima.getId() == id) {
@@ -56,6 +61,7 @@ public class MateriaPrimaRealDAO {
 		}
 		return null;
 	}
+	@Override
 	public ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id){
 		// Retorna todos os produtos de um mesmo tipo de ProdutoFinal
 		ArrayList<MateriaPrimaReal> materiasAux = new ArrayList<MateriaPrimaReal>();
@@ -66,6 +72,7 @@ public class MateriaPrimaRealDAO {
 		}
 		return materiasAux;
 	}
+	@Override
 	public ArrayList<MateriaPrimaReal> procuraTodos(){
 		return this.materiasPrimas;
 	}	
