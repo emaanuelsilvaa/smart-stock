@@ -72,7 +72,10 @@ public final class EncomendaService implements IEncomendaService {
 
 	@Override
 	public int inserir(Encomenda encomenda) {
-		// TODO Auto-generated method stub
+		if (this.encomendaDAO.procuraPeloId(encomenda.getId()) != null) {
+			return -1;
+		}
+		this.encomendaDAO.inserir(encomenda);
 		return 0;
 	}
 
