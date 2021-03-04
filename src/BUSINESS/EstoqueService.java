@@ -39,6 +39,7 @@ public final class EstoqueService implements IEstoqueService {
 		return 0;
 	}
 	
+	@Override
 	public int reporProdutoFinal(int id, int quantidade) {
 		this.produtoFinalRealService.alterarQuantidade(id, quantidade);
 		return 0;

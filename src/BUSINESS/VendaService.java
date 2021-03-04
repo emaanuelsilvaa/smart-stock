@@ -94,6 +94,7 @@ public final class VendaService implements IVendaService {
 
 	}
 	
+	@Override
 	public boolean cancelarVenda(int id) {
 		Venda vendaASerCancelada = this.vendaDAO.procuraPeloID(id);
 		ProdutoFinalReal produtoFinalRealASerReposto = new ProdutoFinalReal();
@@ -113,6 +114,7 @@ public final class VendaService implements IVendaService {
 		return true;
 	}
 	
+	@Override
 	public int remover (int id) {
 		if(this.vendaDAO.procuraPeloID(id) != null) {
 			this.vendaDAO.remover(id);
