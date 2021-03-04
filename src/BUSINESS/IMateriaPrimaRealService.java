@@ -10,7 +10,7 @@ public interface IMateriaPrimaRealService {
 
 	int remover(int id);
 
-	int alterar();
+	int alterar(int id, MateriaPrimaReal materiaPrimaReal);
 
 	int alterarQuantidade(int id, float quantidade);
 

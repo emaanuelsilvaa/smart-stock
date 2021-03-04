@@ -10,7 +10,7 @@ public interface IMateriaPrimaRealDAO {
 
 	int remover(int id);
 
-	int alterar();
+	int alterar(int id, MateriaPrimaReal materiaPrima);
 
 	int alterarQuantidade(int id, float quantidade);
 

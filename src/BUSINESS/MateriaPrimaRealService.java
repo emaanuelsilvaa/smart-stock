@@ -53,9 +53,12 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 	}
 
 	@Override
-	public int alterar() {
-		// TODO things
-		return 0;
+	public int alterar(int id, MateriaPrimaReal materiaPrimaReal) {
+		if (this.materiaPrimaRealDAO.procuraPeloId(id) != null) {
+			this.materiaPrimaRealDAO.alterar(id, materiaPrimaReal);
+			return 0;
+		}
+		return -1;
 	}
 	@Override
 	public int alterarQuantidade(int id, float quantidade) {

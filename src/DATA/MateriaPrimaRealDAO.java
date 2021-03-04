@@ -2,6 +2,7 @@ package DATA;
 
 import java.util.ArrayList;
 
+import ENTITY.Cliente;
 import ENTITY.MateriaPrimaReal;
 import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
@@ -35,9 +36,18 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 		return 0;
 	}
 	@Override
-	public int alterar() {
-		//TODO things
-		
+	public int alterar(int id, MateriaPrimaReal materiaPrima) {
+		for (MateriaPrimaReal m : this.materiasPrimas) {
+			if (m.getId() == id) {
+				m.setId(materiaPrima.getId());
+				m.setIdExterno(materiaPrima.getIdExterno());
+				m.setPreço(materiaPrima.getPreço());
+				m.setValidade(materiaPrima.getValidade());
+				m.setQuantidade(materiaPrima.getQuantidade());
+				m.setFornecedor(materiaPrima.getFornecedor());
+				break;
+			}
+		}
 		return 0;
 	}
 	@Override
