@@ -8,6 +8,8 @@ import ENTITY.ProdutoFinalReal;
 public interface IEstoqueService {
 
 	int baixaProdutoFinal(int id, int quantidade);
+	
+	int reporProdutoFinal(int id, int quantidade);
 
 	int baixaMateriaPrima(int id, float quantidade);
 

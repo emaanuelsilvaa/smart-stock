@@ -48,6 +48,8 @@ public final class VendaService implements IVendaService {
 	public boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) {
 		Date data = new Date();
 		boolean temMateriaPrimaSuficiente = true;
+		HashMap <Integer, Integer> listaDeProdutosReais = listaProdutos;
+		listaDeProdutosReais.clear();
 		float valorDaVenda = 0;
 		for (int idProduto : listaProdutos.keySet()) {
 			int quantidade = listaProdutos.get(idProduto);
@@ -68,16 +70,21 @@ public final class VendaService implements IVendaService {
 					int quantidadeMax = p.getQuantidade();
 					if (quantidadeMax >= quantidade) {
 						estoqueService.baixaProdutoFinal(p.getId(), quantidade);
+						listaDeProdutosReais.put(p.getId(), quantidade);
 						break;
 					} else {
 						estoqueService.baixaProdutoFinal(p.getId(), quantidadeMax);
+						listaDeProdutosReais.put(p.getId(), quantidadeMax);
 						quantidade -= quantidadeMax;
 					}
 				}
 			}
 			// Gerando um ID automaticamente para a nova venda
 			int newID = vendaDAO.getNextID();
-			this.vendaDAO.inserir(new Venda(newID, valorDaVenda, idCliente, listaProdutos, data));
+			Venda vendaASerInserida = new Venda(newID, valorDaVenda, idCliente, listaProdutos, data);
+			vendaASerInserida.setListaProdutosReais(listaDeProdutosReais);
+			
+			this.vendaDAO.inserir(vendaASerInserida);
 			return true;
 		}
 
@@ -85,6 +92,25 @@ public final class VendaService implements IVendaService {
 			return false;
 		}
 
+	}
+	
+	public boolean cancelarVenda(int id) {
+		Venda vendaASerCancelada = this.vendaDAO.procuraPeloID(id);
+		ProdutoFinalReal produtoFinalRealASerReposto = new ProdutoFinalReal();
+		
+		if(vendaASerCancelada == null) {
+			return false;
+		}
+		
+		this.vendaDAO.remover(id);
+		HashMap<Integer, Integer> listaDeProdutosFinaisReais = vendaASerCancelada.getListaProdutosReais();
+		
+		for(Integer key : listaDeProdutosFinaisReais.keySet()) {
+			
+			this.estoqueService.reporProdutoFinal(key, listaDeProdutosFinaisReais.get(key));
+			
+		}
+		return true;
 	}
 
 }

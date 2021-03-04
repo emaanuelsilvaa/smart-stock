@@ -38,6 +38,11 @@ public final class EstoqueService implements IEstoqueService {
 		produtoFinalRealService.alterarQuantidade(id, -1 * quantidade);
 		return 0;
 	}
+	
+	public int reporProdutoFinal(int id, int quantidade) {
+		this.produtoFinalRealService.alterarQuantidade(id, quantidade);
+		return 0;
+	}
 
 	@Override
 	public int baixaMateriaPrima(int id, float quantidade) {

@@ -9,6 +9,7 @@ public class Venda {
 	protected float valor;
 	protected int idCliente;
 	protected HashMap<Integer, Integer> listaProdutos;
+	protected HashMap<Integer, Integer> listaProdutosReais;
 	protected Date data;
 
 	public Venda() {
@@ -54,6 +55,14 @@ public class Venda {
 
 	public void setListaProdutos(HashMap<Integer, Integer> listaProdutos) {
 		this.listaProdutos = listaProdutos;
+	}
+	
+	public HashMap<Integer, Integer> getListaProdutosReais() {
+		return this.listaProdutosReais;
+	}
+
+	public void setListaProdutosReais(HashMap<Integer, Integer> listaProdutosReais) {
+		this.listaProdutosReais = listaProdutosReais;
 	}
 
 	public Date getData() {

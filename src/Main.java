@@ -270,6 +270,28 @@ public class Main {
 						+ v.getListaProdutos().get(p) + " Unidades");
 			}
 		}
+		
+		vendaService.cancelarVenda(1);
+		vendas = vendaService.procuraTodos();
+		
+		
+		System.out.println("******* Após Cancelar a venda 1 *******");
+		
+		for (Venda v : vendas) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> Venda ID= " + v.getId());
+			System.out.println("> Valor: " + v.getValor() + "R$");
+			System.out.println("> Cliente: " + clienteService.procuraPeloId(v.getIdCliente()).getNome());
+			System.out.println("> Data: " + v.getData());
+			System.out.println("> Lista de Produtos: ");
+			int contador = 0;
+			for (Integer p : v.getListaProdutos().keySet()) {
+				contador += 1;
+				System.out.println("\t" + contador + ". " + produtoFinalService.procuraPeloId(p).getNome() + ": "
+						+ v.getListaProdutos().get(p) + " Unidades");
+			}
+		}
+		
 		System.out.print("//========== Teste Estoque ===========//\n\n\n");
 
 		ArrayList<ProdutoFinalReal> produtosEstoque = estoqueService.procuraTodosProdutos();
