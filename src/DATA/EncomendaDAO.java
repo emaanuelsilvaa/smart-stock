@@ -56,4 +56,12 @@ public class EncomendaDAO implements IEncomendaDAO {
 		}
 		return -1;
 	}
+	public int getNextID() {
+		int length = this.encomendas.size();
+		if (this.encomendas.isEmpty()) {
+			return 1;
+		}
+		int nextID = this.encomendas.get(length-1).getId() + 1;
+		return nextID;
+	}
 }
