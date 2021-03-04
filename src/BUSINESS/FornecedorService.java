@@ -40,9 +40,12 @@ public final class FornecedorService implements IFornecedorService {
 	}
 
 	@Override
-	public int alterar() {
-		// TODO things
-		return 0;
+	public int alterar(int id, Fornecedor fornecedor) {
+		if (this.fornecedorDAO.procuraPeloId(id) != null) {
+			this.fornecedorDAO.alterar(id, fornecedor);
+			return 0;
+		}
+		return -1;
 	}
 
 	@Override

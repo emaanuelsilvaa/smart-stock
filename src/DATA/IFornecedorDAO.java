@@ -10,7 +10,7 @@ public interface IFornecedorDAO {
 
 	int remover(int id);
 
-	int alterar();
+	int alterar(int id, Fornecedor fornecedor);
 
 	Fornecedor procuraPeloId(int id);
 

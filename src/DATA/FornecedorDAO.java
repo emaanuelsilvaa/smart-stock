@@ -2,6 +2,7 @@ package DATA;
 
 import java.util.ArrayList;
 
+import ENTITY.Cliente;
 import ENTITY.Fornecedor;
 
 public class FornecedorDAO implements IFornecedorDAO {
@@ -37,9 +38,19 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	@Override
-	public int alterar() {
-		//TODO things
-		
+	public int alterar(int id, Fornecedor fornecedor) {
+		for (Fornecedor f : this.fornecedores) {
+			if (f.getId() == id) {
+				f.setId(fornecedor.getId());
+				f.setNome(fornecedor.getNome());
+				f.setCnpj(fornecedor.getCnpj());
+				f.setEndereço(fornecedor.getEndereço());
+				f.setTelefone(fornecedor.getTelefone());
+				f.setEmail(fornecedor.getEmail());
+				f.setListaProdutos(fornecedor.getListaProdutos());
+				break;
+			}
+		}
 		return 0;
 	}
 
