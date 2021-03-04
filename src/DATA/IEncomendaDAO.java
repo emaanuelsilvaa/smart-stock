@@ -16,4 +16,6 @@ public interface IEncomendaDAO {
 
 	int alterar(int id, Encomenda encomenda);
 
+	int getNextID();
+
 }

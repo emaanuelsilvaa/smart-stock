@@ -1,6 +1,8 @@
 package BUSINESS;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 import DATA.EncomendaDAO;
 import DATA.IEncomendaDAO;
@@ -10,12 +12,16 @@ public final class EncomendaService implements IEncomendaService {
 
 	protected IEncomendaDAO encomendaDAO;
 	protected IVendaService vendaService;
+	protected IProdutoFinalService produtoFinalService;
+	protected IProdutoFinalRealService produtoFinalRealService;
 	private static IEncomendaService instance;
 
 	private EncomendaService() {
 		// TODO Auto-generated constructor stub
 		this.encomendaDAO = new EncomendaDAO();
 		this.vendaService = VendaService.getInstance();
+		this.produtoFinalRealService = ProdutoFinalRealService.getInstance();
+		this.produtoFinalService = ProdutoFinalService.getInstance();
 	}
 
 	public static IEncomendaService getInstance() {
@@ -36,11 +42,15 @@ public final class EncomendaService implements IEncomendaService {
 	}
 
 	@Override
-	public int inserir(Encomenda encomenda) {
-		if (this.encomendaDAO.procuraPeloId(encomenda.getId()) != null) {
-			return -1;
+	public int realizarEncomenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Date dataEntrega) {
+		Date data = new Date();
+		float valorDaEncomenda = 0;
+		for (int id : listaProdutos.keySet()) {
+			int quantidade = listaProdutos.get(id);
+			valorDaEncomenda += produtoFinalService.procuraPeloId(id).getPreco() * quantidade;
 		}
-		this.encomendaDAO.inserir(encomenda);
+		int newID = this.encomendaDAO.getNextID();
+		this.encomendaDAO.inserir(new Encomenda(newID, valorDaEncomenda, idCliente, listaProdutos, data, dataEntrega));
 		return 0;
 	}
 
@@ -57,6 +67,12 @@ public final class EncomendaService implements IEncomendaService {
 	@Override
 	public int alterar(int id, Encomenda encomenda) {
 		this.encomendaDAO.alterar(id, encomenda);
+		return 0;
+	}
+
+	@Override
+	public int inserir(Encomenda encomenda) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
