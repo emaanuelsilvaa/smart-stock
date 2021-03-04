@@ -13,7 +13,9 @@ public interface IVendaService {
 	
 	Venda procuraPeloId(int id);
 	
-	boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente);
+	int remover(int id);
+	
+	boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente);	
 	
 	boolean cancelarVenda(int id);
 	

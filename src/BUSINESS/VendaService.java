@@ -102,7 +102,7 @@ public final class VendaService implements IVendaService {
 			return false;
 		}
 		
-		this.vendaDAO.remover(id);
+		this.remover(id);
 		HashMap<Integer, Integer> listaDeProdutosFinaisReais = vendaASerCancelada.getListaProdutosReais();
 		
 		for(Integer key : listaDeProdutosFinaisReais.keySet()) {
@@ -111,6 +111,15 @@ public final class VendaService implements IVendaService {
 			
 		}
 		return true;
+	}
+	
+	public int remover (int id) {
+		if(this.vendaDAO.procuraPeloID(id) != null) {
+			this.vendaDAO.remover(id);
+			return 0;
+		}
+		
+		return -1;
 	}
 
 }
