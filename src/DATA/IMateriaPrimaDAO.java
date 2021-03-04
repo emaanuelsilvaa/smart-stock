@@ -10,7 +10,7 @@ public interface IMateriaPrimaDAO {
 
 	int remover(int id);
 
-	int alterar();
+	int alterar(int id, MateriaPrima materiaPrima);
 
 	MateriaPrima procuraPeloId(int id);
 
