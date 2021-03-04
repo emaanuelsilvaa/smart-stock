@@ -49,9 +49,12 @@ public final class ProdutoFinalRealService implements IProdutoFinalRealService {
 	}
 
 	@Override
-	public int alterar() {
-		// TODO things
-		return 0;
+	public int alterar(int id, ProdutoFinalReal produto) {
+		if (produtoFinalRealDAO.procuraPeloId(id) != null) {
+			produtoFinalRealDAO.alterar(id, produto);
+			return 0;
+		}
+		return -1;
 	}
 	@Override
 	public int alterarQuantidade(int id, int unidades) {

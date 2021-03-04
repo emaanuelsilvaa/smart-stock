@@ -2,6 +2,7 @@ package DATA;
 
 import java.util.ArrayList;
 
+import ENTITY.Cliente;
 import ENTITY.ProdutoFinalReal;
 
 public class ProdutoFinalRealDAO implements IProdutoFinalRealDAO {
@@ -35,9 +36,16 @@ public class ProdutoFinalRealDAO implements IProdutoFinalRealDAO {
 	}
 	
 	@Override
-	public int alterar() {
-		//TODO things
-		
+	public int alterar(int id, ProdutoFinalReal produto) {
+		for (ProdutoFinalReal pr : this.produtos) {
+			if (pr.getId() == id) {
+				pr.setId(produto.getId());
+				pr.setIdExterno(produto.getIdExterno());
+				pr.setValidade(produto.getValidade());
+				pr.setQuantidade(produto.getQuantidade());
+				break;
+			}
+		}
 		return 0;
 	}
 

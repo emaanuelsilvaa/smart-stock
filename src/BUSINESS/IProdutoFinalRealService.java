@@ -10,7 +10,7 @@ public interface IProdutoFinalRealService {
 
 	int remover(int id);
 
-	int alterar();
+	int alterar(int id, ProdutoFinalReal produto);
 
 	int alterarQuantidade(int id, int unidades);
 

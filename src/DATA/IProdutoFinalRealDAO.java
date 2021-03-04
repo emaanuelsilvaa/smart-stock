@@ -10,7 +10,7 @@ public interface IProdutoFinalRealDAO {
 
 	int remover(int id);
 
-	int alterar();
+	int alterar(int id, ProdutoFinalReal produto);
 
 	ProdutoFinalReal procuraPeloId(int id);
 
