@@ -68,6 +68,9 @@ public class Main {
 		clienteService.inserir(cliente1);
 		clienteService.inserir(cliente2);
 		clienteService.inserir(cliente3);
+		
+		Cliente cliente2_1 = new Cliente(2, "João", "11122233344", "Rua dos Eucaliptos, 199", "84-44445555");
+		clienteService.alterar(2, cliente2_1);
 
 		ArrayList<Cliente> clientes = clienteService.procuraTodos();
 
@@ -103,6 +106,9 @@ public class Main {
 		materiaPrimaService.inserir(mp1);
 		materiaPrimaService.inserir(mp2);
 		materiaPrimaService.inserir(mp3);
+		
+		MateriaPrima mp1_1 = new MateriaPrima(1, "Linguiça", "alimento", true, "kg");
+		materiaPrimaService.alterar(1, mp1_1);
 
 		ArrayList<MateriaPrima> materiasPrimas = materiaPrimaService.procuraTodos();
 
@@ -117,8 +123,7 @@ public class Main {
 		}
 		System.out.println("\n");
 
-		System.out
-				.println(">>> Consulta nome matéria prima 1: " + materiaPrimaService.procuraPeloId(1).getNome() + "\n");
+		System.out.println(">>> Consulta nome matéria prima 1: " + materiaPrimaService.procuraPeloId(1).getNome() + "\n");
 
 		System.out.print("//=================================//\n\n\n");
 		// ===================================//
@@ -136,6 +141,10 @@ public class Main {
 
 		fornecedorService.inserir(f1);
 		fornecedorService.inserir(f2);
+		
+		Fornecedor f2_1 = new Fornecedor(2, "Supershow", "123", "Rua teste, 34", "81-99998888", "email@email.com",
+				materiasPrimas);
+		fornecedorService.alterar(2, f2_1);
 
 		ArrayList<Fornecedor> fornecedores = fornecedorService.procuraTodos();
 
@@ -167,10 +176,13 @@ public class Main {
 		HashMap<Integer, Float> receita1 = new HashMap<Integer, Float>();
 		receita1.put(3, 0.1f);
 		receita1.put(1, 0.5f);
-		ProdutoFinal p2 = new ProdutoFinal(2, "Empada", 0.75f, receita1);
+		ProdutoFinal p2 = new ProdutoFinal(2, "Coxinha", 0.75f, receita1);
 
 		produtoFinalService.inserir(p1);
 		produtoFinalService.inserir(p2);
+
+		ProdutoFinal p2_1 = new ProdutoFinal(2, "Empada", 0.75f, receita1);
+		produtoFinalService.alterar(2, p2_1);
 
 		System.out.print(">>> Cadastrando Produtos");
 
@@ -207,6 +219,10 @@ public class Main {
 		produtoFinalRealService.inserir(pr2);
 		produtoFinalRealService.inserir(pr3);
 		produtoFinalRealService.inserir(pr4);
+		
+		data.setDate(10);
+		ProdutoFinalReal pr4_1 = new ProdutoFinalReal(4, 1, data, 22);
+		produtoFinalRealService.alterar(4, pr4_1);
 
 		ArrayList<ProdutoFinalReal> produtosReais = produtoFinalRealService.procuraTodos();
 		System.out.println("\n>>> Produtos Reais cadastrados:");
