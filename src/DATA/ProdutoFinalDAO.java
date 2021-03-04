@@ -2,6 +2,7 @@ package DATA;
 
 import java.util.ArrayList;
 
+import ENTITY.Cliente;
 import ENTITY.ProdutoFinal;
 
 public class ProdutoFinalDAO implements IProdutoFinalDAO {
@@ -32,9 +33,16 @@ public class ProdutoFinalDAO implements IProdutoFinalDAO {
 	}
 
 	@Override
-	public int alterar() {
-		//TODO things
-		
+	public int alterar(int id, ProdutoFinal produto) {
+		for (ProdutoFinal p : this.produtos) {
+			if (p.getId() == id) {
+				p.setId(produto.getId());
+				p.setNome(produto.getNome());
+				p.setPreco(produto.getPreco());
+				p.setReceita(produto.getReceita());
+				break;
+			}
+		}
 		return 0;
 	}
 	
