@@ -38,7 +38,12 @@ public final class VendaService implements IVendaService {
 	public ArrayList<Venda> procuraTodos(){
 		return vendaDAO.procuraTodos();
 	}
-
+	
+	@Override
+	public Venda procuraPeloId(int id) {
+		return this.vendaDAO.procuraPeloID(id);
+	}
+	
 	@Override
 	public boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) {
 		Date data = new Date();
@@ -81,11 +86,5 @@ public final class VendaService implements IVendaService {
 		}
 
 	}
-
-	@Override
-	public boolean realizarVenda(ArrayList<ProdutoFinal> listaDeProdutos, Cliente comprador) {
-		// TODO Auto-generated method stub
-		return false;
-	};
 
 }

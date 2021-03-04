@@ -10,9 +10,9 @@ import ENTITY.Venda;
 public interface IVendaService {
 
 	ArrayList<Venda> procuraTodos();
-
+	
+	Venda procuraPeloId(int id);
+	
 	boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente);
-
-	boolean realizarVenda(ArrayList<ProdutoFinal> listaDeProdutos, Cliente comprador);
-
+	
 }
