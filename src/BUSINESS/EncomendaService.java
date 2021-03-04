@@ -60,8 +60,8 @@ public final class EncomendaService implements IEncomendaService {
 	}
 	
 	@Override
-	public int cosumarEncomenda(Encomenda encomenda) {
-		this.vendaService.realizarVenda(encomenda.getListaProdutos(), encomenda.getIdCliente());
+	public int cosumarEncomenda(int id) {
+		this.vendaService.realizarVenda(encomendaDAO.procuraPeloId(id).getListaProdutos(), encomendaDAO.procuraPeloId(id).getIdCliente());
 		return 0;
 	}
 	@Override

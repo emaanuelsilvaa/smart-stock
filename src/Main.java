@@ -262,7 +262,7 @@ public class Main {
 						+ e.getListaProdutos().get(p) + " Unidades");
 			}
 		}
-		
+		encomendaService.cosumarEncomenda(1);
 		System.out.print("//========== Teste Venda ===========//\n\n\n");
 
 		HashMap<Integer, Integer> listProdutos1 = new HashMap<Integer, Integer>();

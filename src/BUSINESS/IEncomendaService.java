@@ -16,7 +16,7 @@ public interface IEncomendaService {
 
 	boolean remover(int id);
 
-	int cosumarEncomenda(Encomenda encomenda);
+	int cosumarEncomenda(int id);
 
 	int alterar(int id, Encomenda encomenda);
 
