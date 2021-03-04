@@ -10,7 +10,7 @@ public interface IClienteDAO {
 
 	int remover(int id);
 
-	int alterar();
+	int alterar(int id, Cliente cliente);
 
 	Cliente procuraPeloId(int id);
 

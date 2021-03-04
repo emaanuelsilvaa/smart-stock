@@ -1,6 +1,7 @@
 package DATA;
 
 import java.util.ArrayList;
+import java.lang.reflect.*;
 
 import ENTITY.Cliente;
 
@@ -37,9 +38,17 @@ public class ClienteDAO implements IClienteDAO {
 	}
 
 	@Override
-	public int alterar() {
-		//TODO things
-		
+	public int alterar(int id, Cliente cliente) {
+		for (Cliente c : this.clientes) {
+			if (c.getId() == id) {
+				c.setId(cliente.getId());
+				c.setNome(cliente.getNome());
+				c.setCpf(cliente.getCpf());
+				c.setEndereço(cliente.getEndereço());
+				c.setTelefone(cliente.getTelefone());
+				break;
+			}
+		}
 		return 0;
 	}
 

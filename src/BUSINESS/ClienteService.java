@@ -41,9 +41,12 @@ public final class ClienteService implements IClienteService {
 	}
 	
 	@Override
-	public int alterar() {
-		// TODO things
-		return 0;
+	public int alterar(int id, Cliente cliente) {
+		if (this.clienteDAO.procuraPeloId(id) != null) {
+			this.clienteDAO.alterar(id, cliente);
+			return 0;
+		}
+		return -1;
 	}
 
 	@Override
