@@ -58,11 +58,13 @@ public final class RelatorioService {
 	
 	public HashMap <Integer, Float> litarReposicaoMateriaPrima(Date dataInicio, Date dataFim){
 		HashMap <Integer, Integer> listaDeProdutosFaltantes = this.listarReposicaoProduto(dataInicio, dataFim);
+		HashMap <Integer, Float> listaDeMateriaPrimaFaltanteTotal = new HashMap <Integer, Float> ();
 		HashMap <Integer, Float> listaDeMateriaPrimaFaltante = new HashMap <Integer, Float> ();
+		
 		//MateriaPrima materiaPrimaASerReposta = new MateriaPrima ();
 		ProdutoFinal produtoFinalASerReposto = new ProdutoFinal ();
 		HashMap<Integer, Float> receita = new HashMap <Integer, Float> (); 
-		float valor_residual, valor_de_reposição, valor_final = 0;
+		float valor_residual, valor_de_reposição, valor_final, diferença_de_estoque = 0;
 		int quantidade_de_produtos = 0;
 		
 		if(!listaDeProdutosFaltantes.isEmpty()) {
@@ -72,19 +74,28 @@ public final class RelatorioService {
 				receita = produtoFinalASerReposto.getReceita();
 				quantidade_de_produtos= listaDeProdutosFaltantes.get(ide_prod);
 				
-				for(int ide_receita : receita.keySet()) {
-					valor_residual = listaDeMateriaPrimaFaltante.get(ide_receita);
-					valor_de_reposição = quantidade_de_produtos * receita.get(ide_receita);
-					valor_final = valor_residual + valor_de_reposição;
+				for(int ide_receita : receita.keySet()) {		
 					
-					if(listaDeMateriaPrimaFaltante.containsKey(ide_receita)) {
-						listaDeMateriaPrimaFaltante.put(ide_receita, valor_final);
+					if(listaDeMateriaPrimaFaltanteTotal.containsKey(ide_receita)) {
+						
+						valor_residual = listaDeMateriaPrimaFaltanteTotal.get(ide_receita);
+						valor_de_reposição = quantidade_de_produtos * receita.get(ide_receita);
+						valor_final = valor_residual + valor_de_reposição;
+						listaDeMateriaPrimaFaltanteTotal.put(ide_receita, valor_final);
 					}
 					
-					else {
-						listaDeMateriaPrimaFaltante.put(ide_receita, valor_final + materiaPrimaService.procuraPeloId(ide_receita).getQntMinima());
+					else {					
+						valor_final = quantidade_de_produtos * receita.get(ide_receita);
+						listaDeMateriaPrimaFaltanteTotal.put(ide_receita, valor_final + materiaPrimaService.procuraPeloId(ide_receita).getQntMinima());
 					}
 					
+				}
+			}
+			
+			for (int id_materia : listaDeMateriaPrimaFaltanteTotal.keySet()) {
+				diferença_de_estoque = estoqueService.verificaDisponibilidadeMateriaPrima(id_materia, listaDeMateriaPrimaFaltanteTotal.get(id_materia));
+				if(diferença_de_estoque < 0) {
+					listaDeMateriaPrimaFaltante.put(id_materia, diferença_de_estoque);
 				}
 			}
 		}
