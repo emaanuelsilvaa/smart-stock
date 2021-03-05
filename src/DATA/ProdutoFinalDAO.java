@@ -39,6 +39,7 @@ public class ProdutoFinalDAO implements IProdutoFinalDAO {
 				p.setId(produto.getId());
 				p.setNome(produto.getNome());
 				p.setPreco(produto.getPreco());
+				p.setQntMinima(produto.getQntMinima());
 				p.setReceita(produto.getReceita());
 				break;
 			}

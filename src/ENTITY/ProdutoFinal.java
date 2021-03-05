@@ -6,17 +6,19 @@ public class ProdutoFinal {
 	protected int id;
 	protected String nome;
 	protected float preco;
+	protected int qntMinima;
 	protected HashMap<Integer, Float> receita;
 
 	// Construtores
 	public ProdutoFinal() {
 	}
 
-	public ProdutoFinal(int id, String nome, float preco, HashMap<Integer, Float> receita) {
+	public ProdutoFinal(int id, String nome, float preco, int qntMinima, HashMap<Integer, Float> receita) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
+		this.qntMinima = qntMinima;
 		this.receita = receita;
 	}
 
@@ -42,6 +44,14 @@ public class ProdutoFinal {
 
 	public void setPreco(float preco) {
 		this.preco = preco;
+	}
+
+	public int getQntMinima() {
+		return qntMinima;
+	}
+
+	public void setQntMinima(int qntMinima) {
+		this.qntMinima = qntMinima;
 	}
 
 	public HashMap<Integer, Float> getReceita() {
