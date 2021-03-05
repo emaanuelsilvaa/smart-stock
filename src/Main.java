@@ -297,6 +297,7 @@ public class Main {
 		encomendaService.cosumarEncomenda(1);
 		
 		System.out.print("\n\n\n//====== Teste Lista Reposição Produto ======//\n");
+		
 		HashMap<Integer, Integer> listaReposicaoProduto = relatorioService.listarReposicaoProduto(data3, data4);
 		
 		System.out.println(">>> Lista de produtos necessários para reposição de acordo \ncom as encomendas entre as datas: \n"+data3+" e "+data4+":\n");

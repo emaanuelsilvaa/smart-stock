@@ -37,7 +37,7 @@ public final class RelatorioService implements IRelatorioService {
 		HashMap<Integer, Integer> qntProduto = new HashMap<Integer, Integer>();
 		HashMap<Integer, Integer> qntProdutoFaltante = new HashMap<Integer, Integer>();
 		for (Encomenda e : encomendaService.procuraTodos()) {
-			if (e.getDataEntrega().after(dataInicio) && e.getDataEntrega().before(dataFim)) {
+			if ((e.getDataEntrega().after(dataInicio) && e.getDataEntrega().before(dataFim)) || e.getDataEntrega().equals(dataInicio) || e.getDataEntrega().equals(dataFim)) {
 				for (int id : e.getListaProdutos().keySet()) {
 					if (!qntProduto.containsKey(id)) {
 						qntProduto.put(id, e.getListaProdutos().get(id));
@@ -49,9 +49,10 @@ public final class RelatorioService implements IRelatorioService {
 			}
 		}
 		for (int id : qntProduto.keySet()) {
-			int disponibilidade = estoqueService.verificaDisponibilidadeProduto(id, qntProduto.get(id));
+			int qntMinima = this.produtoFinalService.procuraPeloId(id).getQntMinima();
+			int disponibilidade = estoqueService.verificaDisponibilidadeProduto(id, qntProduto.get(id) + qntMinima);
 			if (disponibilidade < 0) {
-				qntProdutoFaltante.put(id, disponibilidade);
+				qntProdutoFaltante.put(id, -1 * disponibilidade);
 			}
 		}
 		return qntProdutoFaltante;
