@@ -76,8 +76,14 @@ public final class RelatorioService {
 					valor_residual = listaDeMateriaPrimaFaltante.get(ide_receita);
 					valor_de_reposição = quantidade_de_produtos * receita.get(ide_receita);
 					valor_final = valor_residual + valor_de_reposição;
-							
-					listaDeMateriaPrimaFaltante.put(ide_receita, valor_final);
+					
+					if(listaDeMateriaPrimaFaltante.containsKey(ide_receita)) {
+						listaDeMateriaPrimaFaltante.put(ide_receita, valor_final);
+					}
+					
+					else {
+						listaDeMateriaPrimaFaltante.put(ide_receita, valor_final + materiaPrimaService.procuraPeloId(ide_receita).getQntMinima());
+					}
 					
 				}
 			}
