@@ -101,9 +101,6 @@ public class Main {
 		// ==== Teste MateriaPrimaService ====//
 		System.out.print("//==== Teste MateriaPrimaService ====//\n");
 
-		Fornecedor fncd = new Fornecedor();
-		Date d = new Date();
-
 		System.out.print(">>> Criando a Matéria Prima 1...\n");
 		MateriaPrima mp1 = new MateriaPrima(1, "Frango", "alimento", true, "kg", (float) 4.5);
 
@@ -315,7 +312,7 @@ public class Main {
 		for(int id : listaReposicaoMateriaPrima.keySet()) {
 			System.out.println("- - - - - - - - - -");
 			System.out.println(">> Matéria Prima ID = " + id);
-			System.out.println(">> Quantidade necessária = " + listaReposicaoMateriaPrima.get(id));
+			System.out.println(">> Quantidade necessária = " + listaReposicaoMateriaPrima.get(id) + materiaPrimaService.procuraPeloId(id).getUnMedida());
 		}
 		
 		System.out.print("//========== Teste Venda ===========//\n\n\n");
