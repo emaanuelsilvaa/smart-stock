@@ -60,29 +60,20 @@ public final class EstoqueService implements IEstoqueService {
 	}
 
 	@Override
-	public boolean verificaDisponibilidadeProduto(int id, int quantidade) {
+	public int verificaDisponibilidadeProduto(int id, int quantidade) {
 		int sum = 0;
 		for (ProdutoFinalReal p: this.produtoFinalRealService.procuraPeloIdExterno(id)) {
 			sum += p.getQuantidade();
 		}
-		if (sum >= quantidade) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return sum-quantidade;
 	}
 
 	@Override
-	public boolean verificaDisponibilidadeMateriaPrima(int id, float quantidade) {
+	public float verificaDisponibilidadeMateriaPrima(int id, float quantidade) {
 		float sum = 0;
 		for(MateriaPrimaReal m: this.materiaPrimaRealService.procuraPeloIdExterno(id)) {
 			sum += m.getQuantidade();
 		}
-		if (sum >= quantidade) {
-			return true;
-		} else {
-			return false;
-		}
+		return sum-quantidade;
 	}
 }

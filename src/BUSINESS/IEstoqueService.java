@@ -17,8 +17,8 @@ public interface IEstoqueService {
 
 	ArrayList<MateriaPrimaReal> procuraTodasMaterias();
 
-	boolean verificaDisponibilidadeProduto(int id, int quantidade);
+	int verificaDisponibilidadeProduto(int id, int quantidade);
 
-	boolean verificaDisponibilidadeMateriaPrima(int id, float quantidade);
+	float verificaDisponibilidadeMateriaPrima(int id, float quantidade);
 
 }

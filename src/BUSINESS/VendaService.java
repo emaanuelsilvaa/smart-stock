@@ -52,7 +52,7 @@ public final class VendaService implements IVendaService {
 		float valorDaVenda = 0;
 		for (int idProduto : listaProdutos.keySet()) {
 			int quantidade = listaProdutos.get(idProduto);
-			if(!estoqueService.verificaDisponibilidadeProduto(idProduto, quantidade)) {
+			if(estoqueService.verificaDisponibilidadeProduto(idProduto, quantidade) < 0) {
 				temMateriaPrimaSuficiente = false;
 				return false;
 			}
