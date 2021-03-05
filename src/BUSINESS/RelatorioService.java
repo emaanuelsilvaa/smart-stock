@@ -7,15 +7,20 @@ import java.util.HashMap;
 import ENTITY.Encomenda;
 import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
+import ENTITY.MateriaPrima;
 
 public final class RelatorioService {
 	protected IEncomendaService encomendaService;
 	protected IEstoqueService estoqueService;
+	protected IProdutoFinalService produtoFinalService;
+	protected IMateriaPrimaService materiaPrimaService;
 	private static RelatorioService instance;
 
 	private RelatorioService() {
 		this.encomendaService = EncomendaService.getInstance();
 		this.estoqueService = EstoqueService.getInstance();
+		this.produtoFinalService = ProdutoFinalService.getInstance();
+		this.materiaPrimaService = MateriaPrimaService.getInstance();
 	}
 
 	public static RelatorioService getInstence() {
@@ -49,6 +54,37 @@ public final class RelatorioService {
 			}
 		}
 		return qntProdutoFaltante;
+	}
+	
+	public HashMap <Integer, Float> litarReposicaoMateriaPrima(Date dataInicio, Date dataFim){
+		HashMap <Integer, Integer> listaDeProdutosFaltantes = this.listarReposicaoProduto(dataInicio, dataFim);
+		HashMap <Integer, Float> listaDeMateriaPrimaFaltante = new HashMap <Integer, Float> ();
+		//MateriaPrima materiaPrimaASerReposta = new MateriaPrima ();
+		ProdutoFinal produtoFinalASerReposto = new ProdutoFinal ();
+		HashMap<Integer, Float> receita = new HashMap <Integer, Float> (); 
+		float valor_residual, valor_de_reposição, valor_final = 0;
+		int quantidade_de_produtos = 0;
+		
+		if(!listaDeProdutosFaltantes.isEmpty()) {
+			for(int ide_prod : listaDeProdutosFaltantes.keySet()) {
+				
+				produtoFinalASerReposto = produtoFinalService.procuraPeloId(ide_prod);
+				receita = produtoFinalASerReposto.getReceita();
+				quantidade_de_produtos= listaDeProdutosFaltantes.get(ide_prod);
+				
+				for(int ide_receita : receita.keySet()) {
+					valor_residual = listaDeMateriaPrimaFaltante.get(ide_receita);
+					valor_de_reposição = quantidade_de_produtos * receita.get(ide_receita);
+					valor_final = valor_residual + valor_de_reposição;
+							
+					listaDeMateriaPrimaFaltante.put(ide_receita, valor_final);
+					
+				}
+			}
+		}
+		
+		
+		return listaDeMateriaPrimaFaltante;
 	}
 
 }
