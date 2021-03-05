@@ -59,7 +59,7 @@ public final class RelatorioService implements IRelatorioService {
 	}
 	
 	@Override
-	public HashMap <Integer, Float> litarReposicaoMateriaPrima(Date dataInicio, Date dataFim){
+	public HashMap <Integer, Float> listarReposicaoMateriaPrima(Date dataInicio, Date dataFim){
 		HashMap <Integer, Integer> listaDeProdutosFaltantes = this.listarReposicaoProduto(dataInicio, dataFim);
 		HashMap <Integer, Float> listaDeMateriaPrimaFaltanteTotal = new HashMap <Integer, Float> ();
 		HashMap <Integer, Float> listaDeMateriaPrimaFaltante = new HashMap <Integer, Float> ();
