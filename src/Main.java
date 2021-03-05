@@ -311,13 +311,13 @@ public class Main {
 		
 		HashMap<Integer, Float> listaReposicaoMateriaPrima = relatorioService.listarReposicaoMateriaPrima(data3, data4);
 		
-//		System.out.println(">>> Lista de matérias primas necessários para reposição de acordo \ncom as encomendas entre as datas: \n"+data3+" e "+data4+":\n");
-//		for(int id : listaReposicaoMateriaPrima.keySet()) {
-//			System.out.println("- - - - - - - - - -");
-//			System.out.println(">> Matéria Prima ID = " + id);
-//			System.out.println(">> Quantidade necessária = " + listaReposicaoMateriaPrima.get(id));
-//		}
-//		
+		System.out.println(">>> Lista de matérias primas necessários para reposição de acordo \ncom as encomendas entre as datas: \n"+data3+" e "+data4+":\n");
+		for(int id : listaReposicaoMateriaPrima.keySet()) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> Matéria Prima ID = " + id);
+			System.out.println(">> Quantidade necessária = " + listaReposicaoMateriaPrima.get(id));
+		}
+		
 		System.out.print("//========== Teste Venda ===========//\n\n\n");
 
 		HashMap<Integer, Integer> listProdutos1 = new HashMap<Integer, Integer>();
