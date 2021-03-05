@@ -9,12 +9,12 @@ import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
 import ENTITY.MateriaPrima;
 
-public final class RelatorioService {
+public final class RelatorioService implements IRelatorioService {
 	protected IEncomendaService encomendaService;
 	protected IEstoqueService estoqueService;
 	protected IProdutoFinalService produtoFinalService;
 	protected IMateriaPrimaService materiaPrimaService;
-	private static RelatorioService instance;
+	private static IRelatorioService instance;
 
 	private RelatorioService() {
 		this.encomendaService = EncomendaService.getInstance();
@@ -23,13 +23,14 @@ public final class RelatorioService {
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
 	}
 
-	public static RelatorioService getInstence() {
+	public static IRelatorioService getInstance() {
 		if (instance == null) {
 			instance = new RelatorioService();
 		}
 		return instance;
 	}
 
+	@Override
 	public HashMap<Integer, Integer> listarReposicaoProduto(Date dataInicio, Date dataFim) {
 		// Função que retorna a lista de produtos necessário para atender as encomendas
 		// a partir de um intervalo de tempo
@@ -56,6 +57,7 @@ public final class RelatorioService {
 		return qntProdutoFaltante;
 	}
 	
+	@Override
 	public HashMap <Integer, Float> litarReposicaoMateriaPrima(Date dataInicio, Date dataFim){
 		HashMap <Integer, Integer> listaDeProdutosFaltantes = this.listarReposicaoProduto(dataInicio, dataFim);
 		HashMap <Integer, Float> listaDeMateriaPrimaFaltanteTotal = new HashMap <Integer, Float> ();

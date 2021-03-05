@@ -1,3 +1,5 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,6 +12,7 @@ import BUSINESS.MateriaPrimaRealService;
 import BUSINESS.MateriaPrimaService;
 import BUSINESS.ProdutoFinalRealService;
 import BUSINESS.ProdutoFinalService;
+import BUSINESS.RelatorioService;
 import BUSINESS.VendaService;
 import DATA.MateriaPrimaDAO;
 import DATA.MateriaPrimaRealDAO;
@@ -35,6 +38,8 @@ import BUSINESS.IProdutoFinalRealService;
 import BUSINESS.IProdutoFinalService;
 import BUSINESS.IVendaService;
 import DATA.FornecedorDAO;
+import BUSINESS.RelatorioService;
+import BUSINESS.IRelatorioService;
 
 public class Main {
 
@@ -54,6 +59,7 @@ public class Main {
 		IVendaService vendaService = VendaService.getInstance();
 		IEstoqueService estoqueService = EstoqueService.getInstance();
 		IEncomendaService encomendaService = EncomendaService.getInstance();
+		IRelatorioService relatorioService = RelatorioService.getInstance();
 
 		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n\n");
 
@@ -246,15 +252,32 @@ public class Main {
 			System.out.println("> Quantidade: " + p.getQuantidade());
 		}
 		
-		System.out.print("//========== Teste Encomenda ===========//\n\n\n");
+		System.out.print("\n\n//========== Teste Encomenda ===========//\n\n");
 		HashMap<Integer, Integer> listProdutos3 = new HashMap<Integer, Integer>();
-		
 		listProdutos3.put(1, 10);
 		listProdutos3.put(2, 30);
-		System.out.println(listProdutos3.size());
 		Date data3 = new Date();
+		try {
+			data3 = new SimpleDateFormat("yyyyMMdd").parse("20210320");
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		HashMap<Integer, Integer> listProdutos4 = new HashMap<Integer, Integer>();
+		listProdutos4.put(1, 10);
+		listProdutos4.put(2, 20);
+		listProdutos4.put(3, 50);
+		
+		Date data4 = new Date();
+		try {
+			data4 = new SimpleDateFormat("yyyyMMdd").parse("20210401");
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
 		
 		encomendaService.realizarEncomenda(listProdutos3, 1, data3);
+		encomendaService.realizarEncomenda(listProdutos4, 2, data4);
+		
 		ArrayList<Encomenda> encomendas = encomendaService.procuraTodos();
 		for (Encomenda e : encomendas) {
 			System.out.println("- - - - - - - - - -");
@@ -272,6 +295,17 @@ public class Main {
 			}
 		}
 		encomendaService.cosumarEncomenda(1);
+		
+		System.out.print("\n\n\n//====== Teste Lista Reposição Produto ======//\n");
+		HashMap<Integer, Integer> listaReposicaoProduto = relatorioService.listarReposicaoProduto(data3, data4);
+		
+		System.out.println(">>> Lista de produtos necessários para reposição de acordo \ncom as encomendas entre as datas: \n"+data3+" e "+data4+":\n");
+		for(int id : listaReposicaoProduto.keySet()) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> Produto ID = " + id);
+			System.out.println(">> Quantidade necessária = " + listaReposicaoProduto.get(id));
+		}
+		
 		System.out.print("//========== Teste Venda ===========//\n\n\n");
 
 		HashMap<Integer, Integer> listProdutos1 = new HashMap<Integer, Integer>();
