@@ -48,8 +48,7 @@ public final class VendaService implements IVendaService {
 	public boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) {
 		Date data = new Date();
 		boolean temMateriaPrimaSuficiente = true;
-		HashMap <Integer, Integer> listaDeProdutosReais = listaProdutos;
-		listaDeProdutosReais.clear();
+		HashMap <Integer, Integer> listaDeProdutosReais = new HashMap<Integer, Integer>();
 		float valorDaVenda = 0;
 		for (int idProduto : listaProdutos.keySet()) {
 			int quantidade = listaProdutos.get(idProduto);

@@ -131,7 +131,10 @@ public class Main {
 
 		System.out.print("//=================================//\n\n\n");
 		// ===================================//
-
+		MateriaPrimaReal mr1 = new MateriaPrimaReal(1, 1, 2.5f, new Date(), 50, 1);
+		MateriaPrimaReal mr2 = new MateriaPrimaReal(2, 2, 2.5f, new Date(), 50, 1);
+		materiaPrimaRealService.inserir(mr1);
+		materiaPrimaRealService.inserir(mr2);
 		// ===== Teste FornecedorService ====//
 		System.out.print("//==== Teste FornecedorService ====//\n");
 
@@ -187,6 +190,9 @@ public class Main {
 
 		ProdutoFinal p2_1 = new ProdutoFinal(2, "Empada", 0.75f, receita1);
 		produtoFinalService.alterar(2, p2_1);
+		
+		ProdutoFinal p3 = new ProdutoFinal(3, "Coxinha", 0.75f, receita1);
+		produtoFinalService.inserir(p3);
 
 		System.out.print(">>> Cadastrando Produtos");
 
@@ -243,6 +249,7 @@ public class Main {
 		
 		listProdutos3.put(1, 10);
 		listProdutos3.put(2, 30);
+		System.out.println(listProdutos3.size());
 		Date data3 = new Date();
 		
 		encomendaService.realizarEncomenda(listProdutos3, 1, data3);
@@ -268,10 +275,11 @@ public class Main {
 		HashMap<Integer, Integer> listProdutos1 = new HashMap<Integer, Integer>();
 		listProdutos1.put(1, 10);
 		listProdutos1.put(2, 30);
-
+		
 		System.out.println(">>> Realizando Venda1");
-
+		
 		vendaService.realizarVenda(listProdutos1, 1);
+		
 
 		HashMap<Integer, Integer> listProdutos2 = new HashMap<Integer, Integer>();
 
@@ -337,7 +345,7 @@ public class Main {
 			System.out.println("- - - - - - - - - -");
 			System.out.println(">> Materia Prima ID = " + m.getId());
 			System.out.println(">> Nome = " + materiaPrimaService.procuraPeloId(m.getIdExterno()).getNome());
-			System.out.println(">> Quantidade = " + m.getQuantidade() + m.getQuantidade());
+			System.out.println(">> Quantidade = " + m.getQuantidade() + materiaPrimaService.procuraPeloId(m.getId()).getUnMedida());
 		}
 		// ===================================//
 	}
