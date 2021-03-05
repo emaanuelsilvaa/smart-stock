@@ -6,6 +6,7 @@ public class MateriaPrima {
 	protected String tipo;
 	protected boolean perecivel;
 	protected String unMedida;
+	protected float qntMinima;
 	
 
 	// Construtores
@@ -14,13 +15,14 @@ public class MateriaPrima {
 	}
 
 	public MateriaPrima(int id, String nome, String tipo,
-			boolean perecivel, String unMedida) {
+			boolean perecivel, String unMedida, float qntMinima) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.tipo = tipo;
 		this.perecivel = perecivel;
 		this.unMedida = unMedida;
+		this.qntMinima = qntMinima;
 	}
 
 	// Getters e Setters
@@ -63,6 +65,14 @@ public class MateriaPrima {
 
 	public void setUnMedida(String unMedida) {
 		this.unMedida = unMedida;
+	}
+
+	public float getQntMinima() {
+		return qntMinima;
+	}
+
+	public void setQntMinima(float qntMinima) {
+		this.qntMinima = qntMinima;
 	}
 
 }

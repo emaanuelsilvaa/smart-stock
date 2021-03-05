@@ -99,19 +99,19 @@ public class Main {
 		Date d = new Date();
 
 		System.out.print(">>> Criando a Matéria Prima 1...\n");
-		MateriaPrima mp1 = new MateriaPrima(1, "Frango", "alimento", true, "kg");
+		MateriaPrima mp1 = new MateriaPrima(1, "Frango", "alimento", true, "kg", (float) 4.5);
 
 		System.out.print(">>> Criando a Matéria Prima 2...\n");
-		MateriaPrima mp2 = new MateriaPrima(2, "Carne", "alimento", true, "kg");
+		MateriaPrima mp2 = new MateriaPrima(2, "Carne", "alimento", true, "kg", (float) 3.0);
 
 		System.out.print(">>> Criando a Matéria Prima 3...\n");
-		MateriaPrima mp3 = new MateriaPrima(3, "Farinha de Trigo", "alimento", true, "kg");
+		MateriaPrima mp3 = new MateriaPrima(3, "Farinha de Trigo", "alimento", true, "kg", (float) 2.0);
 
 		materiaPrimaService.inserir(mp1);
 		materiaPrimaService.inserir(mp2);
 		materiaPrimaService.inserir(mp3);
 		
-		MateriaPrima mp1_1 = new MateriaPrima(1, "Linguiça", "alimento", true, "kg");
+		MateriaPrima mp1_1 = new MateriaPrima(1, "Linguiça", "alimento", true, "kg", (float) 1.5);
 		materiaPrimaService.alterar(1, mp1_1);
 
 		ArrayList<MateriaPrima> materiasPrimas = materiaPrimaService.procuraTodos();
@@ -124,6 +124,7 @@ public class Main {
 			System.out.println("> Tipo: " + m.getTipo());
 			System.out.println("> Perecivel: " + m.isPerecivel());
 			System.out.println("> Unidade de Medida: " + m.getUnMedida());
+			System.out.println("> Quantidade mínima: " + m.getQntMinima());
 		}
 		System.out.println("\n");
 
