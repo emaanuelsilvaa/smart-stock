@@ -70,7 +70,7 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 	}
 	@Override
 	public ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id){
-		return this.procuraPeloIdExterno(id);
+		return this.materiaPrimaRealDAO.procuraPeloIdExterno(id);
 	}
 
 	@Override
