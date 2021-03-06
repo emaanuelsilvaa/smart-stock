@@ -101,9 +101,6 @@ public class Main {
 		// ==== Teste MateriaPrimaService ====//
 		System.out.print("//==== Teste MateriaPrimaService ====//\n");
 
-		Fornecedor fncd = new Fornecedor();
-		Date d = new Date();
-
 		System.out.print(">>> Criando a Matéria Prima 1...\n");
 		MateriaPrima mp1 = new MateriaPrima(1, "Frango", "alimento", true, "kg", (float) 4.5);
 
