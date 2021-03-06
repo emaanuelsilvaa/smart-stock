@@ -303,7 +303,7 @@ public class Main {
 		System.out.println(">>> Lista de produtos necessários para reposição de acordo \ncom as encomendas entre as datas: \n"+data3+" e "+data4+":\n");
 		for(int id : listaReposicaoProduto.keySet()) {
 			System.out.println("- - - - - - - - - -");
-			System.out.println(">> Produto ID = " + id);
+			System.out.println(">> Produto ID = " + id + "[" + produtoFinalService.procuraPeloId(id).getNome() + "]");
 			System.out.println(">> Quantidade necessária = " + listaReposicaoProduto.get(id));
 		}
 		
@@ -314,8 +314,8 @@ public class Main {
 		System.out.println(">>> Lista de matérias primas necessários para reposição de acordo \ncom as encomendas entre as datas: \n"+data3+" e "+data4+":\n");
 		for(int id : listaReposicaoMateriaPrima.keySet()) {
 			System.out.println("- - - - - - - - - -");
-			System.out.println(">> Matéria Prima ID = " + id);
-			System.out.println(">> Quantidade necessária = " + listaReposicaoMateriaPrima.get(id));
+			System.out.println(">> Matéria Prima ID = " + id + "[" + materiaPrimaService.procuraPeloId(id).getNome() + "]");
+			System.out.println(">> Quantidade necessária = " + listaReposicaoMateriaPrima.get(id) + materiaPrimaService.procuraPeloId(id).getUnMedida());
 		}
 		
 		System.out.print("//========== Teste Venda ===========//\n\n\n");

@@ -98,7 +98,7 @@ public final class RelatorioService implements IRelatorioService {
 			for (int id_materia : listaDeMateriaPrimaFaltanteTotal.keySet()) {
 				diferença_de_estoque = estoqueService.verificaDisponibilidadeMateriaPrima(id_materia, listaDeMateriaPrimaFaltanteTotal.get(id_materia));
 				if(diferença_de_estoque < 0) {
-					listaDeMateriaPrimaFaltante.put(id_materia, diferença_de_estoque);
+					listaDeMateriaPrimaFaltante.put(id_materia, -1 * diferença_de_estoque);
 				}
 			}
 		}
