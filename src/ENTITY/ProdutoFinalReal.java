@@ -1,23 +1,26 @@
 package ENTITY;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class ProdutoFinalReal implements Comparable<ProdutoFinalReal>{
 	protected int id;
 	protected int idExterno;
 	protected Date validade;
 	protected int quantidade;
+	protected HashMap<Integer, Float> receitaReal; // <idMateriaPrimaReal, quantidade>
 	
 	public ProdutoFinalReal() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProdutoFinalReal(int id, int idExterno, Date validade, int quantidade) {
+	public ProdutoFinalReal(int id, int idExterno, Date validade, int quantidade, HashMap<Integer, Float> receitaReal) {
 		super();
 		this.id = id;
 		this.idExterno = idExterno;
 		this.validade = validade;
 		this.quantidade = quantidade;
+		this.receitaReal= receitaReal;
 	}
 
 	public int getId() {
@@ -50,6 +53,14 @@ public class ProdutoFinalReal implements Comparable<ProdutoFinalReal>{
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public HashMap<Integer, Float> getReceitaReal() {
+		return receitaReal;
+	}
+
+	public void setReceitaReal(HashMap<Integer, Float> receitaReal) {
+		this.receitaReal = receitaReal;
 	}
 
 	@Override

@@ -7,7 +7,7 @@ public class ProdutoFinal {
 	protected String nome;
 	protected float preco;
 	protected int qntMinima;
-	protected HashMap<Integer, Float> receita;
+	protected HashMap<Integer, Float> receita; // <idMateriaPrima, quantidade>
 
 	// Construtores
 	public ProdutoFinal() {

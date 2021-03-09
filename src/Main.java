@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import BUSINESS.AnaliseLucro;
 import BUSINESS.ClienteService;
 import BUSINESS.EncomendaService;
 import BUSINESS.EstoqueService;
@@ -40,6 +41,7 @@ import BUSINESS.IVendaService;
 import DATA.FornecedorDAO;
 import BUSINESS.RelatorioService;
 import BUSINESS.IRelatorioService;
+import BUSINESS.IAnaliseLucro;
 
 public class Main {
 
@@ -60,12 +62,11 @@ public class Main {
 		IEstoqueService estoqueService = EstoqueService.getInstance();
 		IEncomendaService encomendaService = EncomendaService.getInstance();
 		IRelatorioService relatorioService = RelatorioService.getInstance();
+		IAnaliseLucro analiseLucro = AnaliseLucro.getInstance();
 
 		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n\n");
 
-		// ==== Teste ClienteService ====//
 		System.out.print("//==== Teste ClienteService ====//\n");
-
 		System.out.print(">>> Criando o cliente 1...\n");
 		Cliente cliente1 = new Cliente(1, "Maria", "123", "Rua Palmares, 180", "84-3332222");
 
@@ -98,9 +99,7 @@ public class Main {
 		System.out.print("//==============================//\n\n\n");
 		// ==============================//
 
-		// ==== Teste MateriaPrimaService ====//
 		System.out.print("//==== Teste MateriaPrimaService ====//\n");
-
 		System.out.print(">>> Criando a Matéria Prima 1...\n");
 		MateriaPrima mp1 = new MateriaPrima(1, "Frango", "alimento", true, "kg", (float) 4.5);
 
@@ -134,14 +133,16 @@ public class Main {
 		System.out.println(">>> Consulta nome matéria prima 1: " + materiaPrimaService.procuraPeloId(1).getNome() + "\n");
 
 		System.out.print("//=================================//\n\n\n");
-		// ===================================//
+
 		MateriaPrimaReal mr1 = new MateriaPrimaReal(1, 1, 2.5f, new Date(), 50, 1);
 		MateriaPrimaReal mr2 = new MateriaPrimaReal(2, 2, 2.5f, new Date(), 50, 1);
+		MateriaPrimaReal mr3 = new MateriaPrimaReal(3, 3, 2.5f, new Date(), 50, 1);
 		materiaPrimaRealService.inserir(mr1);
 		materiaPrimaRealService.inserir(mr2);
-		// ===== Teste FornecedorService ====//
+		materiaPrimaRealService.inserir(mr3);
+		// ===================================//
+		
 		System.out.print("//==== Teste FornecedorService ====//\n");
-
 		System.out.print(">>> Criando o Fornecedor 1...\n");
 		Fornecedor f1 = new Fornecedor(1, "Nordestão", "12345678912345", "Rua Teste, 12", "88-922221111",
 				"email@email.com", materiasPrimas);
@@ -176,9 +177,9 @@ public class Main {
 			}
 		}
 		System.out.println("\n");
-		// Teste ProdutoFinal
+		// ===================================//
+		
 		System.out.print("//========== Teste Produto Final ===========//\n\n\n");
-
 		HashMap<Integer, Float> receita = new HashMap<Integer, Float>();
 		receita.put(3, 0.1f);
 		receita.put(2, 0.5f);
@@ -219,25 +220,31 @@ public class Main {
 			}
 
 		}
-		// Teste Produto Final Real
+		// ===================================//
+
 		System.out.print("//========== Teste Produto Final Real ===========//\n\n\n");
 		Date data = new Date();
+
+		HashMap<Integer, Float> receitaReal = new HashMap<Integer, Float>();
+		receitaReal.put(3, 0.1f);
+		receitaReal.put(2, 0.5f);
+
+		HashMap<Integer, Float> receitaReal1 = new HashMap<Integer, Float>();
+		receitaReal1.put(3, 0.1f);
+		receitaReal1.put(1, 0.5f);
+
 		data.setDate(15);
-		ProdutoFinalReal pr1 = new ProdutoFinalReal(1, 2, data, 50);
+		ProdutoFinalReal pr1 = new ProdutoFinalReal(1, 1, data, 50, receitaReal);
 		data.setDate(10);
-		ProdutoFinalReal pr2 = new ProdutoFinalReal(2, 2, data, 20);
+		ProdutoFinalReal pr2 = new ProdutoFinalReal(2, 2, data, 20, receitaReal1);
 		data.setDate(15);
-		ProdutoFinalReal pr3 = new ProdutoFinalReal(3, 1, data, 50);
-		data.setDate(10);
-		ProdutoFinalReal pr4 = new ProdutoFinalReal(4, 1, data, 20);
+		ProdutoFinalReal pr3 = new ProdutoFinalReal(3, 3, data, 50, receitaReal);
 		produtoFinalRealService.inserir(pr1);
 		produtoFinalRealService.inserir(pr2);
 		produtoFinalRealService.inserir(pr3);
-		produtoFinalRealService.inserir(pr4);
 		
-		data.setDate(10);
-		ProdutoFinalReal pr4_1 = new ProdutoFinalReal(4, 1, data, 22);
-		produtoFinalRealService.alterar(4, pr4_1);
+		ProdutoFinalReal pr3_1 = new ProdutoFinalReal(3, 1, data, 22, receitaReal1);
+		produtoFinalRealService.alterar(3, pr3_1);
 
 		ArrayList<ProdutoFinalReal> produtosReais = produtoFinalRealService.procuraTodos();
 		System.out.println("\n>>> Produtos Reais cadastrados:");
@@ -248,6 +255,7 @@ public class Main {
 			System.out.println("> Validade: " + p.getValidade());
 			System.out.println("> Quantidade: " + p.getQuantidade());
 		}
+		// ===================================//
 		
 		System.out.print("\n\n//========== Teste Encomenda ===========//\n\n");
 		HashMap<Integer, Integer> listProdutos3 = new HashMap<Integer, Integer>();
@@ -292,9 +300,9 @@ public class Main {
 			}
 		}
 		encomendaService.cosumarEncomenda(1);
+		// ===================================//
 		
-		System.out.print("\n\n\n//====== Teste Lista Reposição Produto ======//\n");
-		
+		System.out.print("\n\n\n//====== Teste Lista Reposição Produto ======//\n");		
 		HashMap<Integer, Integer> listaReposicaoProduto = relatorioService.listarReposicaoProduto(data3, data4);
 		
 		System.out.println(">>> Lista de produtos necessários para reposição de acordo \ncom as encomendas entre as datas: \n"+data3+" e "+data4+":\n");
@@ -303,9 +311,9 @@ public class Main {
 			System.out.println(">> Produto ID = " + id + "[" + produtoFinalService.procuraPeloId(id).getNome() + "]");
 			System.out.println(">> Quantidade necessária = " + listaReposicaoProduto.get(id));
 		}
+		// ===================================//
 		
-		System.out.print("\n\n\n//====== Teste Lista Reposição Matéria Prima ======//\n");
-		
+		System.out.print("\n\n\n//====== Teste Lista Reposição Matéria Prima ======//\n");	
 		HashMap<Integer, Float> listaReposicaoMateriaPrima = relatorioService.listarReposicaoMateriaPrima(data3, data4);
 		
 		System.out.println(">>> Lista de matérias primas necessários para reposição de acordo \ncom as encomendas entre as datas: \n"+data3+" e "+data4+":\n");
@@ -314,20 +322,18 @@ public class Main {
 			System.out.println(">> Matéria Prima ID = " + id + "[" + materiaPrimaService.procuraPeloId(id).getNome() + "]");
 			System.out.println(">> Quantidade necessária = " + listaReposicaoMateriaPrima.get(id) + materiaPrimaService.procuraPeloId(id).getUnMedida());
 		}
+		// ===================================//
 		
 		System.out.print("//========== Teste Venda ===========//\n\n\n");
-
 		HashMap<Integer, Integer> listProdutos1 = new HashMap<Integer, Integer>();
 		listProdutos1.put(1, 10);
 		listProdutos1.put(2, 30);
 		
 		System.out.println(">>> Realizando Venda1");
-		
 		vendaService.realizarVenda(listProdutos1, 1);
 		
 
 		HashMap<Integer, Integer> listProdutos2 = new HashMap<Integer, Integer>();
-
 		listProdutos2.put(2, 10);
 		listProdutos2.put(1, 30);
 
@@ -353,29 +359,29 @@ public class Main {
 			}
 		}
 		
-		vendaService.cancelarVenda(1);
-		vendas = vendaService.procuraTodos();
-		
-		
-		System.out.println("******* Após Cancelar a venda 1 *******");
-		
-		for (Venda v : vendas) {
-			System.out.println("- - - - - - - - - -");
-			System.out.println(">> Venda ID= " + v.getId());
-			System.out.println("> Valor: " + v.getValor() + "R$");
-			System.out.println("> Cliente: " + clienteService.procuraPeloId(v.getIdCliente()).getNome());
-			System.out.println("> Data: " + v.getData());
-			System.out.println("> Lista de Produtos: ");
-			int contador = 0;
-			for (Integer p : v.getListaProdutos().keySet()) {
-				contador += 1;
-				System.out.println("\t" + contador + ". " + produtoFinalService.procuraPeloId(p).getNome() + ": "
-						+ v.getListaProdutos().get(p) + " Unidades");
-			}
-		}
+//		vendaService.cancelarVenda(1);
+//		vendas = vendaService.procuraTodos();
+//		
+//		
+//		System.out.println("******* Após Cancelar a venda 1 *******");
+//		
+//		for (Venda v : vendas) {
+//			System.out.println("- - - - - - - - - -");
+//			System.out.println(">> Venda ID= " + v.getId());
+//			System.out.println("> Valor: " + v.getValor() + "R$");
+//			System.out.println("> Cliente: " + clienteService.procuraPeloId(v.getIdCliente()).getNome());
+//			System.out.println("> Data: " + v.getData());
+//			System.out.println("> Lista de Produtos: ");
+//			int contador = 0;
+//			for (Integer p : v.getListaProdutos().keySet()) {
+//				contador += 1;
+//				System.out.println("\t" + contador + ". " + produtoFinalService.procuraPeloId(p).getNome() + ": "
+//						+ v.getListaProdutos().get(p) + " Unidades");
+//			}
+//		}
+		// ===================================//
 		
 		System.out.print("//========== Teste Estoque ===========//\n\n\n");
-
 		ArrayList<ProdutoFinalReal> produtosEstoque = estoqueService.procuraTodosProdutos();
 		ArrayList<MateriaPrimaReal> materiaPrimaEstoque = estoqueService.procuraTodasMaterias();
 		System.out.println("Produto Final");
@@ -393,6 +399,24 @@ public class Main {
 			System.out.println(">> Quantidade = " + m.getQuantidade() + materiaPrimaService.procuraPeloId(m.getId()).getUnMedida());
 		}
 		// ===================================//
+		
+		System.out.print("\n\n//========== Teste Análise Lucro ===========//\n\n");	
+		Date data_ex_1 = new Date();
+		try {
+			data_ex_1 = new SimpleDateFormat("yyyyMMdd").parse("20000101");
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		Date data_ex_2 = new Date();
+		try {
+			data_ex_2 = new SimpleDateFormat("yyyyMMdd").parse("20220320");
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		float lucro = analiseLucro.analisarLucro(data_ex_1, data_ex_2);
+		System.out.print("Lucro entre as datas ["+data_ex_1+"] e ["+data_ex_2+"] = "+lucro+"\n\n");
 	}
 
 }
