@@ -9,7 +9,7 @@ public interface IMateriaPrimaService {
 
 	int inserir(MateriaPrima materiaPrima) throws BusinessRuleException;
 
-	int remover(int id);
+	void remover(int id) throws BusinessRuleException;
 
 	void alterar(int id, MateriaPrima materiaPrima) throws BusinessRuleException;
 

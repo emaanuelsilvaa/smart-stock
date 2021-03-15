@@ -30,12 +30,11 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	}
 
 	@Override
-	public int remover(int id) {
-		if (this.materiaPrimaDAO.procuraPeloId(id) != null) {
-			this.materiaPrimaDAO.remover(id);
-			return 0;
+	public void remover(int id) throws BusinessRuleException {
+		if(this.materiaPrimaDAO.procuraPeloId(id) == null) {
+			throw new BusinessRuleException("Tentou excluir uma matéria-prima inexistente");
 		}
-		return -1;
+		this.materiaPrimaDAO.remover(id);	
 	}
 	
 	@Override
