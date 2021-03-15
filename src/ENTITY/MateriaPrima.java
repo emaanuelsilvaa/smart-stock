@@ -51,7 +51,7 @@ public class MateriaPrima {
 	}
 
 
-	public boolean isPerecivel() {
+	public boolean getPerecivel() {
 		return perecivel;
 	}
 

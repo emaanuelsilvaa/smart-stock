@@ -28,6 +28,7 @@ import ENTITY.MateriaPrimaReal;
 import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
 import ENTITY.Venda;
+import UTIL.BusinessRuleException;
 import BUSINESS.FornecedorService;
 import BUSINESS.IClienteService;
 import BUSINESS.IEncomendaService;
@@ -108,13 +109,23 @@ public class Main {
 
 		System.out.print(">>> Criando a Matéria Prima 3...\n");
 		MateriaPrima mp3 = new MateriaPrima(3, "Farinha de Trigo", "alimento", true, "kg", (float) 2.0);
-
-		materiaPrimaService.inserir(mp1);
-		materiaPrimaService.inserir(mp2);
-		materiaPrimaService.inserir(mp3);
+		
+		try {
+			materiaPrimaService.inserir(mp1);
+			materiaPrimaService.inserir(mp2);
+			materiaPrimaService.inserir(mp3);
+		}
+		catch (BusinessRuleException e) {
+			System.out.println("Erros: " + e.toString());
+		}
+		
 		
 		MateriaPrima mp1_1 = new MateriaPrima(1, "Linguiça", "alimento", true, "kg", (float) 1.5);
-		materiaPrimaService.alterar(1, mp1_1);
+		try {
+			materiaPrimaService.alterar(1, mp1_1);
+		} catch(BusinessRuleException e) {
+			System.out.println("Erros:" + e.toString());
+		}
 
 		ArrayList<MateriaPrima> materiasPrimas = materiaPrimaService.procuraTodos();
 
@@ -124,7 +135,7 @@ public class Main {
 			System.out.println(">> Matéria Prima ID=" + m.getId() + ": ");
 			System.out.println("> Nome: " + m.getNome());
 			System.out.println("> Tipo: " + m.getTipo());
-			System.out.println("> Perecivel: " + m.isPerecivel());
+			System.out.println("> Perecivel: " + m.getPerecivel());
 			System.out.println("> Unidade de Medida: " + m.getUnMedida());
 			System.out.println("> Quantidade mínima: " + m.getQntMinima());
 		}
@@ -327,18 +338,25 @@ public class Main {
 		System.out.print("//========== Teste Venda ===========//\n\n\n");
 		HashMap<Integer, Integer> listProdutos1 = new HashMap<Integer, Integer>();
 		listProdutos1.put(1, 10);
-		listProdutos1.put(2, 30);
+		listProdutos1.put(2, 10);
 		
 		System.out.println(">>> Realizando Venda1");
-		vendaService.realizarVenda(listProdutos1, 1);
+		System.out.println(vendaService.realizarVenda(listProdutos1, 1));
 		
 
 		HashMap<Integer, Integer> listProdutos2 = new HashMap<Integer, Integer>();
-		listProdutos2.put(2, 10);
+		listProdutos2.put(2, 5);
 		listProdutos2.put(1, 30);
 
 		System.out.println(">>> Realizando Venda2");
-		vendaService.realizarVenda(listProdutos2, 2);
+		System.out.println(vendaService.realizarVenda(listProdutos2, 2));
+		
+		HashMap<Integer, Integer> listProdutos10 = new HashMap<Integer, Integer>();
+		listProdutos10.put(2, 5);
+		listProdutos10.put(1, 10);
+
+		System.out.println(">>> Realizando Venda3");
+		System.out.println(vendaService.realizarVenda(listProdutos10, 1));
 
 		ArrayList<Venda> vendas = new ArrayList<Venda>();
 

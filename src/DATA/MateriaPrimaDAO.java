@@ -45,7 +45,7 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 				p.setId(materiaPrima.getId());
 				p.setNome(materiaPrima.getNome());
 				p.setTipo(materiaPrima.getTipo());
-				p.setPerecivel(materiaPrima.isPerecivel());
+				p.setPerecivel(materiaPrima.getPerecivel());
 				p.setUnMedida(materiaPrima.getUnMedida());
 				p.setQntMinima(materiaPrima.getQntMinima());
 				break;

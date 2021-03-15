@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import DATA.IMateriaPrimaDAO;
 import DATA.MateriaPrimaDAO;
 import ENTITY.MateriaPrima;
+import UTIL.BusinessRuleException;
 
 public final class MateriaPrimaService implements IMateriaPrimaService {
 	
@@ -23,12 +24,9 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	}
 	
 	@Override
-	public int inserir(MateriaPrima materiaPrima) {
-		if (this.materiaPrimaDAO.procuraPeloId(materiaPrima.getId()) != null) {
-			return -1;
-		}
-		this.materiaPrimaDAO.inserir(materiaPrima);
-		return -1;
+	public int inserir(MateriaPrima materiaPrima) throws BusinessRuleException {
+		validarCadastro(materiaPrima);
+		return this.materiaPrimaDAO.inserir(materiaPrima);
 	}
 
 	@Override
@@ -41,12 +39,12 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	}
 	
 	@Override
-	public int alterar(int id, MateriaPrima materiaPrima) {
-		if (this.materiaPrimaDAO.procuraPeloId(id) != null) {
-			this.materiaPrimaDAO.alterar(id, materiaPrima);
-			return 0;
+	public void alterar(int id, MateriaPrima materiaPrima) throws BusinessRuleException {
+		validarCadastro(materiaPrima);
+		if (this.materiaPrimaDAO.procuraPeloId(id) == null) {
+			throw new BusinessRuleException("ID inexistente");
 		}
-		return -1;
+		this.materiaPrimaDAO.alterar(id, materiaPrima);
 	}
 
 	@Override
@@ -60,21 +58,26 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	}
 	
 	@Override
-	public int validarCadastro(int id) {
-		// Checagem se matéria prima existe		
-		if(this.materiaPrimaDAO.procuraPeloId(id) == null) {
-			return -1;
+	public void validarCadastro(MateriaPrima materiaPrima) throws BusinessRuleException{
+		ArrayList<String> erros = new ArrayList<String>();
+		if(materiaPrima == null) {
+			erros.add("Tentou inserir uma MateriaPrima nula");
 		}
-		else {	
-			MateriaPrima materiaPrima = this.materiaPrimaDAO.procuraPeloId(id);
-			// Validação de Tipo (Padrão: Alimento ou Embalagem.)
-			if(materiaPrima.getTipo().toLowerCase() != "alimento" &&
-			   materiaPrima.getTipo().toLowerCase() != "embalagem") {
-				return -1;
-			}
+		if(materiaPrima.getNome() == "" || materiaPrima.getNome() == null ) {
+			erros.add("Tentou inserir uma MateriaPrima com nome nulo");
 		}
-		
-		return 0;
+		if(materiaPrima.getQntMinima() < 0) {
+			erros.add("Tentou inserir uma quantidade mínima negativa");
+		}
+		if(materiaPrima.getTipo() == "" ||  materiaPrima.getTipo() == null) {
+			erros.add("Tentou inserir uma tipo nulo");
+		}
+		if(materiaPrima.getUnMedida() == "" || materiaPrima.getUnMedida() == null) {
+			erros.add("Tentou inserir uma quantidade de medida nula");
+		}
+		if (erros.size()>0) {
+			throw new BusinessRuleException(erros);
+		}
 	}
 
 }
