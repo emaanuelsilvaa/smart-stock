@@ -102,13 +102,13 @@ public class Main {
 
 		System.out.print("//==== Teste MateriaPrimaService ====//\n");
 		System.out.print(">>> Criando a Matéria Prima 1...\n");
-		MateriaPrima mp1 = new MateriaPrima(1, "Frango", "alimento", true, "kg", (float) 4.5);
+		MateriaPrima mp1 = new MateriaPrima("Frango", "alimento", true, "kg", (float) 4.5);
 
 		System.out.print(">>> Criando a Matéria Prima 2...\n");
-		MateriaPrima mp2 = new MateriaPrima(2, "Carne", "alimento", true, "kg", (float) 3.0);
+		MateriaPrima mp2 = new MateriaPrima("Carne", "alimento", true, "kg", (float) 3.0);
 
 		System.out.print(">>> Criando a Matéria Prima 3...\n");
-		MateriaPrima mp3 = new MateriaPrima(3, "Farinha de Trigo", "alimento", true, "kg", (float) 2.0);
+		MateriaPrima mp3 = new MateriaPrima("Farinha de Trigo", "alimento", true, "kg", (float) 2.0);
 		
 		try {
 			materiaPrimaService.inserir(mp1);

@@ -26,6 +26,7 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	@Override
 	public int inserir(MateriaPrima materiaPrima) throws BusinessRuleException {
 		validarCadastro(materiaPrima);
+		materiaPrima.setId(this.pegaEIncremanetaId());
 		return this.materiaPrimaDAO.inserir(materiaPrima);
 	}
 
@@ -78,5 +79,7 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 			throw new BusinessRuleException(erros);
 		}
 	}
-
+	public int pegaEIncremanetaId() {
+		return this.materiaPrimaDAO.pegaEIncremanetaId();
+	}
 }

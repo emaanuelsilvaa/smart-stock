@@ -24,6 +24,16 @@ public class MateriaPrima {
 		this.unMedida = unMedida;
 		this.qntMinima = qntMinima;
 	}
+	
+
+	public MateriaPrima(String nome, String tipo, boolean perecivel, String unMedida, float qntMinima) {
+		super();
+		this.nome = nome;
+		this.tipo = tipo;
+		this.perecivel = perecivel;
+		this.unMedida = unMedida;
+		this.qntMinima = qntMinima;
+	}
 
 	// Getters e Setters
 	public int getId() {

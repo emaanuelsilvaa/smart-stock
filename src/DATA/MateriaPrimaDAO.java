@@ -8,10 +8,12 @@ import ENTITY.ProdutoFinal;
 
 public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 	protected ArrayList<MateriaPrima> materiasPrimas;
+	protected int idSerial;
 	
 	// Construtores
 	public MateriaPrimaDAO() {
 		this.materiasPrimas = new ArrayList<MateriaPrima>();
+		this.idSerial = 1;
 	}
 
 	public MateriaPrimaDAO(ArrayList<MateriaPrima> materiasPrimas) {
@@ -67,6 +69,14 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 	@Override
 	public ArrayList<MateriaPrima> procuraTodos(){
 		return this.materiasPrimas;
+	}
+	
+	@Override
+	public int pegaEIncremanetaId() {
+		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
+		int idAtual = this.idSerial;
+		this.idSerial += 1;
+		return idAtual;
 	}
 	
 }

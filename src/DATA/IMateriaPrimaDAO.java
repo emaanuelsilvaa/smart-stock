@@ -15,5 +15,7 @@ public interface IMateriaPrimaDAO {
 	MateriaPrima procuraPeloId(int id);
 
 	ArrayList<MateriaPrima> procuraTodos();
+	
+	public int pegaEIncremanetaId();
 
 }
