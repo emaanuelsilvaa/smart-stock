@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ENTITY.MateriaPrimaReal;
 import ENTITY.ProdutoFinalReal;
+import UTIL.BusinessRuleException;
 
 public interface IEstoqueService {
 
@@ -11,7 +12,7 @@ public interface IEstoqueService {
 	
 	int reporProdutoFinal(int id, int quantidade);
 
-	int baixaMateriaPrima(int id, float quantidade);
+	int baixaMateriaPrima(int id, float quantidade) throws BusinessRuleException;
 
 	ArrayList<ProdutoFinalReal> procuraTodosProdutos();
 
