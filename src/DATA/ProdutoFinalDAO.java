@@ -7,16 +7,18 @@ import ENTITY.ProdutoFinal;
 
 public class ProdutoFinalDAO implements IProdutoFinalDAO {
 	protected ArrayList<ProdutoFinal> produtos;
+	protected int idSerial;
 
 	public ProdutoFinalDAO() {
 		// TODO Auto-generated constructor stub
 		this.produtos = new ArrayList<ProdutoFinal>();
+		this.idSerial = 1;
 	}
 
 	@Override
 	public int inserir(ProdutoFinal produto) {
 		this.produtos.add(produto);
-		return 0;
+		return produto.getId();
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class ProdutoFinalDAO implements IProdutoFinalDAO {
 			}
 		}
 		this.produtos.remove(aux);
-		return 0;
+		return aux.getId();
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class ProdutoFinalDAO implements IProdutoFinalDAO {
 				break;
 			}
 		}
-		return 0;
+		return id;
 	}
 	
 	@Override
@@ -59,5 +61,13 @@ public class ProdutoFinalDAO implements IProdutoFinalDAO {
 	@Override
 	public ArrayList<ProdutoFinal> procuraTodos(){
 		return this.produtos;
+	}
+	
+	@Override
+	public int pegaEIncremanetaId() {
+		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
+		int idAtual = this.idSerial;
+		this.idSerial += 1;
+		return idAtual;
 	}
 }

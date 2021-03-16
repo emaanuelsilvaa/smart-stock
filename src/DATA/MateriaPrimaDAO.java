@@ -24,7 +24,7 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 	@Override
 	public int inserir(MateriaPrima materiaPrima) {
 		this.materiasPrimas.add(materiaPrima);
-		return 0;
+		return materiaPrima.getId();
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 			}
 		}
 		this.materiasPrimas.remove(aux);
-		return 0;
+		return aux.getId();
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 				break;
 			}
 		}
-		return 0;
+		return id;
 	}
 
 	@Override

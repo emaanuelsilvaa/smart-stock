@@ -16,4 +16,6 @@ public interface IProdutoFinalDAO {
 
 	ArrayList<ProdutoFinal> procuraTodos();
 
+	int pegaEIncremanetaId();
+
 }

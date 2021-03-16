@@ -4,15 +4,19 @@ import java.util.ArrayList;
 
 import DATA.IProdutoFinalDAO;
 import DATA.ProdutoFinalDAO;
+import ENTITY.MateriaPrima;
 import ENTITY.ProdutoFinal;
+import UTIL.BusinessRuleException;
 
 public final class ProdutoFinalService implements IProdutoFinalService {
 	protected IProdutoFinalDAO produtoFinalDAO;
+	protected IMateriaPrimaService materiaPrimaService;
 	private static IProdutoFinalService instance;
 
 	private ProdutoFinalService() {
 		// TODO Auto-generated constructor stub
 		this.produtoFinalDAO = new ProdutoFinalDAO();
+		this.materiaPrimaService = MateriaPrimaService.getInstance();
 	}
 	public static IProdutoFinalService getInstance() {
 		if(instance == null) {
@@ -22,35 +26,27 @@ public final class ProdutoFinalService implements IProdutoFinalService {
 	}
 	
 	@Override
-	public int inserir(ProdutoFinal produto) {
-		// Aqui temos uma decisão de projeto. Como será a inserção de um produto?
-		// Desta maneira o proprio usuário qm seta o ID, mas vc pode fzr uma função p
-		// pegar
-		// o próximo ID disponível e salvar na memória.
-		if (produtoFinalDAO.procuraPeloId(produto.getId()) != null) {
-			// ID está cadastrado
-			return -1;
-		}
-		produtoFinalDAO.inserir(produto);
-		return 0;
+	public int inserir(ProdutoFinal produto) throws BusinessRuleException {
+		this.validarCadastro(produto);
+		produto.setId(this.produtoFinalDAO.pegaEIncremanetaId());
+		return produtoFinalDAO.inserir(produto);
 	}
 
 	@Override
-	public int remover(int id) {
-		if (produtoFinalDAO.procuraPeloId(id) != null) {
-			produtoFinalDAO.remover(id);
-			return 0;
+	public int remover(int id) throws BusinessRuleException {
+		if (produtoFinalDAO.procuraPeloId(id) == null) {
+			throw new BusinessRuleException("Tentou excluir uma produto final inexistente");
 		}
-		return -1;
+		return this.produtoFinalDAO.remover(id);
 	}
 	
 	@Override
-	public int alterar(int id, ProdutoFinal produto) {
-		if (produtoFinalDAO.procuraPeloId(id) != null) {
-			produtoFinalDAO.alterar(id, produto);
-			return 0;
+	public int alterar(int id, ProdutoFinal produto) throws BusinessRuleException {
+		validarCadastro(produto);
+		if (produtoFinalDAO.procuraPeloId(id) == null) {
+			throw new BusinessRuleException("ID inexistente");
 		}
-		return -1;
+		return produtoFinalDAO.alterar(id, produto);
 	}
 
 	@Override
@@ -62,5 +58,40 @@ public final class ProdutoFinalService implements IProdutoFinalService {
 	public ArrayList<ProdutoFinal> procuraTodos() {
 		return produtoFinalDAO.procuraTodos();
 	}
+	
+	@Override
+	public int pegaEIncremanetaId() {
+		return this.produtoFinalDAO.pegaEIncremanetaId();
+	}
+	
+	@Override
+	public void validarCadastro(ProdutoFinal produtoFinal) throws BusinessRuleException{
+		ArrayList<String> erros = new ArrayList<String>();
+		if(produtoFinal == null) {
+			erros.add("Tentou inserir uma MateriaPrima nula");
+		}
+		if(produtoFinal.getNome() == "" || produtoFinal.getNome() == null ) {
+			erros.add("Tentou inserir uma ProdutoFinal com nome nulo");
+		}
+		if(produtoFinal.getQntMinima() < 0) {
+			erros.add("Tentou inserir uma quantidade mínima negativa");
+		}
+		if(produtoFinal.getPreco() < 0) {
+			erros.add("Tentou inserir um preço negativo");
+		}
+		if(produtoFinal.getReceita().isEmpty()) {
+			erros.add("Tentou inserir uma receita vazia");
+		} else {
+			for(int i : produtoFinal.getReceita().keySet()) {
+				if(this.materiaPrimaService.procuraPeloId(i) == null) {
+					erros.add("MatériaPrima de ID " + i + "não cadastrada");
+				}
+			}
+		}
+		if (erros.size()>0) {
+			throw new BusinessRuleException(erros);
+		}
+	}
+	
 
 }

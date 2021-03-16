@@ -194,21 +194,25 @@ public class Main {
 		HashMap<Integer, Float> receita = new HashMap<Integer, Float>();
 		receita.put(3, 0.1f);
 		receita.put(2, 0.5f);
-		ProdutoFinal p1 = new ProdutoFinal(1, "Esfirra", 0.5f, 3, receita);
+		ProdutoFinal p1 = new ProdutoFinal("Esfirra", 0.5f, 3, receita);
 
 		HashMap<Integer, Float> receita1 = new HashMap<Integer, Float>();
 		receita1.put(3, 0.1f);
 		receita1.put(1, 0.5f);
-		ProdutoFinal p2 = new ProdutoFinal(2, "Coxinha", 0.75f, 6, receita1);
+		ProdutoFinal p2 = new ProdutoFinal("Coxinha", 0.75f, 6, receita1);
+		try {
+			produtoFinalService.inserir(p1);
+			produtoFinalService.inserir(p2);
 
-		produtoFinalService.inserir(p1);
-		produtoFinalService.inserir(p2);
-
-		ProdutoFinal p2_1 = new ProdutoFinal(2, "Empada", 0.75f, 6, receita1);
-		produtoFinalService.alterar(2, p2_1);
+			ProdutoFinal p2_1 = new ProdutoFinal(2, "Empada", 0.75f, 6, receita1);
+			produtoFinalService.alterar(2, p2_1);
+			
+			ProdutoFinal p3 = new ProdutoFinal(3, "Coxinha", 0.75f, 8, receita1);
+			produtoFinalService.inserir(p3);
+		} catch (BusinessRuleException e) {
+			System.out.println("Erros:" + e.toString());
+		}
 		
-		ProdutoFinal p3 = new ProdutoFinal(3, "Coxinha", 0.75f, 8, receita1);
-		produtoFinalService.inserir(p3);
 
 		System.out.print(">>> Cadastrando Produtos");
 

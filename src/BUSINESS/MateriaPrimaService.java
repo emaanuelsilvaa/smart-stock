@@ -39,12 +39,12 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	}
 	
 	@Override
-	public void alterar(int id, MateriaPrima materiaPrima) throws BusinessRuleException {
+	public int alterar(int id, MateriaPrima materiaPrima) throws BusinessRuleException {
 		validarCadastro(materiaPrima);
 		if (this.materiaPrimaDAO.procuraPeloId(id) == null) {
 			throw new BusinessRuleException("ID inexistente");
 		}
-		this.materiaPrimaDAO.alterar(id, materiaPrima);
+		return this.materiaPrimaDAO.alterar(id, materiaPrima);
 	}
 
 	@Override
@@ -79,6 +79,7 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 			throw new BusinessRuleException(erros);
 		}
 	}
+	
 	public int pegaEIncremanetaId() {
 		return this.materiaPrimaDAO.pegaEIncremanetaId();
 	}

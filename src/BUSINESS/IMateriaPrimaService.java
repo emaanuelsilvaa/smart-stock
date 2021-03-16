@@ -11,7 +11,7 @@ public interface IMateriaPrimaService {
 
 	void remover(int id) throws BusinessRuleException;
 
-	void alterar(int id, MateriaPrima materiaPrima) throws BusinessRuleException;
+	int alterar(int id, MateriaPrima materiaPrima) throws BusinessRuleException;
 
 	MateriaPrima procuraPeloId(int id);
 

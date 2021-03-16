@@ -21,6 +21,15 @@ public class ProdutoFinal {
 		this.qntMinima = qntMinima;
 		this.receita = receita;
 	}
+	
+
+	public ProdutoFinal(String nome, float preco, int qntMinima, HashMap<Integer, Float> receita) {
+		super();
+		this.nome = nome;
+		this.preco = preco;
+		this.qntMinima = qntMinima;
+		this.receita = receita;
+	}
 
 	public int getId() {
 		return id;
