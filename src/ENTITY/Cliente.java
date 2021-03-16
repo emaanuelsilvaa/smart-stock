@@ -20,6 +20,14 @@ public class Cliente {
 		this.endereço = endereço;
 		this.telefone = telefone;
 	}
+	
+	public Cliente(String nome, String cpf, String endereço, String telefone) {
+		super();
+		this.nome = nome;
+		this.cpf = cpf;
+		this.endereço = endereço;
+		this.telefone = telefone;
+	}
 
 	// Getters e Setters
 	public int getId() {

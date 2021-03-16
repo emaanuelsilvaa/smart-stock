@@ -50,7 +50,7 @@ public class Main {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws BusinessRuleException {
 
 		// Singleton
 		IClienteService clienteService = ClienteService.getInstance();
@@ -69,19 +69,19 @@ public class Main {
 
 		System.out.print("//==== Teste ClienteService ====//\n");
 		System.out.print(">>> Criando o cliente 1...\n");
-		Cliente cliente1 = new Cliente(1, "Maria", "123", "Rua Palmares, 180", "84-3332222");
+		Cliente cliente1 = new Cliente("Maria", "12356271892", "Rua Palmares, 180", "84-33332222");
 
 		System.out.print(">>> Criando o cliente 2...\n");
-		Cliente cliente2 = new Cliente(2, "João", "11122233344", "Rua dos Poetas, 255", "84-44445555");
+		Cliente cliente2 = new Cliente("Elias", "11122233344", "Rua dos Poetas, 255", "84-44445555");
 
 		System.out.print(">>> Criando o cliente 3...\n");
-		Cliente cliente3 = new Cliente(3, "Yago", "12538500460", "Rua Jacaranda, 255", "84-44445555");
+//		Cliente cliente3 = new Cliente("Yago", "123", "Rua Jacaranda, 255", "84-44445555");
 
 		clienteService.inserir(cliente1);
 		clienteService.inserir(cliente2);
-		clienteService.inserir(cliente3);
+//		clienteService.inserir(cliente3);
 		
-		Cliente cliente2_1 = new Cliente(2, "João", "11122233344", "Rua dos Eucaliptos, 199", "84-44445555");
+		Cliente cliente2_1 = new Cliente("João", "11122233344", "Rua dos Eucaliptos, 199", "84-44445555");
 		clienteService.alterar(2, cliente2_1);
 
 		ArrayList<Cliente> clientes = clienteService.procuraTodos();

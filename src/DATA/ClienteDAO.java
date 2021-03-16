@@ -7,10 +7,12 @@ import ENTITY.Cliente;
 
 public class ClienteDAO implements IClienteDAO {
 	protected ArrayList<Cliente> clientes;
+	protected int idSerial;
 
 	// Construtores
 	public ClienteDAO() {
 		this.clientes = new ArrayList<Cliente>();
+		this.idSerial = 1;
 	}
 	
 	public ClienteDAO(ArrayList<Cliente> clientes) {
@@ -21,7 +23,7 @@ public class ClienteDAO implements IClienteDAO {
 	@Override
 	public int inserir(Cliente cliente) {
 		this.clientes.add(cliente);
-		return 0;
+		return cliente.getId();
 	}
 
 	@Override
@@ -34,14 +36,14 @@ public class ClienteDAO implements IClienteDAO {
 			}
 		}
 		this.clientes.remove(aux);
-		return 0;
+		return aux.getId();
 	}
 
 	@Override
 	public int alterar(int id, Cliente cliente) {
 		for (Cliente c : this.clientes) {
 			if (c.getId() == id) {
-				c.setId(cliente.getId());
+				c.setId(id);
 				c.setNome(cliente.getNome());
 				c.setCpf(cliente.getCpf());
 				c.setEndereço(cliente.getEndereço());
@@ -49,7 +51,7 @@ public class ClienteDAO implements IClienteDAO {
 				break;
 			}
 		}
-		return 0;
+		return id;
 	}
 
 	@Override
@@ -65,5 +67,13 @@ public class ClienteDAO implements IClienteDAO {
 	@Override
 	public ArrayList<Cliente> procuraTodos(){
 		return this.clientes;
+	}
+	
+	@Override
+	public int pegaEIncremanetaId() {
+		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
+		int idAtual = this.idSerial;
+		this.idSerial += 1;
+		return idAtual;
 	}
 }

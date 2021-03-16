@@ -16,4 +16,6 @@ public interface IClienteDAO {
 
 	ArrayList<Cliente> procuraTodos();
 
+	int pegaEIncremanetaId();
+
 }
