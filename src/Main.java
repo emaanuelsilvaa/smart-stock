@@ -148,19 +148,19 @@ public class Main {
 		
 		System.out.print("//==== Teste FornecedorService ====//\n");
 		System.out.print(">>> Criando o Fornecedor 1...\n");
-		Fornecedor f1 = new Fornecedor(1, "Nordestão", "12345678912345", "Rua Teste, 12", "88-922221111",
+		Fornecedor f1 = new Fornecedor("Nordestão", "12345678912345", "Rua Teste, 12", "88-922221111",
 				"email@email.com", materiasPrimas);
 
+		ArrayList<MateriaPrima> mpTesteException = new ArrayList<MateriaPrima>();
 		System.out.print(">>> Criando o Fornecedor 2...\n");
-		Fornecedor f2 = new Fornecedor(2, "Extra", "123", "Rua teste, 34", "81-99998888", "email@email.com",
-				materiasPrimas);
+		Fornecedor f2 = new Fornecedor("Extra", "12364875214369", "Rua teste, 34", "81-99998888", "email@email.com", mpTesteException);
 
 		fornecedorService.inserir(f1);
-		fornecedorService.inserir(f2);
+//		fornecedorService.inserir(f2);
 		
-		Fornecedor f2_1 = new Fornecedor(2, "Supershow", "123", "Rua teste, 34", "81-99998888", "email@email.com",
+		Fornecedor f2_1 = new Fornecedor("Supershow", "12325478931524", "Rua teste, 34", "81-99998888","email@email.com",
 				materiasPrimas);
-		fornecedorService.alterar(2, f2_1);
+		fornecedorService.alterar(1, f2_1);
 
 		ArrayList<Fornecedor> fornecedores = fornecedorService.procuraTodos();
 

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import DATA.FornecedorDAO;
 import DATA.IFornecedorDAO;
 import ENTITY.Fornecedor;
+import ENTITY.MateriaPrima;
+import UTIL.BusinessRuleException;
 
 public final class FornecedorService implements IFornecedorService {
 	
@@ -22,30 +24,29 @@ public final class FornecedorService implements IFornecedorService {
 	}
 
 	@Override
-	public int inserir(Fornecedor fornecedor) {
+	public int inserir(Fornecedor fornecedor) throws BusinessRuleException {
+		validarCadastro(fornecedor);
 		if (this.fornecedorDAO.procuraPeloId(fornecedor.getId()) != null) {
-			return -1;
+			throw new BusinessRuleException("Tentou inserir um fornecedor já existente");
 		}
-		this.fornecedorDAO.inserir(fornecedor);
-		return -1;
+		return this.fornecedorDAO.inserir(fornecedor);
 	}
 
 	@Override
-	public int remover(int id) {
-		if (this.fornecedorDAO.procuraPeloId(id) != null) {
-			this.fornecedorDAO.remover(id);
-			return 0;
+	public int remover(int id) throws BusinessRuleException {
+		if (this.fornecedorDAO.procuraPeloId(id) == null) {
+			throw new BusinessRuleException("Tentou excluir um fornecedor inexistente");
 		}
-		return -1;
+		return this.fornecedorDAO.remover(id);
 	}
 
 	@Override
-	public int alterar(int id, Fornecedor fornecedor) {
-		if (this.fornecedorDAO.procuraPeloId(id) != null) {
-			this.fornecedorDAO.alterar(id, fornecedor);
-			return 0;
+	public int alterar(int id, Fornecedor fornecedor) throws BusinessRuleException {
+		validarCadastro(fornecedor);
+		if (this.fornecedorDAO.procuraPeloId(id) == null) {
+			throw new BusinessRuleException("ID inexistente");
 		}
-		return -1;
+		return this.fornecedorDAO.alterar(id, fornecedor);
 	}
 
 	@Override
@@ -59,32 +60,50 @@ public final class FornecedorService implements IFornecedorService {
 	}
 	
 	@Override
-	public int validarCadastro(int id) {
-		// Checagem se Fornecedor existe
-		if(this.fornecedorDAO.procuraPeloId(id) == null) {
-			return -1;
+	public int validarCadastro(Fornecedor fornecedor) throws BusinessRuleException {
+		ArrayList<String> erros = new ArrayList<String>();
+		if(fornecedor == null) {
+			erros.add("Tentou inserir um Fornecedor nulo");
 		}
-		else {
-			Fornecedor fornecedor = this.fornecedorDAO.procuraPeloId(id);
-			// Validação de CNPJ (Padrão: 14 dígitos.)
-			if(fornecedor.getCnpj().length() != 14) {
-				return -1;
-			}
-			
-			// Validação de Telefone (Padrão: DDD-8números ou DDD-9números. Exemplo: 89-33332222)
-			if((fornecedor.getTelefone().length() != 11 && 
+		if(fornecedor.getNome() == "" || fornecedor.getNome() == null ) {
+			erros.add("Tentou inserir um Fornecedor com nome nulo");
+		}
+		// Validação de CNPJ (Padrão: 14 dígitos.)
+		if(fornecedor.getCnpj().length() != 14) {
+			erros.add("CNPJ deve possuir 14 dígitos");
+		}
+		if(fornecedor.getEndereço() == "" || fornecedor.getEndereço() == null) {
+			erros.add("Tentou inserir um endereço nulo");
+		}
+		// Validação de Telefone (Padrão: DDD-8números ou DDD-9números. Exemplo: 89-33332222)
+		if((fornecedor.getTelefone().length() != 11 && 
 				fornecedor.getTelefone().length() != 12) ||
 				fornecedor.getTelefone().toCharArray()[2] != '-') {
-				return -1;
+			erros.add("Telefone deve ter o padrão DDD-8números ou DDD-9números. Exemplo: 89-33332222");
+		}
+		if(fornecedor.getEmail().indexOf('@') == -1) {
+			erros.add("Tentou inserir um email inválido");
+		}
+		if(fornecedor.getListaProdutos().isEmpty()) {
+			erros.add("Tentou inserir uma lista de produtos vazia");
+		} else {
+			for(MateriaPrima mp : fornecedor.getListaProdutos()) {
+				if(mp == null) {
+					erros.add("Há MatériaPrima não cadastrada na lista de produtos");
+					break;
+				}
 			}
-			
-			// Validação de Email
-			if(fornecedor.getEmail().indexOf('@') == -1) {
-				return -1;
-			}
+		}
+		if (erros.size() > 0) {
+			throw new BusinessRuleException(erros);
 		}
 		
 		return 0;
+	}
+	
+	@Override
+	public int pegaEIncremanetaId() {
+		return this.fornecedorDAO.pegaEIncremanetaId();
 	}
 	
 }

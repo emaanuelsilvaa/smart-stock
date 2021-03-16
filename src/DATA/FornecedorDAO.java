@@ -2,15 +2,16 @@ package DATA;
 
 import java.util.ArrayList;
 
-import ENTITY.Cliente;
 import ENTITY.Fornecedor;
 
 public class FornecedorDAO implements IFornecedorDAO {
 	protected ArrayList<Fornecedor> fornecedores;
+	protected int idSerial;
 	
 	// Construtores
 	public FornecedorDAO() {
 		this.fornecedores = new ArrayList<Fornecedor>();
+		this.idSerial = 1;
 	}
 
 	public FornecedorDAO(ArrayList<Fornecedor> fornecedores) {
@@ -20,8 +21,9 @@ public class FornecedorDAO implements IFornecedorDAO {
 
 	@Override
 	public int inserir(Fornecedor fornecedor) {
+		fornecedor.setId(this.pegaEIncremanetaId());
 		this.fornecedores.add(fornecedor);
-		return 0;
+		return fornecedor.getId();
 	}
 
 	@Override
@@ -34,14 +36,14 @@ public class FornecedorDAO implements IFornecedorDAO {
 			}
 		}
 		this.fornecedores.remove(aux);
-		return 0;
+		return aux.getId();
 	}
 
 	@Override
 	public int alterar(int id, Fornecedor fornecedor) {
 		for (Fornecedor f : this.fornecedores) {
 			if (f.getId() == id) {
-				f.setId(fornecedor.getId());
+				f.setId(id);
 				f.setNome(fornecedor.getNome());
 				f.setCnpj(fornecedor.getCnpj());
 				f.setEndereço(fornecedor.getEndereço());
@@ -51,7 +53,7 @@ public class FornecedorDAO implements IFornecedorDAO {
 				break;
 			}
 		}
-		return 0;
+		return id;
 	}
 
 	@Override
@@ -67,6 +69,14 @@ public class FornecedorDAO implements IFornecedorDAO {
 	@Override
 	public ArrayList<Fornecedor> procuraTodos(){
 		return this.fornecedores;
+	}
+	
+	@Override
+	public int pegaEIncremanetaId() {
+		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
+		int idAtual = this.idSerial;
+		this.idSerial += 1;
+		return idAtual;
 	}
 	
 }

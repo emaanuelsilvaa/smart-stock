@@ -16,4 +16,6 @@ public interface IFornecedorDAO {
 
 	ArrayList<Fornecedor> procuraTodos();
 
+	int pegaEIncremanetaId();
+
 }

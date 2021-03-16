@@ -27,6 +27,17 @@ public class Fornecedor {
 		this.email = email;
 		this.listaProdutos = listaProdutos;
 	}
+	
+	public Fornecedor(String nome, String cnpj, String endereço, String telefone, String email,
+			ArrayList<MateriaPrima> listaProdutos) {
+		super();
+		this.nome = nome;
+		this.cnpj = cnpj;
+		this.endereço = endereço;
+		this.telefone = telefone;
+		this.email = email;
+		this.listaProdutos = listaProdutos;
+	}
 
 	// Getters e Setters
 	public int getId() {
