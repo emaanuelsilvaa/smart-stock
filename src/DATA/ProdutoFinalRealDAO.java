@@ -7,10 +7,12 @@ import ENTITY.ProdutoFinalReal;
 
 public class ProdutoFinalRealDAO implements IProdutoFinalRealDAO {
 	protected ArrayList<ProdutoFinalReal> produtos;
+	protected int idSerial;
 	
 	public ProdutoFinalRealDAO() {
 		// TODO Auto-generated constructor stub
 		this.produtos = new ArrayList<ProdutoFinalReal>();
+		this.idSerial = 1;
 	}
 	public ProdutoFinalRealDAO(ArrayList<ProdutoFinalReal> produtos){
 		this.produtos = produtos;
@@ -18,8 +20,9 @@ public class ProdutoFinalRealDAO implements IProdutoFinalRealDAO {
 	
 	@Override
 	public int inserir(ProdutoFinalReal produto) {
+		produto.setId(this.pegaEIncremanetaId());
 		produtos.add(produto);
-		return 0;
+		return produto.getId();
 	}
 
 	@Override
@@ -32,21 +35,21 @@ public class ProdutoFinalRealDAO implements IProdutoFinalRealDAO {
 			}
 		}
 		this.produtos.remove(aux);
-		return 0;
+		return aux.getId();
 	}
 	
 	@Override
 	public int alterar(int id, ProdutoFinalReal produto) {
 		for (ProdutoFinalReal pr : this.produtos) {
 			if (pr.getId() == id) {
-				pr.setId(produto.getId());
+				pr.setId(id);
 				pr.setIdExterno(produto.getIdExterno());
 				pr.setValidade(produto.getValidade());
 				pr.setQuantidade(produto.getQuantidade());
 				break;
 			}
 		}
-		return 0;
+		return id;
 	}
 
 	@Override
@@ -71,6 +74,7 @@ public class ProdutoFinalRealDAO implements IProdutoFinalRealDAO {
 		}
 		return -1;
 	}
+	
 	@Override
 	public ArrayList<ProdutoFinalReal> procuraPeloIdExterno(int id){
 		// Retorna todos os produtos de um mesmo tipo de ProdutoFinal
@@ -85,5 +89,12 @@ public class ProdutoFinalRealDAO implements IProdutoFinalRealDAO {
 	@Override
 	public ArrayList<ProdutoFinalReal> procuraTodos(){
 		return this.produtos;
+	}
+	
+	public int pegaEIncremanetaId() {
+		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
+		int idAtual = this.idSerial;
+		this.idSerial += 1;
+		return idAtual;
 	}
 }

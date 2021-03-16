@@ -29,7 +29,6 @@ public final class ClienteService implements IClienteService {
 		if (this.clienteDAO.procuraPeloId(cliente.getId()) != null) {
 			throw new BusinessRuleException("Tentou inserir um cliente já existente");
 		}
-		cliente.setId(this.pegaEIncremanetaId());
 		return this.clienteDAO.inserir(cliente);
 	}
 

@@ -28,7 +28,6 @@ public final class ProdutoFinalService implements IProdutoFinalService {
 	@Override
 	public int inserir(ProdutoFinal produto) throws BusinessRuleException {
 		this.validarCadastro(produto);
-		produto.setId(this.produtoFinalDAO.pegaEIncremanetaId());
 		return produtoFinalDAO.inserir(produto);
 	}
 
@@ -57,11 +56,6 @@ public final class ProdutoFinalService implements IProdutoFinalService {
 	@Override
 	public ArrayList<ProdutoFinal> procuraTodos() {
 		return produtoFinalDAO.procuraTodos();
-	}
-	
-	@Override
-	public int pegaEIncremanetaId() {
-		return this.produtoFinalDAO.pegaEIncremanetaId();
 	}
 	
 	@Override

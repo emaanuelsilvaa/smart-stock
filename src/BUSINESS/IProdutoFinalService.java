@@ -17,8 +17,6 @@ public interface IProdutoFinalService {
 
 	ArrayList<ProdutoFinal> procuraTodos();
 
-	int pegaEIncremanetaId();
-
 	void validarCadastro(ProdutoFinal produtoFinal) throws BusinessRuleException;
 
 }

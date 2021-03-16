@@ -10,18 +10,21 @@ import ENTITY.ProdutoFinalReal;
 public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 	
 	protected ArrayList<MateriaPrimaReal> materiasPrimas;
+	protected int idSerial;
 	
 	public MateriaPrimaRealDAO() {
 		// TODO Auto-generated constructor stub
 		this.materiasPrimas = new ArrayList<MateriaPrimaReal>();
+		this.idSerial = 1;
 	}
 	public MateriaPrimaRealDAO(ArrayList<MateriaPrimaReal> materiasPrimas) {
 		this.materiasPrimas = materiasPrimas;
 	}
 	@Override
 	public int inserir(MateriaPrimaReal materiaPrima) {
+		materiaPrima.setId(this.pegaEIncremanetaId());
 		this.materiasPrimas.add(materiaPrima);
-		return 0;
+		return materiaPrima.getId();
 	}
 	@Override
 	public int remover(int id) {
@@ -33,7 +36,7 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 			}
 		}
 		this.materiasPrimas.remove(aux);
-		return 0;
+		return aux.getId();
 	}
 	@Override
 	public int alterar(int id, MateriaPrimaReal materiaPrima) {
@@ -48,7 +51,7 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 				break;
 			}
 		}
-		return 0;
+		return id;
 	}
 	@Override
 	public int alterarQuantidade(int id, float quantidade) {
@@ -86,4 +89,11 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 	public ArrayList<MateriaPrimaReal> procuraTodos(){
 		return this.materiasPrimas;
 	}	
+	
+	public int pegaEIncremanetaId() {
+		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
+		int idAtual = this.idSerial;
+		this.idSerial += 1;
+		return idAtual;
+	}
 }

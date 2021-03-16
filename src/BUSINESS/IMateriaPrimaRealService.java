@@ -3,16 +3,17 @@ package BUSINESS;
 import java.util.ArrayList;
 
 import ENTITY.MateriaPrimaReal;
+import UTIL.BusinessRuleException;
 
 public interface IMateriaPrimaRealService {
 
-	int inserir(MateriaPrimaReal materiaPrimaReal);
+	int inserir(MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException;
 
-	int remover(int id);
+	int remover(int id) throws BusinessRuleException;
 
-	int alterar(int id, MateriaPrimaReal materiaPrimaReal);
+	int alterar(int id, MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException;
 
-	int alterarQuantidade(int id, float quantidade);
+	int alterarQuantidade(int id, float quantidade) throws BusinessRuleException;
 
 	MateriaPrimaReal procuraPeloId(int id);
 
@@ -20,6 +21,6 @@ public interface IMateriaPrimaRealService {
 
 	ArrayList<MateriaPrimaReal> procuraTodos();
 
-	int validarCadastro(int id);
+	void validarCadastro(MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException;
 
 }

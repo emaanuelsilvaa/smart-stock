@@ -22,6 +22,7 @@ public class ClienteDAO implements IClienteDAO {
 
 	@Override
 	public int inserir(Cliente cliente) {
+		cliente.setId(this.pegaEIncremanetaId());
 		this.clientes.add(cliente);
 		return cliente.getId();
 	}

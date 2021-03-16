@@ -17,6 +17,7 @@ public class ProdutoFinalDAO implements IProdutoFinalDAO {
 
 	@Override
 	public int inserir(ProdutoFinal produto) {
+		produto.setId(this.pegaEIncremanetaId());
 		this.produtos.add(produto);
 		return produto.getId();
 	}
@@ -38,7 +39,7 @@ public class ProdutoFinalDAO implements IProdutoFinalDAO {
 	public int alterar(int id, ProdutoFinal produto) {
 		for (ProdutoFinal p : this.produtos) {
 			if (p.getId() == id) {
-				p.setId(produto.getId());
+				p.setId(id);
 				p.setNome(produto.getNome());
 				p.setPreco(produto.getPreco());
 				p.setQntMinima(produto.getQntMinima());

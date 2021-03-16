@@ -143,14 +143,7 @@ public class Main {
 
 		System.out.println(">>> Consulta nome matéria prima 1: " + materiaPrimaService.procuraPeloId(1).getNome() + "\n");
 
-		System.out.print("//=================================//\n\n\n");
-
-		MateriaPrimaReal mr1 = new MateriaPrimaReal(1, 1, 2.5f, new Date(), 50, 1);
-		MateriaPrimaReal mr2 = new MateriaPrimaReal(2, 2, 2.5f, new Date(), 50, 1);
-		MateriaPrimaReal mr3 = new MateriaPrimaReal(3, 3, 2.5f, new Date(), 50, 1);
-		materiaPrimaRealService.inserir(mr1);
-		materiaPrimaRealService.inserir(mr2);
-		materiaPrimaRealService.inserir(mr3);
+		
 		// ===================================//
 		
 		System.out.print("//==== Teste FornecedorService ====//\n");
@@ -189,6 +182,15 @@ public class Main {
 		}
 		System.out.println("\n");
 		// ===================================//
+		
+		System.out.print("//=================================//\n\n\n");
+
+		MateriaPrimaReal mr1 = new MateriaPrimaReal(1, 1, 2.5f, new Date(), 50, 1);
+		MateriaPrimaReal mr2 = new MateriaPrimaReal(2, 2, 2.5f, new Date(), 50, 1);
+		MateriaPrimaReal mr3 = new MateriaPrimaReal(3, 3, 2.5f, new Date(), 50, 1);
+		materiaPrimaRealService.inserir(mr1);
+		materiaPrimaRealService.inserir(mr2);
+		materiaPrimaRealService.inserir(mr3);
 		
 		System.out.print("//========== Teste Produto Final ===========//\n\n\n");
 		HashMap<Integer, Float> receita = new HashMap<Integer, Float>();

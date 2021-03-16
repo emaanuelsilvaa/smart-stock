@@ -5,17 +5,20 @@ import java.util.ArrayList;
 import DATA.IMateriaPrimaRealDAO;
 import DATA.MateriaPrimaRealDAO;
 import ENTITY.MateriaPrimaReal;
+import UTIL.BusinessRuleException;
 
 public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 
 	protected IMateriaPrimaRealDAO materiaPrimaRealDAO;
 	protected IMateriaPrimaService materiaPrimaService;
+	protected IFornecedorService fornecedorService;
 	private static IMateriaPrimaRealService instance;
 
 	private MateriaPrimaRealService() {
 		// TODO Auto-generated constructor stub
 		this.materiaPrimaRealDAO = new MateriaPrimaRealDAO();
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
+		this.fornecedorService = FornecedorService.getInstance();
 	}
 	public static IMateriaPrimaRealService getInstance() {
 		if (instance == null) {
@@ -31,37 +34,33 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 	}
 
 	@Override
-	public int inserir(MateriaPrimaReal materiaPrimaReal) {
-		if (this.materiaPrimaRealDAO.procuraPeloId(materiaPrimaReal.getId()) != null) {
-			return -1;
-		}
-		if(this.materiaPrimaService.procuraPeloId(materiaPrimaReal.getIdExterno())== null) {
-			// Não tem materia prima geral vinvulada
-			return -1;
-		}
+	public int inserir(MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException {
+		this.validarCadastro(materiaPrimaReal);
 		this.materiaPrimaRealDAO.inserir(materiaPrimaReal);
 		return -1;
 	}
 
 	@Override
-	public int remover(int id) {
-		if (this.materiaPrimaRealDAO.procuraPeloId(id) != null) {
-			this.materiaPrimaRealDAO.remover(id);
-			return 0;
+	public int remover(int id) throws BusinessRuleException{
+		if (this.materiaPrimaRealDAO.procuraPeloId(id) == null) {
+			throw new BusinessRuleException("Tentou excluir uma matéria-prima real inexistente");
 		}
-		return -1;
+		return 	this.materiaPrimaRealDAO.remover(id);
 	}
 
 	@Override
-	public int alterar(int id, MateriaPrimaReal materiaPrimaReal) {
-		if (this.materiaPrimaRealDAO.procuraPeloId(id) != null) {
-			this.materiaPrimaRealDAO.alterar(id, materiaPrimaReal);
-			return 0;
+	public int alterar(int id, MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException {
+		this.validarCadastro(materiaPrimaReal);
+		if (this.materiaPrimaRealDAO.procuraPeloId(id) == null) {
+			throw new BusinessRuleException("ID inexistente");
 		}
-		return -1;
+		return this.materiaPrimaRealDAO.alterar(id, materiaPrimaReal);
 	}
 	@Override
-	public int alterarQuantidade(int id, float quantidade) {
+	public int alterarQuantidade(int id, float quantidade) throws BusinessRuleException {
+		if (quantidade < 0){
+			throw new BusinessRuleException("Quantidade negativa");
+		}
 		return this.materiaPrimaRealDAO.alterarQuantidade(id, quantidade);
 	}
 	@Override
@@ -79,12 +78,27 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 	}
 
 	@Override
-	public int validarCadastro(int id) {
-		// Checagem se matéria prima existe
-		if (this.materiaPrimaRealDAO.procuraPeloId(id) == null) {
-			return -1;
+	public void validarCadastro(MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException {
+		ArrayList<String> erros = new ArrayList<String>();
+		if(materiaPrimaReal == null) {
+			erros.add("Tentou inserir uma MateriaPrimaReal nula");
 		}
-		return 0;
+		if(this.fornecedorService.procuraPeloId(materiaPrimaReal.getFornecedor())== null) {
+			erros.add("Tentou inserir sem Fornecedor");
+		}
+		if(this.materiaPrimaService.procuraPeloId(materiaPrimaReal.getIdExterno())== null) {
+			erros.add("Tentou inserir sem um tipo de matéria-prima");
+		}
+		if(materiaPrimaReal.getPreço() < 0) {
+			erros.add("Tentou inserir um preço negativo");
+		}
+		if(materiaPrimaReal.getQuantidade() < 0) {
+			erros.add("Tentou inserir uma quantidade negativa");
+		} 
+		if (erros.size()>0) {
+			throw new BusinessRuleException(erros);
+		}
+
 	}
 
 }

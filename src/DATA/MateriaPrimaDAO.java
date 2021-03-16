@@ -23,6 +23,7 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 
 	@Override
 	public int inserir(MateriaPrima materiaPrima) {
+		materiaPrima.setId(this.pegaEIncremanetaId());
 		this.materiasPrimas.add(materiaPrima);
 		return materiaPrima.getId();
 	}
@@ -44,7 +45,7 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 	public int alterar(int id, MateriaPrima materiaPrima) {
 		for (MateriaPrima p : this.materiasPrimas) {
 			if (p.getId() == id) {
-				p.setId(materiaPrima.getId());
+				p.setId(id);
 				p.setNome(materiaPrima.getNome());
 				p.setTipo(materiaPrima.getTipo());
 				p.setPerecivel(materiaPrima.getPerecivel());
