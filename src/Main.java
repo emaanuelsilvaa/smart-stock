@@ -301,8 +301,8 @@ public class Main {
 			e1.printStackTrace();
 		}
 		
-		encomendaService.realizarEncomenda(listProdutos3, 1, data3);
-		encomendaService.realizarEncomenda(listProdutos4, 2, data4);
+//		encomendaService.realizarEncomenda(listProdutos3, 1, data3);
+//		encomendaService.realizarEncomenda(listProdutos4, 2, data4);
 		
 		ArrayList<Encomenda> encomendas = encomendaService.procuraTodos();
 		for (Encomenda e : encomendas) {
@@ -320,7 +320,7 @@ public class Main {
 						+ e.getListaProdutos().get(p) + " Unidades");
 			}
 		}
-		encomendaService.cosumarEncomenda(1);
+//		encomendaService.cosumarEncomenda(1);
 		// ===================================//
 		
 		System.out.print("\n\n\n//====== Teste Lista Reposição Produto ======//\n");		
@@ -361,12 +361,12 @@ public class Main {
 		System.out.println(">>> Realizando Venda2");
 		System.out.println(vendaService.realizarVenda(listProdutos2, 2));
 		
-		HashMap<Integer, Integer> listProdutos10 = new HashMap<Integer, Integer>();
-		listProdutos10.put(2, 5);
-		listProdutos10.put(1, 10);
-
-		System.out.println(">>> Realizando Venda3");
-		System.out.println(vendaService.realizarVenda(listProdutos10, 1));
+//		HashMap<Integer, Integer> listProdutos10 = new HashMap<Integer, Integer>();
+//		listProdutos10.put(2, 5);
+//		listProdutos10.put(1, 500);
+//
+//		System.out.println(">>> Realizando Venda3");
+//		System.out.println(vendaService.realizarVenda(listProdutos10, 1));
 
 		ArrayList<Venda> vendas = new ArrayList<Venda>();
 
@@ -387,26 +387,26 @@ public class Main {
 			}
 		}
 		
-//		vendaService.cancelarVenda(1);
-//		vendas = vendaService.procuraTodos();
-//		
-//		
-//		System.out.println("******* Após Cancelar a venda 1 *******");
-//		
-//		for (Venda v : vendas) {
-//			System.out.println("- - - - - - - - - -");
-//			System.out.println(">> Venda ID= " + v.getId());
-//			System.out.println("> Valor: " + v.getValor() + "R$");
-//			System.out.println("> Cliente: " + clienteService.procuraPeloId(v.getIdCliente()).getNome());
-//			System.out.println("> Data: " + v.getData());
-//			System.out.println("> Lista de Produtos: ");
-//			int contador = 0;
-//			for (Integer p : v.getListaProdutos().keySet()) {
-//				contador += 1;
-//				System.out.println("\t" + contador + ". " + produtoFinalService.procuraPeloId(p).getNome() + ": "
-//						+ v.getListaProdutos().get(p) + " Unidades");
-//			}
-//		}
+		vendaService.cancelarVenda(1);
+		vendas = vendaService.procuraTodos();
+		
+		
+		System.out.println("******* Após Cancelar a venda 1 *******");
+		
+		for (Venda v : vendas) {
+			System.out.println("- - - - - - - - - -");
+			System.out.println(">> Venda ID= " + v.getId());
+			System.out.println("> Valor: " + v.getValor() + "R$");
+			System.out.println("> Cliente: " + clienteService.procuraPeloId(v.getIdCliente()).getNome());
+			System.out.println("> Data: " + v.getData());
+			System.out.println("> Lista de Produtos: ");
+			int contador = 0;
+			for (Integer p : v.getListaProdutos().keySet()) {
+				contador += 1;
+				System.out.println("\t" + contador + ". " + produtoFinalService.procuraPeloId(p).getNome() + ": "
+						+ v.getListaProdutos().get(p) + " Unidades");
+			}
+		}
 		// ===================================//
 		
 		System.out.print("//========== Teste Estoque ===========//\n\n\n");
