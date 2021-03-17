@@ -28,6 +28,7 @@ import ENTITY.MateriaPrimaReal;
 import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
 import ENTITY.Venda;
+import GUI.Home;
 import UTIL.BusinessRuleException;
 import BUSINESS.FornecedorService;
 import BUSINESS.IClienteService;
@@ -64,7 +65,10 @@ public class Main {
 		IEncomendaService encomendaService = EncomendaService.getInstance();
 		IRelatorioService relatorioService = RelatorioService.getInstance();
 		IAnaliseLucro analiseLucro = AnaliseLucro.getInstance();
-
+		
+		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n\n");
+		Home.telaInicial(1);
+		
 		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n\n");
 
 		System.out.print("//==== Teste ClienteService ====//\n");
