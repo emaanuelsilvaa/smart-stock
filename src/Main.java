@@ -240,7 +240,7 @@ public class Main {
 		// ===================================//
 
 		System.out.print("//========== Teste Produto Final Real ===========//\n\n\n");
-		Date data = new Date();
+		Date data = new Date(121, 4, 1);
 
 		HashMap<Integer, Float> receitaReal = new HashMap<Integer, Float>();
 		receitaReal.put(3, 0.1f);

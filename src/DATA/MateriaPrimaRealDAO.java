@@ -42,7 +42,7 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 	public int alterar(int id, MateriaPrimaReal materiaPrima) {
 		for (MateriaPrimaReal m : this.materiasPrimas) {
 			if (m.getId() == id) {
-				m.setId(materiaPrima.getId());
+				m.setId(id);
 				m.setIdExterno(materiaPrima.getIdExterno());
 				m.setPreço(materiaPrima.getPreço());
 				m.setValidade(materiaPrima.getValidade());

@@ -9,6 +9,7 @@ import DATA.ProdutoFinalDAO;
 import DATA.ProdutoFinalRealDAO;
 import ENTITY.MateriaPrimaReal;
 import ENTITY.ProdutoFinalReal;
+import UTIL.BusinessRuleException;
 
 public final class EstoqueService implements IEstoqueService {
 	
@@ -46,7 +47,7 @@ public final class EstoqueService implements IEstoqueService {
 	}
 
 	@Override
-	public int baixaMateriaPrima(int id, float quantidade) {
+	public int baixaMateriaPrima(int id, float quantidade) throws BusinessRuleException {
 		materiaPrimaRealService.alterarQuantidade(id, -1 * quantidade);
 		return 0;
 	}

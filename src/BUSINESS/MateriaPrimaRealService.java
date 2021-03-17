@@ -36,8 +36,7 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 	@Override
 	public int inserir(MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException {
 		this.validarCadastro(materiaPrimaReal);
-		this.materiaPrimaRealDAO.inserir(materiaPrimaReal);
-		return -1;
+		return this.materiaPrimaRealDAO.inserir(materiaPrimaReal);
 	}
 
 	@Override
