@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import ENTITY.Encomenda;
 
 public class EncomendaDAO implements IEncomendaDAO {
-	
 	private ArrayList<Encomenda> encomendas;
 	
 	public EncomendaDAO() {

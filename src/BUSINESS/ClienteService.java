@@ -88,9 +88,4 @@ public final class ClienteService implements IClienteService {
 		return 0;
 	}
 	
-	
-	@Override
-	public int pegaEIncremanetaId() {
-		return this.clienteDAO.pegaEIncremanetaId();
-	}
 }

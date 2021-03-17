@@ -6,15 +6,14 @@ import ENTITY.Venda;
 
 public interface IVendaDAO {
 
-	void inserir(Venda venda);
+	int inserir(Venda venda);
 
-	boolean remover(int id);
+	int remover(int id);
 
 	ArrayList<Venda> procuraTodos();
 
-	Venda procuraPeloID(int id);
+	Venda procuraPeloId(int id);
 
-	//Cria um novo ID Baseado no ID do último elemento, sempre criando um ID novo {Solução temporária}
-	int getNextID();
+	int pegaEIncremanetaId();
 
 }

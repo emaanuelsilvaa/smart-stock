@@ -62,7 +62,7 @@ public final class ProdutoFinalService implements IProdutoFinalService {
 	public void validarCadastro(ProdutoFinal produtoFinal) throws BusinessRuleException{
 		ArrayList<String> erros = new ArrayList<String>();
 		if(produtoFinal == null) {
-			erros.add("Tentou inserir uma MateriaPrima nula");
+			erros.add("Tentou inserir um Produto Final nulo");
 		}
 		if(produtoFinal.getNome() == "" || produtoFinal.getNome() == null ) {
 			erros.add("Tentou inserir uma ProdutoFinal com nome nulo");

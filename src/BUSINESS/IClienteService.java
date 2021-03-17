@@ -19,6 +19,4 @@ public interface IClienteService {
 
 	int validarCadastro(Cliente cliente) throws BusinessRuleException;
 
-	int pegaEIncremanetaId();
-
 }

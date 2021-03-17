@@ -24,6 +24,14 @@ public class Venda {
 		this.listaProdutos = listaProdutos;
 		this.data = data;
 	}
+	
+	public Venda(float valor, int idCliente, HashMap<Integer, Integer> listaProdutos, Date data) {
+		super();
+		this.valor = valor;
+		this.idCliente = idCliente;
+		this.listaProdutos = listaProdutos;
+		this.data = data;
+	}
 
 	public int getId() {
 		return id;

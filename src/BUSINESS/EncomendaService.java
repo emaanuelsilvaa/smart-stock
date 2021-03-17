@@ -7,6 +7,7 @@ import java.util.HashMap;
 import DATA.EncomendaDAO;
 import DATA.IEncomendaDAO;
 import ENTITY.Encomenda;
+import UTIL.BusinessRuleException;
 
 public final class EncomendaService implements IEncomendaService {
 
@@ -60,7 +61,7 @@ public final class EncomendaService implements IEncomendaService {
 	}
 	
 	@Override
-	public int cosumarEncomenda(int id) {
+	public int cosumarEncomenda(int id) throws BusinessRuleException {
 		this.vendaService.realizarVenda(encomendaDAO.procuraPeloId(id).getListaProdutos(), encomendaDAO.procuraPeloId(id).getIdCliente());
 		return 0;
 	}

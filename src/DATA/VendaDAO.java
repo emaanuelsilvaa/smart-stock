@@ -4,78 +4,56 @@ import java.util.ArrayList;
 import ENTITY.Venda;
 
 public class VendaDAO implements IVendaDAO {
-	
 	private ArrayList <Venda> vendas;
-	
+	protected int idSerial;
 	
 	public VendaDAO () {
 		this.vendas = new ArrayList<Venda>();
-	};
+		this.idSerial = 1;
+	}
 	
 	
 	@Override
-	public void inserir(Venda venda) {
-		
+	public int inserir(Venda venda) {
+		venda.setId(this.pegaEIncremanetaId());
 		this.vendas.add(venda);
-	};
-	
+		return venda.getId();
+	}
 	
 	@Override
-	public boolean remover(int id) {
-		boolean temVendaCompativel = false;
+	public int remover(int id) {
 		Venda aux = new Venda();
-		for(Venda venda : this.vendas) {
+		for (Venda venda : this.vendas) {
 			if(venda.getId() == id) {
 				aux = venda;
-				temVendaCompativel = true;
 				break;
 			}
-		};
-		
-		if(temVendaCompativel) {
-			this.vendas.remove(aux);
-			return true;
 		}
-		
-		else {
-			return false;
-		}
-	};
+		this.vendas.remove(aux);
+		return aux.getId();
+	}
+	
 	@Override
 	public ArrayList<Venda> procuraTodos(){
 		return this.vendas;
 	}
 	
 	@Override
-	public Venda procuraPeloID(int id) {
-		boolean temVendaCompativel = false;
-		Venda aux = new Venda();
-		for(Venda venda : this.vendas) {
-			if(venda.getId() == id) {
-				aux = venda;
-				temVendaCompativel = true;
-				break;
+	public Venda procuraPeloId(int id) {
+		for (Venda venda : this.vendas) {
+			if (venda.getId() == id) {
+				return venda;
 			}
-		};
-		
-		if(temVendaCompativel) {
-			return aux;
 		}
-		
-		else {
-			return null;
-		}
+		return null;
 	};
 	
-	//Cria um novo ID Baseado no ID do último elemento, sempre criando um ID novo {Solução temporária}
 	@Override
-	public int getNextID() {
-		int length = this.vendas.size();
-		if (this.vendas.isEmpty()) {
-			return 1;
-		}
-		int nextID = this.vendas.get(length-1).getId() + 1;
-		return nextID;
+	public int pegaEIncremanetaId() {
+		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
+		int idAtual = this.idSerial;
+		this.idSerial += 1;
+		return idAtual;
 	}
 	
 }

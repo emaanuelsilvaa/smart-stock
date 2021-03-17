@@ -19,6 +19,4 @@ public interface IFornecedorService {
 
 	int validarCadastro(Fornecedor fornecedor) throws BusinessRuleException;
 
-	int pegaEIncremanetaId();
-
 }

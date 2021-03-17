@@ -101,9 +101,4 @@ public final class FornecedorService implements IFornecedorService {
 		return 0;
 	}
 	
-	@Override
-	public int pegaEIncremanetaId() {
-		return this.fornecedorDAO.pegaEIncremanetaId();
-	}
-	
 }

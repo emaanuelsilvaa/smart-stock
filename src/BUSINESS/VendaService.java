@@ -7,10 +7,9 @@ import java.util.HashMap;
 
 import DATA.IVendaDAO;
 import DATA.VendaDAO;
-import ENTITY.Cliente;
-import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
 import ENTITY.Venda;
+import UTIL.BusinessRuleException;
 
 public final class VendaService implements IVendaService {
 
@@ -18,6 +17,8 @@ public final class VendaService implements IVendaService {
 	protected IEstoqueService estoqueService;
 	protected IProdutoFinalService produtoFinalService;
 	protected IProdutoFinalRealService produtoFinalRealService;
+	protected IMateriaPrimaService materiaPrimaService;
+	protected IMateriaPrimaRealService materiaPrimaRealService;
 	private static IVendaService instance;
 	
 	private VendaService() {
@@ -25,6 +26,8 @@ public final class VendaService implements IVendaService {
 		this.estoqueService =  EstoqueService.getInstance();
 		this.produtoFinalService = ProdutoFinalService.getInstance();
 		this.produtoFinalRealService = ProdutoFinalRealService.getInstance();
+		this.materiaPrimaService = MateriaPrimaService.getInstance();
+		this.materiaPrimaRealService = MateriaPrimaRealService.getInstance();
 	};
 	
 	public static IVendaService getInstance() {
@@ -35,17 +38,25 @@ public final class VendaService implements IVendaService {
 	}
 
 	@Override
+	public int remover (int id) throws BusinessRuleException {
+		if(this.vendaDAO.procuraPeloId(id) == null) {
+			throw new BusinessRuleException("Tentou excluir um venda inexistente");
+		}
+		return this.vendaDAO.remover(id);
+	}
+	
+	@Override
 	public ArrayList<Venda> procuraTodos(){
 		return vendaDAO.procuraTodos();
 	}
 	
 	@Override
 	public Venda procuraPeloId(int id) {
-		return this.vendaDAO.procuraPeloID(id);
+		return this.vendaDAO.procuraPeloId(id);
 	}
 	
 	@Override
-	public boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) {
+	public boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) throws BusinessRuleException {
 		Date data = new Date();
 		boolean temMateriaPrimaSuficiente = true;
 		HashMap <Integer, Integer> listaDeProdutosReais = new HashMap<Integer, Integer>();
@@ -79,10 +90,10 @@ public final class VendaService implements IVendaService {
 				}
 			}
 			// Gerando um ID automaticamente para a nova venda
-			int newID = vendaDAO.getNextID();
-			Venda vendaASerInserida = new Venda(newID, valorDaVenda, idCliente, listaProdutos, data);
+			Venda vendaASerInserida = new Venda(valorDaVenda, idCliente, listaProdutos, data);
 			vendaASerInserida.setListaProdutosReais(listaDeProdutosReais);
 			
+			validarCadastro(vendaASerInserida);
 			this.vendaDAO.inserir(vendaASerInserida);
 			return true;
 		}
@@ -94,8 +105,8 @@ public final class VendaService implements IVendaService {
 	}
 	
 	@Override
-	public boolean cancelarVenda(int id) {
-		Venda vendaASerCancelada = this.vendaDAO.procuraPeloID(id);
+	public boolean cancelarVenda(int id) throws BusinessRuleException {
+		Venda vendaASerCancelada = this.vendaDAO.procuraPeloId(id);
 		ProdutoFinalReal produtoFinalRealASerReposto = new ProdutoFinalReal();
 		
 		if(vendaASerCancelada == null) {
@@ -114,13 +125,35 @@ public final class VendaService implements IVendaService {
 	}
 	
 	@Override
-	public int remover (int id) {
-		if(this.vendaDAO.procuraPeloID(id) != null) {
-			this.vendaDAO.remover(id);
-			return 0;
+	public void validarCadastro(Venda venda) throws BusinessRuleException{
+		ArrayList<String> erros = new ArrayList<String>();
+		if(venda == null) {
+			erros.add("Tentou inserir um Venda nula");
 		}
-		
-		return -1;
+		if(venda.getValor() <= 0) {
+			erros.add("Tentou inserir um valor de venda nulo ou negativo");
+		}
+		if(venda.getListaProdutos().isEmpty()) {
+			erros.add("Tentou vender uma lista de produtos vazia");
+		} else {
+			for(int i : venda.getListaProdutos().keySet()) {
+				if(this.materiaPrimaService.procuraPeloId(i) == null) {
+					erros.add("MatériaPrima de ID " + i + "não cadastrada");
+				}
+			}
+		}
+		if(venda.getListaProdutosReais().isEmpty()) {
+			erros.add("Tentou vender uma lista de produtos reais vazia");
+		} else {
+			for(int i : venda.getListaProdutosReais().keySet()) {
+				if(this.materiaPrimaRealService.procuraPeloId(i) == null) {
+					erros.add("MatériaPrimaReal de ID " + i + "não cadastrada");
+				}
+			}
+		}
+		if (erros.size()>0) {
+			throw new BusinessRuleException(erros);
+		}
 	}
 
 }

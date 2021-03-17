@@ -3,20 +3,21 @@ package BUSINESS;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ENTITY.Cliente;
-import ENTITY.ProdutoFinal;
 import ENTITY.Venda;
+import UTIL.BusinessRuleException;
 
 public interface IVendaService {
+	
+	int remover(int id) throws BusinessRuleException;
 
 	ArrayList<Venda> procuraTodos();
 	
 	Venda procuraPeloId(int id);
 	
-	int remover(int id);
+	boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) throws BusinessRuleException;	
 	
-	boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente);	
-	
-	boolean cancelarVenda(int id);
+	boolean cancelarVenda(int id) throws BusinessRuleException;
+
+	void validarCadastro(Venda venda) throws BusinessRuleException;
 	
 }
