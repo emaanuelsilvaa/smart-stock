@@ -2,11 +2,6 @@ package BUSINESS;
 
 import java.util.ArrayList;
 
-import DATA.IProdutoFinalDAO;
-import DATA.MateriaPrimaDAO;
-import DATA.MateriaPrimaRealDAO;
-import DATA.ProdutoFinalDAO;
-import DATA.ProdutoFinalRealDAO;
 import ENTITY.MateriaPrimaReal;
 import ENTITY.ProdutoFinalReal;
 import UTIL.BusinessRuleException;
