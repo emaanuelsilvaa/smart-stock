@@ -14,9 +14,9 @@ public interface IVendaService {
 	
 	Venda procuraPeloId(int id);
 	
-	boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) throws BusinessRuleException;	
+	int realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) throws BusinessRuleException;	
 	
-	boolean cancelarVenda(int id) throws BusinessRuleException;
+	int cancelarVenda(int id) throws BusinessRuleException;
 
 	void validarCadastro(Venda venda) throws BusinessRuleException;
 	

@@ -56,7 +56,7 @@ public final class VendaService implements IVendaService {
 	}
 	
 	@Override
-	public boolean realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) throws BusinessRuleException {
+	public int realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) throws BusinessRuleException {
 		Date data = new Date();
 		boolean temMateriaPrimaSuficiente = true;
 		HashMap <Integer, Integer> listaDeProdutosReais = new HashMap<Integer, Integer>();
@@ -65,7 +65,7 @@ public final class VendaService implements IVendaService {
 			int quantidade = listaProdutos.get(idProduto);
 			if(estoqueService.verificaDisponibilidadeProduto(idProduto, quantidade) < 0) {
 				temMateriaPrimaSuficiente = false;
-				return false;
+				throw new BusinessRuleException("Não tem produto suficiente para realização desta venda");
 			}
 			valorDaVenda += produtoFinalService.procuraPeloId(idProduto).getPreco() * quantidade;
 		}
@@ -95,25 +95,23 @@ public final class VendaService implements IVendaService {
 			
 			validarCadastro(vendaASerInserida);
 			this.vendaDAO.inserir(vendaASerInserida);
-			return true;
+			return vendaASerInserida.getId();
 		}
-
 		else {
-			return false;
+			throw new BusinessRuleException("Não tem produto suficiente para realização desta venda");
 		}
 
 	}
 	
 	@Override
-	public boolean cancelarVenda(int id) throws BusinessRuleException {
+	public int cancelarVenda(int id) throws BusinessRuleException {
 		Venda vendaASerCancelada = this.vendaDAO.procuraPeloId(id);
 		ProdutoFinalReal produtoFinalRealASerReposto = new ProdutoFinalReal();
 		
 		if(vendaASerCancelada == null) {
-			return false;
+			throw new BusinessRuleException("Tentou cancelar uma venda inexistente");
 		}
 		
-		this.remover(id);
 		HashMap<Integer, Integer> listaDeProdutosFinaisReais = vendaASerCancelada.getListaProdutosReais();
 		
 		for(Integer key : listaDeProdutosFinaisReais.keySet()) {
@@ -121,7 +119,7 @@ public final class VendaService implements IVendaService {
 			this.estoqueService.reporProdutoFinal(key, listaDeProdutosFinaisReais.get(key));
 			
 		}
-		return true;
+		return this.remover(id);
 	}
 	
 	@Override
