@@ -4,10 +4,16 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
+import BUSINESS.IMateriaPrimaService;
+import BUSINESS.MateriaPrimaService;
+import UTIL.Colors;
+
 public class MateriaPrimaGUI {
+	IMateriaPrimaService materiaPrimaService;
 
 	public MateriaPrimaGUI() {
 		// TODO Auto-generated constructor stub
+		this.materiaPrimaService = MateriaPrimaService.getInstance();
 	}
 	public static void telaCadastrar(int a) {
 	
