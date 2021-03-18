@@ -1,21 +1,62 @@
 package GUI;
 
+
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
 import BUSINESS.IMateriaPrimaService;
 import BUSINESS.MateriaPrimaService;
+import ENTITY.MateriaPrima;
 import UTIL.Colors;
 
 public class MateriaPrimaGUI {
 	IMateriaPrimaService materiaPrimaService;
 
-	public MateriaPrimaGUI() {
+	public  MateriaPrimaGUI() {
 		// TODO Auto-generated constructor stub
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
 	}
+	
+	
+	
 	public static void telaCadastrar(int a) {
+		IMateriaPrimaService materiaPrimaService = MateriaPrimaService.getInstance();
+		
+		
+		Scanner input = new Scanner(System.in);
+		String nome = " "; 
+		String tipo = " ";
+		Boolean perecivel = false;
+		String unMedida = " ";
+		Float quantidade = (float)0.0;
+		
+		while(nome != "SAIR") {
+			try {
+				System.out.println("===== Cadastrar Matéria-Prima =====");
+				System.out.println("\nDigite os seguintes parâmetros:");
+				System.out.println("[Str ] [Str ] [Boolean  ] [Str              ] [Float     ]");
+				System.out.println("[Nome] [Tipo] [Perecível] [Unidade De Medida] [Quantidade]\n");
+				System.out.println("Se quiser volta, basta digitar 'sair' ");
+				nome = input.next();
+				if(!nome.toUpperCase().equals("SAIR")) {
+					tipo = input.next();
+					perecivel = Boolean.parseBoolean(input.next());
+					unMedida = input.next();
+					quantidade = Float.parseFloat(input.next());
+					materiaPrimaService.inserir(new MateriaPrima(nome, tipo, perecivel, unMedida, quantidade));
+				}
+				else {
+					nome = "SAIR";
+					System.out.println("Saindo da tela de cadastro");
+				}
+				
+			} catch (Exception e){
+				System.out.println("Digite valores válidos");
+				nome = "SAIR";
+			}
+			System.out.println("");
+		}
 	
 	}
 	public static void telaAlterar(int a) {
