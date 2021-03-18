@@ -38,6 +38,7 @@ public class Home {
 
 		funcoesPtr.put(0, Home::telaDespedida);
 		funcoesPtr.put(3, MateriaPrimaGUI::init);
+		funcoesPtr.put(5, ProdutoFinalGUI::init);
 
 		 do{
 			System.out.println("===== Menu Principal =====");
