@@ -66,7 +66,45 @@ public class MateriaPrimaGUI {
 	}
 
 	public static void telaAlterar(int a) {
+		String nome = "";
+		String tipo = "";
+		boolean perecivel = true;
+		String unMedida = "";
+		float qntMinima = 0;
+		int aux = -1;
+		int id;
+		int idASubstituir = 0;
+		System.out.println("===== Alterar Matéria-Prima =====");
+		do {
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("[Int] Entre com o ID da matéria-prima a ser alterada: ");
+				idASubstituir = Integer.parseInt(input.nextLine());
+				System.out.print("[String] Entre com o nome: ");
+				nome = input.nextLine();
+				System.out.print("[String] Entre com o tipo: ");
+				tipo = input.nextLine();
+				System.out.print("[Boolean] É perecível? ");
+				perecivel = Boolean.getBoolean(input.nextLine());
+				System.out.print("[String] Entre com a unidade de medida: ");
+				unMedida = input.nextLine();
+				System.out.print("[Float] Entre com a quantidade mínima no estoque: ");
+				qntMinima = Float.parseFloat(input.nextLine());
+				aux = 0;
+			} catch (Exception e) {
+				System.out.println("\nErro de parâmetros, digite novamente seguindo os tipos\n");
+				aux = -1;
+			}
+		} while (aux != 0);
+		try {
+			id = materiaPrimaService.alterar(idASubstituir,new MateriaPrima(nome, tipo, perecivel, unMedida, qntMinima));
+			System.out.println(Colors.GREEN + "Matéria Prima alterada com o ID " + id + Colors.RESET);
 
+		} catch (BusinessRuleException bre) {
+			System.out
+					.println(Colors.RED + "Matéria Prima não alterada pelo(s) seguinte(s) motivo(s):" + Colors.RESET);
+			System.out.println(bre.getMessage());
+		}
 	}
 
 	public static void materiasPrimasCadastradas() {
@@ -96,7 +134,14 @@ public class MateriaPrimaGUI {
 
 		}
 	}
-
+	public static void removerMateriaPrima(int id) {
+		try{
+			materiaPrimaService.remover(id);
+			System.out.println(Colors.GREEN + "Materia prima de Id: "+ id + " removida" + Colors.RESET);
+		} catch (BusinessRuleException e) {
+			System.out.println(Colors.RED+ e.getMessage() + Colors.RESET);
+		}
+	}
 	public static void telaConsultar(int a) {
 		int opt = -1;
 		int opt2 = -1;
@@ -134,6 +179,39 @@ public class MateriaPrimaGUI {
 	}
 
 	public static void telaRemover(int a) {
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Remover Matéria-Prima ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Matérias-Primas cadastradas");
+			System.out.printf("[%d] %s \n", 2, "Remover Matéria-Prima");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					materiasPrimasCadastradas();
+					break;
+				case 2:
+					System.out.print("Digite o id da matéria-prima: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					removerMateriaPrima(opt2);
+					break;
+				default:
+					throw new Exception("Aqui!");
+
+				}
+			} catch (Exception e) {
+				System.out.println(Colors.RED + "Digite um valor válido" + Colors.RESET);
+				e.printStackTrace();
+			}
+		} while (opt != 0);
+		
 
 	}
 
