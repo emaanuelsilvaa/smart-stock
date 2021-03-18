@@ -37,7 +37,7 @@ public class Home {
 		funcoes.put(11, "Analisar  Lucro");
 
 		funcoesPtr.put(0, Home::telaDespedida);
-		funcoesPtr.put(3, MateriaPrimaGUI::telaInicial);
+		funcoesPtr.put(3, MateriaPrimaGUI::init);
 
 		 do{
 			System.out.println("===== Menu Principal =====");
