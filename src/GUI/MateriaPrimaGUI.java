@@ -21,43 +21,43 @@ public class MateriaPrimaGUI {
 	
 	
 	public static void telaCadastrar(int a) {
-		IMateriaPrimaService materiaPrimaService = MateriaPrimaService.getInstance();
-		
-		
-		Scanner input = new Scanner(System.in);
-		String nome = " "; 
-		String tipo = " ";
-		Boolean perecivel = false;
-		String unMedida = " ";
-		Float quantidade = (float)0.0;
-		
-		while(nome != "SAIR") {
+		String nome = "";
+		String tipo = "";
+		boolean perecivel = true;
+		String unMedida = "";
+		float qntMinima = 0;
+		int aux = -1;
+		int id;
+		System.out.println("===== Cadastrar Matéria-Prima =====");
+		do {
 			try {
-				System.out.println("===== Cadastrar Matéria-Prima =====");
-				System.out.println("\nDigite os seguintes parâmetros:");
-				System.out.println("[Str ] [Str ] [Boolean  ] [Str              ] [Float     ]");
-				System.out.println("[Nome] [Tipo] [Perecível] [Unidade De Medida] [Quantidade]\n");
-				System.out.println("Se quiser volta, basta digitar 'sair' ");
-				nome = input.next();
-				if(!nome.toUpperCase().equals("SAIR")) {
-					tipo = input.next();
-					perecivel = Boolean.parseBoolean(input.next());
-					unMedida = input.next();
-					quantidade = Float.parseFloat(input.next());
-					materiaPrimaService.inserir(new MateriaPrima(nome, tipo, perecivel, unMedida, quantidade));
-				}
-				else {
-					nome = "SAIR";
-					System.out.println("Saindo da tela de cadastro");
-				}
-				
-			} catch (Exception e){
-				System.out.println("Digite valores válidos");
-				nome = "SAIR";
+				Scanner input = new Scanner(System.in);
+				System.out.print("[String] Entre com o nome: ");
+				nome = input.nextLine();
+				System.out.print("[String] Entre com o tipo: ");
+				tipo = input.nextLine();
+				System.out.print("[Boolean] É perecível? ");
+				perecivel = Boolean.getBoolean(input.nextLine());
+				System.out.print("[String] Entre com a unidade de medida: ");
+				unMedida = input.nextLine();
+				System.out.print("[Float] Entre com a quantidade mínima no estoque: ");
+				qntMinima = Float.parseFloat(input.nextLine());
+				aux = 0;
+			} catch (Exception e) {
+				System.out.println("\nErro de parâmetros, digite novamente seguindo os tipos\n");
+				aux = -1;
 			}
-			System.out.println("");
+		} while (aux != 0);
+		try {
+			id = materiaPrimaService.inserir(new MateriaPrima(nome, tipo, perecivel, unMedida, qntMinima));
+			System.out.println(Colors.GREEN + "Matéria Prima cadastrada com o ID " + id + Colors.RESET);
+
+		} catch (BusinessRuleException bre) {
+			System.out
+					.println(Colors.RED + "Matéria Prima não cadastrada pelo(s) seguinte(s) motivo(s):" + Colors.RESET);
+			System.out.println(bre.getMessage());
 		}
-	
+
 	}
 	public static void telaAlterar(int a) {
 		
