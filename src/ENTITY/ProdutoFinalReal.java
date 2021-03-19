@@ -22,6 +22,14 @@ public class ProdutoFinalReal implements Comparable<ProdutoFinalReal>{
 		this.quantidade = quantidade;
 		this.receitaReal= receitaReal;
 	}
+	
+	public ProdutoFinalReal(int idExterno, Date validade, int quantidade, HashMap<Integer, Float> receitaReal) {
+		super();
+		this.idExterno = idExterno;
+		this.validade = validade;
+		this.quantidade = quantidade;
+		this.receitaReal= receitaReal;
+	}
 
 	public int getId() {
 		return id;
