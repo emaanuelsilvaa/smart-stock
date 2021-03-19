@@ -24,6 +24,16 @@ public class MateriaPrimaReal{
 		this.quantidade = quantidade;
 		this.idFornecedor = idFornecedor;
 	}
+	
+
+	public MateriaPrimaReal(int idExterno, float preço, Date validade, float quantidade, int idFornecedor) {
+		super();
+		this.idExterno = idExterno;
+		this.preço = preço;
+		this.validade = validade;
+		this.quantidade = quantidade;
+		this.idFornecedor = idFornecedor;
+	}
 
 	public int getId() {
 		return id;

@@ -40,6 +40,7 @@ public class Home {
 		funcoesPtr.put(0, ClienteGUI::init);
 		funcoesPtr.put(2, FornecedorGUI::init);
 		funcoesPtr.put(3, MateriaPrimaGUI::init);
+		funcoesPtr.put(4, MateriaPrimaRealGUI::init);
 		funcoesPtr.put(5, ProdutoFinalGUI::init);
 
 		 do{
