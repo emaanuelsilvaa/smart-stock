@@ -198,7 +198,49 @@ public class FornecedorGUI {
 
 	}
 	
+	public static void removerFornecedor(int id) {
+		IFornecedorService fornecedorService = FornecedorService.getInstance();
+		try{
+			fornecedorService.remover(id);
+			System.out.println("Fornecedor de Id: "+ id + " foi removido");
+		} catch (BusinessRuleException bre) {
+			System.out.println(bre.getMessage());
+		}
+	}
+	
 	public static void telaRemover (int id) {
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Remover Fornecedor ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Fornecedores cadastrados");
+			System.out.printf("[%d] %s \n", 2, "Remover Fornecedor");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					mostraTodosOSFornecedores();
+					break;
+				case 2:
+					System.out.print("Digite o id do Fornecedor: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					removerFornecedor(opt2);
+					break;
+				default:
+					throw new Exception("Valor Inválido");
+
+				}
+			} catch (Exception bre) {
+				System.out.println("Digite um valor válido");
+				bre.printStackTrace();
+			}
+		} while (opt != 0);
 		
 	}
 	
