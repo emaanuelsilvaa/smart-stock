@@ -120,7 +120,7 @@ public class FornecedorGUI {
 		
 	}
 	
-	private static void mostraTodosOSFornecedores(int a) {
+	private static void mostraTodosOSFornecedores() {
 		ArrayList<Fornecedor> listaDeFornecedores = new ArrayList <Fornecedor> ();
 		IFornecedorService fornecedorService = FornecedorService.getInstance();
 		listaDeFornecedores = fornecedorService.procuraTodos();
@@ -151,9 +151,9 @@ public class FornecedorGUI {
 			System.out.printf("Endereço: %s\n", fornecedor.getEndereço());
 			System.out.printf("Telefone: %s\n", fornecedor.getTelefone());
 			System.out.printf("Email: %s\n", fornecedor.getEmail());
-			System.out.printf("Matérias Primas que o Fornecedor dispõe: ");
+			System.out.printf("Matérias Primas que o Fornecedor dispõe: \n");
 			for(MateriaPrima materiaPrima : fornecedor.getListaProdutos()) {
-				System.out.printf("[", materiaPrima.getNome(), "]\n");
+				System.out.println("[" + materiaPrima.getNome()+ "]");
 			}
 		}
 	}
@@ -163,7 +163,39 @@ public class FornecedorGUI {
 	}
 	
 	public static void telaConsultar (int a) {
-		
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Consultar Fornecedor ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Fornecedores cadastrados");
+			System.out.printf("[%d] %s \n", 2, "Ver um Fornecedor Detalhadamente");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					mostraTodosOSFornecedores();
+					break;
+				case 2:
+					System.out.print("Digite o id do Fornecedor: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					mostraFornecedorDetalhado(opt2);
+					break;
+				default:
+					throw new Exception("Valor Inválido");
+
+				}
+			} catch (Exception e) {
+				System.out.println(Colors.RED + "Digite um valor válido" + Colors.RESET);
+				e.printStackTrace();
+			}
+		} while (opt != 0);
+
 	}
 	
 	public static void telaRemover (int id) {
