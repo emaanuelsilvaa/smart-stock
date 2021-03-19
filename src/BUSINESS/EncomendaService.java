@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import DATA.EncomendaDAO;
 import DATA.IEncomendaDAO;
+import ENTITY.Cliente;
 import ENTITY.Encomenda;
 import UTIL.BusinessRuleException;
 
@@ -16,6 +17,7 @@ public final class EncomendaService implements IEncomendaService {
 	protected IProdutoFinalService produtoFinalService;
 	protected IProdutoFinalRealService produtoFinalRealService;
 	protected IMateriaPrimaService materiaPrimaService;
+	protected IClienteService clienteService;
 	private static IEncomendaService instance;
 
 	private EncomendaService() {
@@ -25,6 +27,7 @@ public final class EncomendaService implements IEncomendaService {
 		this.produtoFinalRealService = ProdutoFinalRealService.getInstance();
 		this.produtoFinalService = ProdutoFinalService.getInstance();
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
+		this.clienteService = ClienteService.getInstance();
 	}
 
 	public static IEncomendaService getInstance() {
@@ -96,11 +99,21 @@ public final class EncomendaService implements IEncomendaService {
 		if(encomenda == null) {
 			erros.add("Tentou inserir uma Encomenda nula");
 		}
-		if (erros.size() > 0) {
-			throw new BusinessRuleException(erros);
-		}
 		if(encomenda.getValor() <= 0) {
-			erros.add("Tentou inserir um valor de encomenda nula ou negativa");
+			erros.add("Tentou inserir um valor de encomenda nulo ou negativo");
+		}
+		if(encomenda.getIdCliente() < 1) {
+			erros.add("Tentou inserir um id de Cliente inválido");
+		} else {
+			int aux = -1;
+			for (Cliente c: clienteService.procuraTodos()) {
+			    if (c.getId() == encomenda.getIdCliente()) {
+			        aux = 0;
+			    }
+			}
+			if(aux == -1) {
+				erros.add("Cliente de ID " + encomenda.getIdCliente() + "não cadastrado");
+			}
 		}
 		if(encomenda.getListaProdutos().isEmpty()) {
 			erros.add("Tentou vender uma lista de produtos vazia");

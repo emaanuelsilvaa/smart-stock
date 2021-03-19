@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import DATA.IVendaDAO;
 import DATA.VendaDAO;
+import ENTITY.Cliente;
 import ENTITY.ProdutoFinalReal;
 import ENTITY.Venda;
 import UTIL.BusinessRuleException;
@@ -19,6 +20,7 @@ public final class VendaService implements IVendaService {
 	protected IProdutoFinalRealService produtoFinalRealService;
 	protected IMateriaPrimaService materiaPrimaService;
 	protected IMateriaPrimaRealService materiaPrimaRealService;
+	protected IClienteService clienteService;
 	private static IVendaService instance;
 	
 	private VendaService() {
@@ -28,6 +30,7 @@ public final class VendaService implements IVendaService {
 		this.produtoFinalRealService = ProdutoFinalRealService.getInstance();
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
 		this.materiaPrimaRealService = MateriaPrimaRealService.getInstance();
+		this.clienteService = ClienteService.getInstance();
 	};
 	
 	public static IVendaService getInstance() {
@@ -130,6 +133,19 @@ public final class VendaService implements IVendaService {
 		}
 		if(venda.getValor() <= 0) {
 			erros.add("Tentou inserir um valor de venda nulo ou negativo");
+		}
+		if(venda.getIdCliente() < 1) {
+			erros.add("Tentou inserir um id de Cliente inválido");
+		} else {
+			int aux = -1;
+			for (Cliente c: clienteService.procuraTodos()) {
+			    if (c.getId() == venda.getIdCliente()) {
+			        aux = 0;
+			    }
+			}
+			if(aux == -1) {
+				erros.add("Cliente de ID " + venda.getIdCliente() + "não cadastrado");
+			}
 		}
 		if(venda.getListaProdutos().isEmpty()) {
 			erros.add("Tentou vender uma lista de produtos vazia");
