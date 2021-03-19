@@ -100,7 +100,7 @@ public final class EncomendaService implements IEncomendaService {
 			throw new BusinessRuleException(erros);
 		}
 		if(encomenda.getValor() <= 0) {
-			erros.add("Tentou inserir um valor de encomenda nulo ou negativo");
+			erros.add("Tentou inserir um valor de encomenda nula ou negativa");
 		}
 		if(encomenda.getListaProdutos().isEmpty()) {
 			erros.add("Tentou vender uma lista de produtos vazia");

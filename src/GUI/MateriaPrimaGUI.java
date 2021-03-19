@@ -58,8 +58,7 @@ public class MateriaPrimaGUI {
 			System.out.println(Colors.GREEN + "Matéria Prima cadastrada com o ID " + id + Colors.RESET);
 
 		} catch (BusinessRuleException bre) {
-			System.out
-					.println(Colors.RED + "Matéria Prima não cadastrada pelo(s) seguinte(s) motivo(s):" + Colors.RESET);
+			System.out.println(Colors.RED + "Matéria Prima não cadastrada pelo(s) seguinte(s) motivo(s):" + Colors.RESET);
 			System.out.println(bre.getMessage());
 		}
 
