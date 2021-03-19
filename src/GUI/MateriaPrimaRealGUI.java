@@ -156,8 +156,7 @@ public class MateriaPrimaRealGUI {
 			System.out.println("Matéria Prima em Estoque cadastrada com o ID " + id);
 
 		} catch (BusinessRuleException bre) {
-			System.out
-					.println("Matéria Prima não cadastrada pelo(s) seguinte(s) motivo(s):");
+			System.out.println("Matéria Prima não cadastrada pelo(s) seguinte(s) motivo(s):");
 			System.out.println(bre.getMessage());
 		}
 
