@@ -113,7 +113,7 @@ public class FornecedorGUI {
 			id = fornecedorService.inserir(new Fornecedor(nome, cnpj, endereco, telefone, email, listaDeMateriasPrimasASeremInseridas));
 			System.out.println("Fornecedor cadastrado com o ID " + id);
 		}catch (BusinessRuleException bre) {
-			System.out.println("Matéria Prima não cadastrada pelo(s) seguinte(s) motivo(s):");
+			System.out.println("Fornecedor não cadastrado pelo(s) seguinte(s) motivo(s):");
 			System.out.println(bre.getMessage());
 		}
 		
@@ -159,7 +159,91 @@ public class FornecedorGUI {
 	}
 	
 	public static void telaAlterar (int a) {
+		IFornecedorService fornecedorService = FornecedorService.getInstance();
+		IMateriaPrimaService materiaPrimaService = MateriaPrimaService.getInstance();
+		int id = 0;
+		int idASubstituir = 0;
+		int aux = 0;
+		int auxMateriaPrima = 0;
+		int checadorDeContinuidade = 0;
+		Boolean temMateriaPrimaCorrespondente = false;
+		String nome = new String();
+		String cnpj = new String();
+		String endereco = new String();
+		String telefone = new String();
+		String email = new String();
+		ArrayList <String> listaDeMateriasPrimasInseridas = new ArrayList <String> (); // Nomes das matérias primas que vão ser inseridas no fornecedor
+		ArrayList <MateriaPrima> listaDeMateriasPrimasASeremInseridas = new ArrayList <MateriaPrima> (); // Todas as matérias primas que vão ser inseridas no construtor do fornecedor
+		ArrayList <MateriaPrima> listaDeMateriasPrimas = new ArrayList <MateriaPrima> (); //Todas as matérias primas no estoque
+		listaDeMateriasPrimas = materiaPrimaService.procuraTodos();
 		
+		System.out.println("===== Cadastrar Fornecedor =====");
+		do {
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("[Int] Entre com o Id do Fornedor a ser alterado: ");
+				idASubstituir = Integer.parseInt(input.nextLine());
+				System.out.print("[String] Entre com o nome: ");
+				nome = input.nextLine();
+				System.out.print("[String] Entre com o cnpj: ");
+				cnpj = input.nextLine();
+				System.out.print("[String] Entre com o endereço ");
+				endereco = input.nextLine();
+				System.out.print("[String] Entre com o telefone: ");
+				telefone = input.nextLine();
+				System.out.print("[String] Entre com o email: ");
+				email = input.nextLine();
+				
+				do {
+					temMateriaPrimaCorrespondente = false;
+					System.out.print("[String] Entre com o nome da  matéria prima que esse Fornecedor vende: ");
+					listaDeMateriasPrimasInseridas.add(input.nextLine());
+					for(MateriaPrima materiaPrima : listaDeMateriasPrimas) {
+						if(materiaPrima.getNome().equalsIgnoreCase(listaDeMateriasPrimasInseridas.get(auxMateriaPrima))) {
+							temMateriaPrimaCorrespondente = true;
+							listaDeMateriasPrimasASeremInseridas.add(materiaPrima);
+						}
+					}
+					
+					if(temMateriaPrimaCorrespondente) {
+						System.out.print("Deseja inserir outra matéria prima? [1 - sim] [2 - não]: ");
+						checadorDeContinuidade = Integer.parseInt(input.nextLine());
+						if(checadorDeContinuidade == 1) {
+							auxMateriaPrima++;
+						}
+						else if (checadorDeContinuidade == 2) {
+							auxMateriaPrima = -1;
+							aux = -1;
+						}
+						else {
+							System.out.println("Você não digitou um valor válido, encerrando a inserção de matéria prima...\n");
+							auxMateriaPrima = -1;
+							aux = -1;
+						}
+					}
+					
+					else {
+						listaDeMateriasPrimasInseridas.remove(auxMateriaPrima);
+						System.out.println("Matéria Prima inválida\n");
+					}
+					
+				}while(auxMateriaPrima != -1);
+				
+				
+				
+			} catch(Exception e){
+				System.out.println("\nErro de parâmetros, digite novamente seguindo os tipos\n");
+			}
+			
+		}while(aux != -1);
+		
+		try {
+			id = fornecedorService.alterar(idASubstituir, new Fornecedor(nome, cnpj, endereco, telefone, email, listaDeMateriasPrimasASeremInseridas));
+			System.out.println("Fornecedor alterado com o ID " + id);
+		}catch (BusinessRuleException bre) {
+			System.out.println("Fornecedor não alterado pelo(s) seguinte(s) motivo(s):");
+			System.out.println(bre.getMessage());
+		}
 	}
 	
 	public static void telaConsultar (int a) {
