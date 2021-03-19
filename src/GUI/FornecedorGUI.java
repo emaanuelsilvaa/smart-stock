@@ -177,7 +177,7 @@ public class FornecedorGUI {
 		ArrayList <MateriaPrima> listaDeMateriasPrimas = new ArrayList <MateriaPrima> (); //Todas as matérias primas no estoque
 		listaDeMateriasPrimas = materiaPrimaService.procuraTodos();
 		
-		System.out.println("===== Cadastrar Fornecedor =====");
+		System.out.println("===== Alterar Fornecedor =====");
 		do {
 			try {
 				Scanner input = new Scanner(System.in);

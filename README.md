@@ -1,6 +1,11 @@
 # SmartStock
 Projeto da disciplina DIM0138 - PROJETO DETALHADO DE SOFTWARE de 2020.2
 
+## Autores
+- Yago Marques
+- Camila Duarte
+- Leonandro Gurgel
+
 ## Sprint 1 15/02/2021
 - Adicionar/Remover/Consultar: 
 	Matéria Prima
