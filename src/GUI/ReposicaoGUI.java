@@ -76,7 +76,7 @@ public class ReposicaoGUI {
 			} else {
 				System.out.println(" Produtos Finais que faltarão: \n");
 				for(int id : produtosFaltantes.keySet()) {
-					System.out.printf("%s: %d", produtoFinalService.procuraPeloId(id).getNome(), produtosFaltantes.get(id));
+					System.out.printf("%s: %d\n", produtoFinalService.procuraPeloId(id).getNome(), produtosFaltantes.get(id));
 				}
 			}
 		} catch (BusinessRuleException bre) {
@@ -92,7 +92,7 @@ public class ReposicaoGUI {
 			} else {
 				System.out.println("Matérias-Primas que faltarão: \n");
 				for(int id : materiasFaltantes.keySet()) {
-					System.out.printf("%s: %f", materiaPrimaService.procuraPeloId(id).getNome(), materiasFaltantes.get(id));
+					System.out.printf("%s: %f\n", materiaPrimaService.procuraPeloId(id).getNome(), materiasFaltantes.get(id));
 				}
 			}
 		} catch (BusinessRuleException bre) {
