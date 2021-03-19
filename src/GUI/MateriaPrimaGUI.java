@@ -55,10 +55,10 @@ public class MateriaPrimaGUI {
 		} while (aux != 0);
 		try {
 			id = materiaPrimaService.inserir(new MateriaPrima(nome, tipo, perecivel, unMedida, qntMinima));
-			System.out.println(Colors.GREEN + "Matéria Prima cadastrada com o ID " + id + Colors.RESET);
+			System.out.println("Matéria Prima cadastrada com o ID " + id);
 
 		} catch (BusinessRuleException bre) {
-			System.out.println(Colors.RED + "Matéria Prima não cadastrada pelo(s) seguinte(s) motivo(s):" + Colors.RESET);
+			System.out.println("Matéria Prima não cadastrada pelo(s) seguinte(s) motivo(s):");
 			System.out.println(bre.getMessage());
 		}
 
@@ -97,11 +97,11 @@ public class MateriaPrimaGUI {
 		} while (aux != 0);
 		try {
 			id = materiaPrimaService.alterar(idASubstituir,new MateriaPrima(nome, tipo, perecivel, unMedida, qntMinima));
-			System.out.println(Colors.GREEN + "Matéria Prima alterada com o ID " + id + Colors.RESET);
+			System.out.println("Matéria Prima alterada com o ID " + id);
 
 		} catch (BusinessRuleException bre) {
 			System.out
-					.println(Colors.RED + "Matéria Prima não alterada pelo(s) seguinte(s) motivo(s):" + Colors.RESET);
+					.println("Matéria Prima não alterada pelo(s) seguinte(s) motivo(s):");
 			System.out.println(bre.getMessage());
 		}
 	}
@@ -136,9 +136,9 @@ public class MateriaPrimaGUI {
 	public static void removerMateriaPrima(int id) {
 		try{
 			materiaPrimaService.remover(id);
-			System.out.println(Colors.GREEN + "Materia prima de Id: "+ id + " removida" + Colors.RESET);
+			System.out.println("Materia prima de Id: "+ id + " removida");
 		} catch (BusinessRuleException e) {
-			System.out.println(Colors.RED+ e.getMessage() + Colors.RESET);
+			System.out.println(e.getMessage());
 		}
 	}
 	public static void telaConsultar(int a) {
@@ -170,7 +170,7 @@ public class MateriaPrimaGUI {
 
 				}
 			} catch (Exception e) {
-				System.out.println(Colors.RED + "Digite um valor válido" + Colors.RESET);
+				System.out.println("Digite um valor válido");
 				e.printStackTrace();
 			}
 		} while (opt != 0);
@@ -206,7 +206,7 @@ public class MateriaPrimaGUI {
 
 				}
 			} catch (Exception e) {
-				System.out.println(Colors.RED + "Digite um valor válido" + Colors.RESET);
+				System.out.println("Digite um valor válido");
 				e.printStackTrace();
 			}
 		} while (opt != 0);
