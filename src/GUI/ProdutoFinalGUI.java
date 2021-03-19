@@ -123,7 +123,28 @@ public class ProdutoFinalGUI {
 			}
 		}
 		
+	}
+	
+	private static void mostraProdutoFinalDetalhado(int id) {
+		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
+		IMateriaPrimaService materiaPrimaService = MateriaPrimaService.getInstance();
+		ProdutoFinal produtoFinal = produtoFinalService.procuraPeloId(id);
+		if(produtoFinal == null) {
+			System.out.println("Produto Final não encontrado\n");
+		}
 		
+		else {
+			System.out.printf("\nId: %d\n", produtoFinal.getId());
+			System.out.printf("Nome: %s\n", produtoFinal.getNome());
+			System.out.printf("Preço: %.2f\n", produtoFinal.getPreco());
+			System.out.printf("Quantidade Mínima: %d\n", produtoFinal.getQntMinima());
+			System.out.printf("Receita referente a esse produtoFinal: \n");
+			for(int materiaPrimaID : produtoFinal.getReceita().keySet()) {
+			
+				System.out.println("Matéria Prima = [" + materiaPrimaService.procuraPeloId(materiaPrimaID).getNome() 
+								  + "] Quantidade = [" + produtoFinal.getReceita().get(materiaPrimaID)+ "]");
+			}
+		}
 	}
 	
 	public static void telaAlterar (int a) {
