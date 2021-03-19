@@ -32,8 +32,7 @@ public class Home {
 		funcoes.put(6, "Gerenciar Produto Final Real");
 		funcoes.put(7, "Gerenciar Venda");
 		funcoes.put(8, "Gerenciar Encomenda");
-		funcoes.put(9, "Analisar Produto Final");
-		funcoes.put(10, "Analisar  Matéria-Prima");
+		funcoes.put(9, "Analisar Provisionamento");
 		funcoes.put(11, "Analisar  Lucro");
 
 		funcoesPtr.put(0, Home::telaDespedida);
@@ -42,7 +41,7 @@ public class Home {
 		funcoesPtr.put(3, MateriaPrimaGUI::init);
 		funcoesPtr.put(4, MateriaPrimaRealGUI::init);
 		funcoesPtr.put(5, ProdutoFinalGUI::init);
-
+		funcoesPtr.put(9, ReposicaoGUI::init);
 		 do{
 			System.out.println("===== Menu Principal =====");
 			System.out.println("\nOperações disponíveis:\n");

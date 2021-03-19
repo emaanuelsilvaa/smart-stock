@@ -7,6 +7,7 @@ import java.util.HashMap;
 import ENTITY.Encomenda;
 import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
+import UTIL.BusinessRuleException;
 import ENTITY.MateriaPrima;
 
 public final class RelatorioService implements IRelatorioService {
@@ -31,9 +32,12 @@ public final class RelatorioService implements IRelatorioService {
 	}
 
 	@Override
-	public HashMap<Integer, Integer> listarReposicaoProduto(Date dataInicio, Date dataFim) {
+	public HashMap<Integer, Integer> listarReposicaoProduto(Date dataInicio, Date dataFim) throws BusinessRuleException {
 		// Função que retorna a lista de produtos necessário para atender as encomendas
 		// a partir de um intervalo de tempo
+		if (dataInicio.after(dataFim)){
+			throw new BusinessRuleException("Data final é menor que a data inicial");
+		}
 		HashMap<Integer, Integer> qntProduto = new HashMap<Integer, Integer>();
 		HashMap<Integer, Integer> qntProdutoFaltante = new HashMap<Integer, Integer>();
 		for (Encomenda e : encomendaService.procuraTodos()) {
@@ -59,7 +63,7 @@ public final class RelatorioService implements IRelatorioService {
 	}
 	
 	@Override
-	public HashMap <Integer, Float> listarReposicaoMateriaPrima(Date dataInicio, Date dataFim){
+	public HashMap <Integer, Float> listarReposicaoMateriaPrima(Date dataInicio, Date dataFim) throws BusinessRuleException{
 		HashMap <Integer, Integer> listaDeProdutosFaltantes = this.listarReposicaoProduto(dataInicio, dataFim);
 		HashMap <Integer, Float> listaDeMateriaPrimaFaltanteTotal = new HashMap <Integer, Float> ();
 		HashMap <Integer, Float> listaDeMateriaPrimaFaltante = new HashMap <Integer, Float> ();

@@ -67,9 +67,6 @@ public class Main {
 		IAnaliseLucro analiseLucro = AnaliseLucro.getInstance();
 		
 		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n\n");
-		Home.telaInicial(1);
-		
-		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n\n");
 
 		System.out.print("//==== Teste ClienteService ====//\n");
 		System.out.print(">>> Criando o cliente 1...\n");
@@ -445,6 +442,7 @@ public class Main {
 		
 		float lucro = analiseLucro.analisarLucro(data_ex_1, data_ex_2);
 		System.out.print("Lucro entre as datas ["+data_ex_1+"] e ["+data_ex_2+"] = "+lucro+"\n\n");
+		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n\n");
+		Home.telaInicial(1);
 	}
-
 }
