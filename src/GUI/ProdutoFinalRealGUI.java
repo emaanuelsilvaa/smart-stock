@@ -14,10 +14,12 @@ import ENTITY.ProdutoFinalReal;
 import UTIL.BusinessRuleException;
 
 public class ProdutoFinalRealGUI {
-	IProdutoFinalRealService produtoFinalRealService;
+	static IProdutoFinalRealService produtoFinalRealService;
+	static IMateriaPrimaRealService materiaPrimaRealService;
 	
 	public ProdutoFinalRealGUI() {
 		produtoFinalRealService = ProdutoFinalRealService.getInstance();
+		materiaPrimaRealService = MateriaPrimaRealService.getInstance();
 	}
 	
 	public static void init(int a) {
@@ -66,10 +68,7 @@ public class ProdutoFinalRealGUI {
 		System.out.println("Saindo do Menu Produto Final Real");
 	}
 		
-	public static void telaCadastrar(int a) {
-		IProdutoFinalRealService produtoFinalRealService = ProdutoFinalRealService.getInstance();
-		IMateriaPrimaRealService materiaPrimaRealService = MateriaPrimaRealService.getInstance();
-		
+	public static void telaCadastrar(int a) {		
 		int id;
 		int idExterno = 0;
 		Date validade = new Date();
