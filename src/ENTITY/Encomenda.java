@@ -16,6 +16,12 @@ public class Encomenda extends Venda {
 		this.dataEntrega = dataEntrega;
 	}
 	
+	public Encomenda(float valor, int idCliente, HashMap<Integer, Integer> listaProdutos, Date data,
+			Date dataEntrega) {
+		super(valor, idCliente, listaProdutos, data);
+		this.dataEntrega = dataEntrega;
+	}
+	
 	public Date getDataEntrega() {
 		return dataEntrega;
 	}

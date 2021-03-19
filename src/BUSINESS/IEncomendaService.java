@@ -13,14 +13,16 @@ public interface IEncomendaService {
 
 	Encomenda procuraPeloId(int id);
 
-	int inserir(Encomenda encomenda);
+	int inserir(Encomenda encomenda) throws BusinessRuleException;
 
-	boolean remover(int id);
+	int remover(int id) throws BusinessRuleException;
 
-	int cosumarEncomenda(int id) throws BusinessRuleException;
+	int consumarEncomenda(int id) throws BusinessRuleException;
 
-	int alterar(int id, Encomenda encomenda);
+	int alterar(int id, Encomenda encomenda) throws BusinessRuleException;
 
 	int realizarEncomenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Date dataEntrega);
+
+	int validarCadastro(Encomenda encomenda) throws BusinessRuleException;
 
 }

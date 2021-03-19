@@ -6,17 +6,23 @@ import ENTITY.Encomenda;
 
 public class EncomendaDAO implements IEncomendaDAO {
 	private ArrayList<Encomenda> encomendas;
+	protected int idSerial;
 	
 	public EncomendaDAO() {
 		// TODO Auto-generated constructor stub
 		this.encomendas = new ArrayList<Encomenda>();
+		this.idSerial = 1;
 	}
+	
 	@Override
-	public void inserir(Encomenda encomenda) {
+	public int inserir(Encomenda encomenda) {
+		encomenda.setId(this.pegaEIncremanetaId());
 		this.encomendas.add(encomenda);
+		return encomenda.getId();
 	}
+	
 	@Override
-	public boolean remover(int id) {
+	public int remover(int id) {
 		Encomenda aux = new Encomenda();
 		for (Encomenda e : encomendas) {
 			if(e.getId() == id) {
@@ -25,12 +31,14 @@ public class EncomendaDAO implements IEncomendaDAO {
 			}
 		}
 		this.encomendas.remove(aux);
-		return true;
+		return aux.getId();
 	}
+	
 	@Override
 	public ArrayList<Encomenda> procuraTodos(){
 		return this.encomendas;
 	}
+	
 	@Override
 	public Encomenda procuraPeloId(int id) {
 		for(Encomenda e : this.encomendas) {
@@ -40,6 +48,7 @@ public class EncomendaDAO implements IEncomendaDAO {
 		}
 		return null;
 	}
+	
 	@Override
 	public int alterar(int id, Encomenda encomenda) {
 		for (Encomenda e : this.encomendas) {
@@ -50,17 +59,17 @@ public class EncomendaDAO implements IEncomendaDAO {
 				e.setValor(encomenda.getValor());
 				e.setData(encomenda.getData());
 				e.setDataEntrega(encomenda.getDataEntrega());
-				return 0;
+				break;
 			}
 		}
-		return -1;
+		return id;
 	}
-	public int getNextID() {
-		int length = this.encomendas.size();
-		if (this.encomendas.isEmpty()) {
-			return 1;
-		}
-		int nextID = this.encomendas.get(length-1).getId() + 1;
-		return nextID;
+	
+	@Override
+	public int pegaEIncremanetaId() {
+		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
+		int idAtual = this.idSerial;
+		this.idSerial += 1;
+		return idAtual;
 	}
 }
