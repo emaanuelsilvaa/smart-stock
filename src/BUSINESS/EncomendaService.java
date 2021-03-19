@@ -15,6 +15,7 @@ public final class EncomendaService implements IEncomendaService {
 	protected IVendaService vendaService;
 	protected IProdutoFinalService produtoFinalService;
 	protected IProdutoFinalRealService produtoFinalRealService;
+	protected IMateriaPrimaService materiaPrimaService;
 	private static IEncomendaService instance;
 
 	private EncomendaService() {
@@ -23,6 +24,7 @@ public final class EncomendaService implements IEncomendaService {
 		this.vendaService = VendaService.getInstance();
 		this.produtoFinalRealService = ProdutoFinalRealService.getInstance();
 		this.produtoFinalService = ProdutoFinalService.getInstance();
+		this.materiaPrimaService = MateriaPrimaService.getInstance();
 	}
 
 	public static IEncomendaService getInstance() {
@@ -92,12 +94,26 @@ public final class EncomendaService implements IEncomendaService {
 	public int validarCadastro(Encomenda encomenda) throws BusinessRuleException {
 		ArrayList<String> erros = new ArrayList<String>();
 		if(encomenda == null) {
-			erros.add("Tentou inserir uma Encomenda nulo");
+			erros.add("Tentou inserir uma Encomenda nula");
 		}
 		if (erros.size() > 0) {
 			throw new BusinessRuleException(erros);
 		}
-		
+		if(encomenda.getValor() <= 0) {
+			erros.add("Tentou inserir um valor de encomenda nulo ou negativo");
+		}
+		if(encomenda.getListaProdutos().isEmpty()) {
+			erros.add("Tentou vender uma lista de produtos vazia");
+		} else {
+			for(int i : encomenda.getListaProdutos().keySet()) {
+				if(this.materiaPrimaService.procuraPeloId(i) == null) {
+					erros.add("MatériaPrima de ID " + i + "não cadastrada");
+				}
+			}
+		}
+		if (erros.size() > 0) {
+			throw new BusinessRuleException(erros);
+		}
 		return 0;
 	}
 
