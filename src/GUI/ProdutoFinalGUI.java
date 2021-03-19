@@ -186,6 +186,16 @@ public class ProdutoFinalGUI {
 		} while (opt != 0);
 	}
 	
+	public static void removerProdutoFinal(int id) {
+		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
+		try{
+			produtoFinalService.remover(id);
+			System.out.println("Produto Final de Id: "+ id + " foi removido");
+		} catch (BusinessRuleException bre) {
+			System.out.println(bre.getMessage());
+		}
+	}
+	
 	public static void telaRemover (int id) {
 		
 	}
