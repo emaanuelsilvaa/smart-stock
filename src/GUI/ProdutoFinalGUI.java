@@ -152,7 +152,38 @@ public class ProdutoFinalGUI {
 	}
 	
 	public static void telaConsultar (int a) {
-		
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Consultar ProdutoFinal ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Produtos Finais cadastrados");
+			System.out.printf("[%d] %s \n", 2, "Ver um Produto Final Detalhadamente");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					mostraTodosOSProdutosFinais();
+					break;
+				case 2:
+					System.out.print("Digite o id do Produto Final: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					mostraProdutoFinalDetalhado(opt2);
+					break;
+				default:
+					throw new Exception("Valor Inválido");
+
+				}
+			} catch (Exception e) {
+				System.out.println("Digite um valor válido");
+				e.printStackTrace();
+			}
+		} while (opt != 0);
 	}
 	
 	public static void telaRemover (int id) {
