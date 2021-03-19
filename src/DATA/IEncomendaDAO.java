@@ -6,9 +6,9 @@ import ENTITY.Encomenda;
 
 public interface IEncomendaDAO {
 
-	void inserir(Encomenda encomenda);
+	int inserir(Encomenda encomenda);
 
-	boolean remover(int id);
+	int remover(int id);
 
 	ArrayList<Encomenda> procuraTodos();
 
@@ -16,6 +16,6 @@ public interface IEncomendaDAO {
 
 	int alterar(int id, Encomenda encomenda);
 
-	int getNextID();
+	int pegaEIncremanetaId();
 
 }

@@ -301,8 +301,8 @@ public class Main {
 			e1.printStackTrace();
 		}
 		
-//		encomendaService.realizarEncomenda(listProdutos3, 1, data3);
-//		encomendaService.realizarEncomenda(listProdutos4, 2, data4);
+		encomendaService.realizarEncomenda(listProdutos3, 1, data3);
+		encomendaService.realizarEncomenda(listProdutos4, 2, data4);
 		
 		ArrayList<Encomenda> encomendas = encomendaService.procuraTodos();
 		for (Encomenda e : encomendas) {
@@ -320,7 +320,7 @@ public class Main {
 						+ e.getListaProdutos().get(p) + " Unidades");
 			}
 		}
-//		encomendaService.cosumarEncomenda(1);
+//		encomendaService.consumarEncomenda(1);
 		// ===================================//
 		
 		System.out.print("\n\n\n//====== Teste Lista Reposição Produto ======//\n");		
