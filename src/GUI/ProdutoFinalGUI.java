@@ -6,9 +6,12 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 import BUSINESS.IProdutoFinalService;
+import BUSINESS.FornecedorService;
+import BUSINESS.IFornecedorService;
 import BUSINESS.IMateriaPrimaService;
 import BUSINESS.ProdutoFinalService;
 import BUSINESS.MateriaPrimaService;
+import ENTITY.Fornecedor;
 import ENTITY.MateriaPrima;
 import ENTITY.ProdutoFinal;
 import UTIL.BusinessRuleException;
@@ -105,6 +108,22 @@ public class ProdutoFinalGUI {
 			System.out.println("Produto Final não cadastrado pelo(s) seguinte(s) motivo(s):");
 			System.out.println(bre.getMessage());
 		}
+	}
+	
+	private static void mostraTodosOSProdutosFinais() {
+		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
+		ArrayList<ProdutoFinal> listaDeProdutosFinais = produtoFinalService.procuraTodos();
+		if(listaDeProdutosFinais.isEmpty()) {
+			System.out.println("Nenhum Produto Final Cadastrado\n");
+		}
+		else {
+			System.out.println("Produtos Finais Cadastrados: \n");
+			for(ProdutoFinal produtoFinal : listaDeProdutosFinais) {
+				System.out.printf("[%d] %s \n", produtoFinal.getId(), produtoFinal.getNome());
+			}
+		}
+		
+		
 	}
 	
 	public static void telaAlterar (int a) {
