@@ -2,16 +2,26 @@ package GUI;
 
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import BUSINESS.IFornecedorService;
 import BUSINESS.FornecedorService;
+import BUSINESS.IMateriaPrimaService;
+import BUSINESS.MateriaPrimaService;
+
+import ENTITY.Fornecedor;
+import ENTITY.MateriaPrima;
+import UTIL.BusinessRuleException;
+import UTIL.Colors;
 
 public class FornecedorGUI {
 	IFornecedorService fornecedorService;
+	//IMateriaPrimaService materiaPrimaService;
 	
 	public FornecedorGUI () {
-		this.fornecedorService = FornecedorService.getInstance();
+		//this.fornecedorService = FornecedorService.getInstance();
+		//this.materiaPrimaService = MateriaPrimaService.getInstance();
 	}
 	
 	public static void init(int a) {
@@ -19,7 +29,94 @@ public class FornecedorGUI {
 		telaInicial(1);
 	}
 	
+	
+	
+	// TERMINAR
 	public static void telaCadastrar (int a) {
+		
+		IFornecedorService fornecedorService = FornecedorService.getInstance();
+		IMateriaPrimaService materiaPrimaService = MateriaPrimaService.getInstance();
+		int id = 0;
+		int aux = 0;
+		int auxMateriaPrima = 0;
+		int checadorDeContinuidade = 0;
+		Boolean temMateriaPrimaCorrespondente = false;
+		String nome = new String();
+		String cnpj = new String();
+		String endereco = new String();
+		String telefone = new String();
+		String email = new String();
+		ArrayList <String> listaDeMateriasPrimasInseridas = new ArrayList <String> (); // Nomes das matérias primas que vão ser inseridas no fornecedor
+		ArrayList <MateriaPrima> listaDeMateriasPrimasASeremInseridas = new ArrayList <MateriaPrima> (); // Todas as matérias primas que vão ser inseridas no construtor do fornecedor
+		ArrayList <MateriaPrima> listaDeMateriasPrimas = new ArrayList <MateriaPrima> (); //Todas as matérias primas no estoque
+		listaDeMateriasPrimas = materiaPrimaService.procuraTodos();
+		
+		System.out.println("===== Cadastrar Fornecedor =====");
+		do {
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("[String] Entre com o nome: ");
+				nome = input.nextLine();
+				System.out.print("[String] Entre com o cnpj: ");
+				cnpj = input.nextLine();
+				System.out.print("[String] Entre com o endereço ");
+				endereco = input.nextLine();
+				System.out.print("[String] Entre com o telefone: ");
+				telefone = input.nextLine();
+				System.out.print("[String] Entre com o email: ");
+				email = input.nextLine();
+				
+				do {
+					temMateriaPrimaCorrespondente = false;
+					System.out.print("[String] Entre com o nome da  matéria prima que esse Fornecedor vende: ");
+					listaDeMateriasPrimasInseridas.add(input.nextLine());
+					for(MateriaPrima materiaPrima : listaDeMateriasPrimas) {
+						if(materiaPrima.getNome().equalsIgnoreCase(listaDeMateriasPrimasInseridas.get(auxMateriaPrima))) {
+							temMateriaPrimaCorrespondente = true;
+							listaDeMateriasPrimasASeremInseridas.add(materiaPrima);
+						}
+					}
+					
+					if(temMateriaPrimaCorrespondente) {
+						System.out.print("Deseja inserir outra matéria prima? [1 - sim] [2 - não]: ");
+						checadorDeContinuidade = Integer.parseInt(input.nextLine());
+						if(checadorDeContinuidade == 1) {
+							auxMateriaPrima++;
+						}
+						else if (checadorDeContinuidade == 2) {
+							auxMateriaPrima = -1;
+							aux = -1;
+						}
+						else {
+							System.out.println("Você não digitou um valor válido, encerrando a inserção de matéria prima...\n");
+							auxMateriaPrima = -1;
+							aux = -1;
+						}
+					}
+					
+					else {
+						listaDeMateriasPrimasInseridas.remove(auxMateriaPrima);
+						System.out.println("Matéria Prima inválida\n");
+					}
+					
+				}while(auxMateriaPrima != -1);
+				
+				
+				
+			} catch(Exception e){
+				System.out.println("\nErro de parâmetros, digite novamente seguindo os tipos\n");
+			}
+			
+		}while(aux != -1);
+		
+		try {
+			id = fornecedorService.inserir(new Fornecedor(nome, cnpj, endereco, telefone, email, listaDeMateriasPrimasASeremInseridas));
+			System.out.println("Fornecedor cadastrado com o ID " + id);
+		}catch (BusinessRuleException bre) {
+			System.out.println("Matéria Prima não cadastrada pelo(s) seguinte(s) motivo(s):");
+			System.out.println(bre.getMessage());
+		}
+		
 		
 	}
 	
@@ -33,6 +130,11 @@ public class FornecedorGUI {
 	
 	public static void telaRemover (int id) {
 		
+	}
+	
+	public static void sair(int a) {
+		System.out.println("Saindo do Menu Fornecedor");
+
 	}
 	
 	
@@ -49,11 +151,11 @@ public class FornecedorGUI {
 		funcoes.put(3, "Consultar Fornecedor");
 		funcoes.put(4, "Remover Fornecedor");
 
-		funcoesPtr.put(0, MateriaPrimaGUI::sair);
-		funcoesPtr.put(1, MateriaPrimaGUI::telaCadastrar);
-		funcoesPtr.put(2, MateriaPrimaGUI::telaAlterar);
-		funcoesPtr.put(3, MateriaPrimaGUI::telaConsultar);
-		funcoesPtr.put(4, MateriaPrimaGUI::telaRemover);
+		funcoesPtr.put(0, FornecedorGUI::sair);
+		funcoesPtr.put(1, FornecedorGUI::telaCadastrar);
+		funcoesPtr.put(2, FornecedorGUI::telaAlterar);
+		funcoesPtr.put(3, FornecedorGUI::telaConsultar);
+		funcoesPtr.put(4, FornecedorGUI::telaRemover);
 
 		while (opt != 0) {
 			System.out.println("===== Menu Fornecedor =====");
