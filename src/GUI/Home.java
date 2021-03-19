@@ -37,7 +37,7 @@ public class Home {
 		funcoes.put(11, "Analisar  Lucro");
 
 		funcoesPtr.put(0, Home::telaDespedida);
-		funcoesPtr.put(0, ClienteGUI::init);
+		funcoesPtr.put(1, ClienteGUI::init);
 		funcoesPtr.put(2, FornecedorGUI::init);
 		funcoesPtr.put(3, MateriaPrimaGUI::init);
 		funcoesPtr.put(5, ProdutoFinalGUI::init);
