@@ -31,7 +31,7 @@ public class FornecedorGUI {
 	
 	
 	
-	// TERMINAR
+	// TODO [Leonandro] Refatorar (pelo menos quebrando em múltiplas funções para diminuir a complexidade da leitura)
 	public static void telaCadastrar (int a) {
 		
 		IFornecedorService fornecedorService = FornecedorService.getInstance();
@@ -118,6 +118,44 @@ public class FornecedorGUI {
 		}
 		
 		
+	}
+	
+	private static void mostraTodosOSFornecedores(int a) {
+		ArrayList<Fornecedor> listaDeFornecedores = new ArrayList <Fornecedor> ();
+		IFornecedorService fornecedorService = FornecedorService.getInstance();
+		listaDeFornecedores = fornecedorService.procuraTodos();
+		if(listaDeFornecedores.isEmpty()) {
+			System.out.println("Nenhum Fornecedor Cadastrado\n");
+		}
+		else {
+			System.out.println("Fornecedores Cadastrados: \n");
+			for(Fornecedor fornecedor : listaDeFornecedores) {
+				System.out.printf("[%d] %s \n", fornecedor.getId(), fornecedor.getNome());
+			}
+		}
+		
+		
+	}
+	
+	private static void mostraFornecedorDetalhado(int id) {
+		IFornecedorService fornecedorService = FornecedorService.getInstance();
+		Fornecedor fornecedor = fornecedorService.procuraPeloId(id);
+		if(fornecedor == null) {
+			System.out.println("Fornecedor não encontrado\n");
+		}
+		
+		else {
+			System.out.printf("\nId: %d\n", fornecedor.getId());
+			System.out.printf("Nome: %s\n", fornecedor.getNome());
+			System.out.printf("CNPJ: %s\n", fornecedor.getCnpj());
+			System.out.printf("Endereço: %s\n", fornecedor.getEndereço());
+			System.out.printf("Telefone: %s\n", fornecedor.getTelefone());
+			System.out.printf("Email: %s\n", fornecedor.getEmail());
+			System.out.printf("Matérias Primas que o Fornecedor dispõe: ");
+			for(MateriaPrima materiaPrima : fornecedor.getListaProdutos()) {
+				System.out.printf("[", materiaPrima.getNome(), "]\n");
+			}
+		}
 	}
 	
 	public static void telaAlterar (int a) {
