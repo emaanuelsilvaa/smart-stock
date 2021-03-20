@@ -8,12 +8,9 @@ import java.util.function.Consumer;
 
 import BUSINESS.IMateriaPrimaRealService;
 import BUSINESS.IProdutoFinalRealService;
-import BUSINESS.IProdutoFinalService;
 import BUSINESS.MateriaPrimaRealService;
 import BUSINESS.ProdutoFinalRealService;
-import BUSINESS.ProdutoFinalService;
 import ENTITY.MateriaPrimaReal;
-import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
 import UTIL.BusinessRuleException;
 
@@ -154,7 +151,38 @@ public class ProdutoFinalRealGUI {
 	}
 	
 	public static void telaConsultar(int a) {
-		
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Consultar ProdutoFinalReal ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Produtos Finais Reais cadastrados");
+			System.out.printf("[%d] %s \n", 2, "Ver um Produto Final Real Detalhadamente");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					mostrarTodosProdutosFinaisReais();
+					break;
+				case 2:
+					System.out.print("Digite o id do Produto Final: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					mostrarProdutoFinalRealDetalhado(opt2);
+					break;
+				default:
+					throw new Exception("Valor Inválido");
+
+				}
+			} catch (Exception e) {
+				System.out.println("Digite um valor válido");
+				e.printStackTrace();
+			}
+		} while (opt != 0);
 	}
 	
 	public static void removerProdutoFinalReal(int id) {
@@ -166,7 +194,26 @@ public class ProdutoFinalRealGUI {
 		}
 	}
 	
-	public static void mostraTodosOsProdutosFinaisReais() {
+	public static void mostrarProdutoFinalRealDetalhado(int id) {
+		ProdutoFinalReal produtoFinalReal = produtoFinalRealService.procuraPeloId(id);
+		if(produtoFinalReal == null) {
+			System.out.println("Produto Final Real não encontrado\n");
+		}
+		
+		else {
+			System.out.printf("\nId: %d\n", produtoFinalReal.getId());
+			System.out.printf("Id Produto Final Genérico: %s\n", produtoFinalReal.getIdExterno());
+			System.out.printf("Validade: " + produtoFinalReal.getValidade() + "\n");
+			System.out.printf("Quantidade: %d\n", produtoFinalReal.getQuantidade());
+			System.out.printf("Receita real referente a esse Produto Final Real: \n");
+			for(int materiaPrimaRealID : produtoFinalReal.getReceitaReal().keySet()) {
+				System.out.println("ID Matéria Prima Real = [" + materiaPrimaRealService.procuraPeloId(materiaPrimaRealID).getId()
+								  + "] Quantidade = [" + produtoFinalReal.getReceitaReal().get(materiaPrimaRealID)+ "]");
+			}
+		}
+	}
+	
+	public static void mostrarTodosProdutosFinaisReais() {
 		ArrayList<ProdutoFinalReal> listaProdutosFinaisReais = produtoFinalRealService.procuraTodos();
 		if(listaProdutosFinaisReais.isEmpty()) {
 			System.out.println("Nenhum Produto Final Cadastrado\n");
@@ -196,7 +243,7 @@ public class ProdutoFinalRealGUI {
 				case 0:
 					break;
 				case 1:
-					mostraTodosOsProdutosFinaisReais();
+					mostrarTodosProdutosFinaisReais();
 					break;
 				case 2:
 					System.out.print("Digite o id do Produto Final Real: ");

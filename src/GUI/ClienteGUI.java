@@ -188,7 +188,7 @@ public class ClienteGUI {
 					clienteDetalhado(opt2);
 					break;
 				default:
-					throw new Exception("Aqui!");
+					throw new Exception("Valor Inválido");
 
 				}
 			} catch (Exception e) {
@@ -233,7 +233,7 @@ public class ClienteGUI {
 					removerCliente(opt2);
 					break;
 				default:
-					throw new Exception("Aqui!");
+					throw new Exception("Valor Inválido");
 
 				}
 			} catch (Exception e) {
