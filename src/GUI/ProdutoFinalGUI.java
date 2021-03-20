@@ -222,10 +222,10 @@ public class ProdutoFinalGUI {
 		} while (aux != 0);
 		try {
 			id = produtoFinalService.alterar(idASubstituir, new ProdutoFinal(nome, preco, qtdMinima, receita)); 
-			System.out.println("Produto Final Cadastrado com o ID " + id);
+			System.out.println("Produto Final alterado com o ID " + id);
 
 		} catch (BusinessRuleException bre) {
-			System.out.println("Produto Final não cadastrado pelo(s) seguinte(s) motivo(s):");
+			System.out.println("Produto Final não alterado pelo(s) seguinte(s) motivo(s):");
 			System.out.println(bre.getMessage());
 		}
 	}

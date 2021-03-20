@@ -147,7 +147,82 @@ public class ProdutoFinalRealGUI {
 	}
 	
 	public static void telaAlterar(int a) {
+		int id;
+		int idASubstituir = 0;
+		int idExterno = 0;
+		Date validade = new Date();
+		int quantidade = 0;
+		int aux = -1;
+		int auxMateriaPrimaReal = 0;
+		int idMateriaPrimaRealReceitaReal;
+		float qtdMateriaPrimaRealReceitaReal = 0;
+		int checadorDeContinuidade = 0;
+		Boolean temMateriaPrimaRealCorrespondente;
+		HashMap<Integer, Float> receitaReal = new HashMap<Integer, Float>();
 		
+		System.out.println("===== Alterar Produto Final =====");
+		do {
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("[Int] Entre com o Id do Produto Final Real a ser alterado: ");
+				idASubstituir = Integer.parseInt(input.nextLine());
+				System.out.print("[Int] Entre com o id do Produto Final genérico: ");
+				idExterno = Integer.parseInt(input.nextLine());
+				System.out.print("[Date] Entre com a validade: (mês/dia/ano)");
+				validade = new Date(input.nextLine());
+				System.out.print("[Int] Entre com a quantidade: ");
+				quantidade = Integer.parseInt(input.nextLine());
+
+				do {
+					temMateriaPrimaRealCorrespondente = false;
+					System.out.print("[Int] Entre com o id de uma Matéria Prima Real que compõe esse Produto Final Real: ");
+					idMateriaPrimaRealReceitaReal = Integer.parseInt(input.nextLine());
+					System.out.print("[Float] Entre com a quantidade dessa Matéria Prima Real na Receita Real: ");
+					qtdMateriaPrimaRealReceitaReal = Float.parseFloat(input.nextLine());
+					for(MateriaPrimaReal materiaPrimaReal : materiaPrimaRealService.procuraTodos()) {
+						if(materiaPrimaReal.getId() == idMateriaPrimaRealReceitaReal) {
+							temMateriaPrimaRealCorrespondente = true;
+							receitaReal.put(idMateriaPrimaRealReceitaReal , qtdMateriaPrimaRealReceitaReal);
+						}
+					}
+					
+					if(temMateriaPrimaRealCorrespondente) {
+						System.out.print("Deseja inserir outra Matéria Prima Real na Receita Real? \n[1] Sim \n[2] Não: \n");
+						checadorDeContinuidade = Integer.parseInt(input.nextLine());
+						if(checadorDeContinuidade == 1) {
+							auxMateriaPrimaReal = 0;
+						}
+						else if (checadorDeContinuidade == 2) {
+							auxMateriaPrimaReal = -1;
+							aux = -1;
+						}
+						else {
+							System.out.println("Você não digitou um valor válido, encerrando a inserção de matérias primas reais na receita real...\n");
+							auxMateriaPrimaReal = -1;
+							aux = -1;
+						}
+					}
+					
+					else {
+						System.out.println("Matéria Prima Real inválida\n");
+					}
+				} while(auxMateriaPrimaReal != -1);
+				
+				aux = 0;
+			} catch (Exception e) {
+				System.out.println("\nErro de parâmetros, digite novamente seguindo os tipos\n");
+				aux = -1;
+			}
+		} while (aux != 0);
+		
+		try {
+			id = produtoFinalRealService.alterar(idASubstituir, new ProdutoFinalReal(idExterno, validade, quantidade, receitaReal)); 
+			System.out.println("Produto Final Real alterado com o ID " + id);
+
+		} catch (BusinessRuleException bre) {
+			System.out.println("Produto Final Real não alterado pelo(s) seguinte(s) motivo(s):");
+			System.out.println(bre.getMessage());
+		}
 	}
 	
 	public static void telaConsultar(int a) {
@@ -170,7 +245,7 @@ public class ProdutoFinalRealGUI {
 					mostrarTodosProdutosFinaisReais();
 					break;
 				case 2:
-					System.out.print("Digite o id do Produto Final: ");
+					System.out.print("Digite o id do Produto Final Real: ");
 					opt2 = Integer.parseInt(input.nextLine());
 					mostrarProdutoFinalRealDetalhado(opt2);
 					break;
@@ -207,7 +282,7 @@ public class ProdutoFinalRealGUI {
 			System.out.printf("Quantidade: %d\n", produtoFinalReal.getQuantidade());
 			System.out.printf("Receita real referente a esse Produto Final Real: \n");
 			for(int materiaPrimaRealID : produtoFinalReal.getReceitaReal().keySet()) {
-				System.out.println("ID Matéria Prima Real = [" + materiaPrimaRealService.procuraPeloId(materiaPrimaRealID).getId()
+				System.out.println("ID Matéria Prima Real = [" + materiaPrimaRealID
 								  + "] Quantidade = [" + produtoFinalReal.getReceitaReal().get(materiaPrimaRealID)+ "]");
 			}
 		}

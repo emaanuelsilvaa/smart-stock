@@ -265,13 +265,17 @@ public class Main {
 		produtoFinalRealService.alterar(3, pr3_1);
 
 		ArrayList<ProdutoFinalReal> produtosReais = produtoFinalRealService.procuraTodos();
-		System.out.println("\n>>> Produtos Reais cadastrados:");
+		System.out.println("\n>>> Produtos Finais Reais cadastrados:");
 		for (ProdutoFinalReal p : produtosReais) {
 			System.out.println("- - - - - - - - - -");
 			System.out.println(">> ProdutoFinalReal ID=" + p.getId() + ": ");
+			System.out.println(">> ProdutoFinalReal ID Externo=" + p.getIdExterno() + ": ");
 			System.out.println("> Nome: " + produtoFinalService.procuraPeloId(p.getIdExterno()).getNome());
 			System.out.println("> Validade: " + p.getValidade());
 			System.out.println("> Quantidade: " + p.getQuantidade());
+			for(int id : p.getReceitaReal().keySet()) {
+				System.out.println(">> Id Matéria Prima Real=[" + id + "] Quantidade=["+p.getReceitaReal().get(id)+"]");
+			}
 		}
 		// ===================================//
 		
