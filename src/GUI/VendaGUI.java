@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import BUSINESS.IVendaService;
+import BUSINESS.MateriaPrimaService;
 import BUSINESS.VendaService;
 import BUSINESS.IProdutoFinalService;
 import BUSINESS.ProdutoFinalService;
 import BUSINESS.IClienteService;
+import BUSINESS.IMateriaPrimaService;
 import BUSINESS.ClienteService;
 
 import ENTITY.Venda;
@@ -129,6 +131,30 @@ public class VendaGUI {
 		
 	}
 	
+	private static void mostraVendaDetalhada(int id) {
+		IVendaService vendaService = VendaService.getInstance();
+		IClienteService clienteService = ClienteService.getInstance();
+		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
+		Venda venda = vendaService.procuraPeloId(id);
+		
+		if(venda == null) {
+			System.out.println("Venda não encontrada\n");
+		}
+		
+		else {
+			System.out.printf("\nId: %d\n", venda.getId());
+			System.out.printf("Cliente: %s\n", clienteService.procuraPeloId(venda.getIdCliente()).getNome());
+			System.out.printf("Valor: %.2f\n", venda.getValor());
+			System.out.println("Data: " + venda.getData());
+			System.out.printf("Produtos que inclusos na compra: \n");
+			for(int produtoID : venda.getListaProdutos().keySet()) {
+			
+				System.out.println("Produto = [" + produtoFinalService.procuraPeloId(produtoID).getNome() 
+								  + "] Quantidade = [" + venda.getListaProdutos().get(produtoID)+ "]");
+			}
+		}
+	}
+	
 	public static void telaConsultar(int a) {
 		int opt = -1;
 		int opt2 = -1;
@@ -151,7 +177,7 @@ public class VendaGUI {
 				case 2:
 					System.out.print("Digite o id da Venda: ");
 					opt2 = Integer.parseInt(input.nextLine());
-					//mostraProdutoFinalDetalhado(opt2);
+					mostraVendaDetalhada(opt2);
 					break;
 				default:
 					throw new Exception("Valor Inválido");
