@@ -123,14 +123,45 @@ public class VendaGUI {
 		else {
 			System.out.println("Vendas Cadastrados: \n");
 			for(Venda venda : listaDeVendas) {
-				System.out.printf("[%d] Cliente: %s / Valor: %.2f\n", venda.getId(), clienteService.procuraPeloId(venda.getIdCliente()), venda.getValor());
+				System.out.printf("[%d] Cliente: %s / Valor: %.2f\n", venda.getId(), clienteService.procuraPeloId(venda.getIdCliente()).getNome(), venda.getValor());
 			}
 		}
 		
 	}
 	
 	public static void telaConsultar(int a) {
-		
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Consultar Venda ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Vendas realizadas");
+			System.out.printf("[%d] %s \n", 2, "Ver uma Venda Detalhadamente");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					mostraTodosAsVendas();
+					break;
+				case 2:
+					System.out.print("Digite o id da Venda: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					//mostraProdutoFinalDetalhado(opt2);
+					break;
+				default:
+					throw new Exception("Valor Inválido");
+
+				}
+			} catch (Exception e) {
+				System.out.println("Digite um valor válido");
+				e.printStackTrace();
+			}
+		} while (opt != 0);
 	}
 	
 	public static void telaRemover(int a) {
