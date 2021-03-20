@@ -75,7 +75,7 @@ public class VendaGUI {
 					
 					if(!listaDeProdutos.containsKey(idProduto)) {
 						listaDeProdutos.put(idProduto, qtdProduto);
-						System.out.print("Deseja inserir outra Matéria Prima na Receita? [1 - sim] [2 - não]: ");
+						System.out.print("Deseja inserir outro produto na compra? [1 - sim] [2 - não]: ");
 						checadorDeContinuidade = Integer.parseInt(input.nextLine());
 						System.out.println();
 						if(checadorDeContinuidade == 1) {
