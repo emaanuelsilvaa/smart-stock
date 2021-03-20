@@ -114,13 +114,13 @@ public class VendaGUI {
 	
 	}
 	
-	private static void mostraTodosAsVendas() {
+	private static void mostraTodasAsVendas() {
 		IVendaService vendaService = VendaService.getInstance();
 		IClienteService clienteService = ClienteService.getInstance();
 		
 		ArrayList<Venda> listaDeVendas = vendaService.procuraTodos();
 		if(listaDeVendas.isEmpty()) {
-			System.out.println("Nenhum Produto Final Cadastrado\n");
+			System.out.println("Nenhuma Venda realizada\n");
 		}
 		else {
 			System.out.println("Vendas Cadastrados: \n");
@@ -172,7 +172,7 @@ public class VendaGUI {
 				case 0:
 					break;
 				case 1:
-					mostraTodosAsVendas();
+					mostraTodasAsVendas();
 					break;
 				case 2:
 					System.out.print("Digite o id da Venda: ");
@@ -190,8 +190,49 @@ public class VendaGUI {
 		} while (opt != 0);
 	}
 	
+	
+	public static void removerVenda(int id) {
+		IVendaService vendaService = VendaService.getInstance();
+		try{
+			vendaService.remover(id);
+			System.out.println("Venda de Id: "+ id + " foi removida");
+		} catch (BusinessRuleException bre) {
+			System.out.println(bre.getMessage());
+		}
+	}
 	public static void telaRemover(int a) {
-		
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Remover Venda ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Vendas Realizadas");
+			System.out.printf("[%d] %s \n", 2, "Remover Venda");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					mostraTodasAsVendas();
+					break;
+				case 2:
+					System.out.print("Digite o id da Venda: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					removerVenda(opt2);
+					break;
+				default:
+					throw new Exception("Valor Inválido");
+
+				}
+			} catch (Exception bre) {
+				System.out.println("Digite um valor válido");
+				bre.printStackTrace();
+			}
+		} while (opt != 0);
 	}
 	
 	public static void sair(int a) {
