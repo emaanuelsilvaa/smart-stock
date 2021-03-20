@@ -1,5 +1,6 @@
 package GUI;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -7,9 +8,12 @@ import java.util.function.Consumer;
 
 import BUSINESS.IMateriaPrimaRealService;
 import BUSINESS.IProdutoFinalRealService;
+import BUSINESS.IProdutoFinalService;
 import BUSINESS.MateriaPrimaRealService;
 import BUSINESS.ProdutoFinalRealService;
+import BUSINESS.ProdutoFinalService;
 import ENTITY.MateriaPrimaReal;
+import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
 import UTIL.BusinessRuleException;
 
@@ -153,7 +157,60 @@ public class ProdutoFinalRealGUI {
 		
 	}
 	
+	public static void removerProdutoFinalReal(int id) {
+		try{
+			produtoFinalRealService.remover(id);
+			System.out.println("Produto Final de Id: "+ id + " foi removido");
+		} catch (BusinessRuleException bre) {
+			System.out.println(bre.getMessage());
+		}
+	}
+	
+	public static void mostraTodosOsProdutosFinaisReais() {
+		ArrayList<ProdutoFinalReal> listaProdutosFinaisReais = produtoFinalRealService.procuraTodos();
+		if(listaProdutosFinaisReais.isEmpty()) {
+			System.out.println("Nenhum Produto Final Cadastrado\n");
+		}
+		else {
+			System.out.println("Produtos Finais Cadastrados: \n");
+			for(ProdutoFinalReal produtoFinal : listaProdutosFinaisReais) {
+				System.out.printf("[id=%d] idExterno=%d \n", produtoFinal.getId(), produtoFinal.getIdExterno());
+			}
+		}
+	}
+	
 	public static void telaRemover(int a) {
-		
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Remover Produto Final Real ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Produtos Finais Reais cadastrados");
+			System.out.printf("[%d] %s \n", 2, "Remover Produto Final Real");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					mostraTodosOsProdutosFinaisReais();
+					break;
+				case 2:
+					System.out.print("Digite o id do Produto Final Real: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					removerProdutoFinalReal(opt2);
+					break;
+				default:
+					throw new Exception("Valor Inválido");
+
+				}
+			} catch (Exception bre) {
+				System.out.println("Digite um valor válido: ");
+				bre.printStackTrace();
+			}
+		} while (opt != 0);
 	}
 }
