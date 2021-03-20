@@ -46,6 +46,7 @@ public class ProdutoFinalRealDAO implements IProdutoFinalRealDAO {
 				pr.setIdExterno(produto.getIdExterno());
 				pr.setValidade(produto.getValidade());
 				pr.setQuantidade(produto.getQuantidade());
+				pr.setReceitaReal(produto.getReceitaReal());
 				break;
 			}
 		}
