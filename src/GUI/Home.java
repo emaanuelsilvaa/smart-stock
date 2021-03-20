@@ -42,6 +42,7 @@ public class Home {
 		funcoesPtr.put(4, MateriaPrimaRealGUI::init);
 		funcoesPtr.put(5, ProdutoFinalGUI::init);
 		funcoesPtr.put(6, ProdutoFinalRealGUI::init);
+		funcoesPtr.put(7, VendaGUI::init);
 		funcoesPtr.put(9, ReposicaoGUI::init);
 		 do{
 			System.out.println("===== Menu Principal =====");
