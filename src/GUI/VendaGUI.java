@@ -9,6 +9,8 @@ import BUSINESS.IVendaService;
 import BUSINESS.VendaService;
 import BUSINESS.IProdutoFinalService;
 import BUSINESS.ProdutoFinalService;
+import BUSINESS.IClienteService;
+import BUSINESS.ClienteService;
 
 import ENTITY.Venda;
 import UTIL.BusinessRuleException;
@@ -108,6 +110,23 @@ public class VendaGUI {
 			System.out.println(bre.getMessage());
 		}
 	
+	}
+	
+	private static void mostraTodosAsVendas() {
+		IVendaService vendaService = VendaService.getInstance();
+		IClienteService clienteService = ClienteService.getInstance();
+		
+		ArrayList<Venda> listaDeVendas = vendaService.procuraTodos();
+		if(listaDeVendas.isEmpty()) {
+			System.out.println("Nenhum Produto Final Cadastrado\n");
+		}
+		else {
+			System.out.println("Vendas Cadastrados: \n");
+			for(Venda venda : listaDeVendas) {
+				System.out.printf("[%d] Cliente: %s / Valor: %.2f\n", venda.getId(), clienteService.procuraPeloId(venda.getIdCliente()), venda.getValor());
+			}
+		}
+		
 	}
 	
 	public static void telaConsultar(int a) {
