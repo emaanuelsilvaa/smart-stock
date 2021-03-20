@@ -44,6 +44,7 @@ public class Home {
 		funcoesPtr.put(6, ProdutoFinalRealGUI::init);
 		funcoesPtr.put(7, VendaGUI::init);
 		funcoesPtr.put(9, ReposicaoGUI::init);
+		funcoesPtr.put(11, AnaliseLucroGUI::init);
 		 do{
 			System.out.println("===== Menu Principal =====");
 			System.out.println("\nOperações disponíveis:\n");
