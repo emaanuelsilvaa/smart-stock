@@ -7,24 +7,29 @@ import java.util.function.Consumer;
 
 import BUSINESS.ClienteService;
 import BUSINESS.IClienteService;
+import DATA.IClienteDAO;
 import ENTITY.Cliente;
 import UTIL.BusinessRuleException;
 
-public class ClienteGUI {
+public class ClienteGUI implements IClienteGUI {
 	
-	static IClienteService clienteService;
+	 IClienteService clienteService;
+	 IClienteGUI clienteGUI;
 	
 	public ClienteGUI() {
 		// TODO Auto-generated constructor stub
 		clienteService = ClienteService.getInstance();
 	}
 
-	public static void init(int a) {
+	@Override
+	public void init(int a) {
+		clienteGUI = new ClienteGUI();
 		new ClienteGUI();
 		telaInicial(1);
 	}
 	
-	public static void telaInicial(int a) {
+	@Override
+	public void telaInicial(int a) {
 		HashMap<Integer, String> funcoes = new HashMap<Integer, String>();
 		HashMap<Integer, Consumer<Integer>> funcoesPtr = new HashMap<Integer, Consumer<Integer>>();
 
@@ -36,11 +41,11 @@ public class ClienteGUI {
 		funcoes.put(3, "Consultar Cliente");
 		funcoes.put(4, "Remover Cliente");
 
-		funcoesPtr.put(0, ClienteGUI::sair);
-		funcoesPtr.put(1, ClienteGUI::telaCadastrar);
-		funcoesPtr.put(2, ClienteGUI::telaAlterar);
-		funcoesPtr.put(3, ClienteGUI::telaConsultar);
-		funcoesPtr.put(4, ClienteGUI::telaRemover);
+		funcoesPtr.put(0, clienteGUI::sair);
+		funcoesPtr.put(1, clienteGUI::telaCadastrar);
+		funcoesPtr.put(2, clienteGUI::telaAlterar);
+		funcoesPtr.put(3, clienteGUI::telaConsultar);
+		funcoesPtr.put(4, clienteGUI::telaRemover);
 
 		while (opt != 0) {
 			System.out.println("===== Menu Cliente =====");
@@ -61,11 +66,13 @@ public class ClienteGUI {
 		}
 	}
 	
-	public static void sair(int a) {
+	@Override
+	public void sair(int a) {
 		System.out.println("Saindo do Menu Cliente");
 	}
 	
-	public static void telaCadastrar(int a) {
+	@Override
+	public void telaCadastrar(int a) {
 		String nome = "";
 		String cpf = "";
 		String endereço = "";
@@ -100,7 +107,8 @@ public class ClienteGUI {
 		}
 	}
 	
-	public static void telaAlterar(int a) {
+	@Override
+	public void telaAlterar(int a) {
 		String nome = "";
 		String cpf = "";
 		String endereço = "";
@@ -138,7 +146,8 @@ public class ClienteGUI {
 		}
 	}
 	
-	public static void clientesCadastrados() {
+	@Override
+	public void clientesCadastrados() {
 		ArrayList<Cliente> clientes = clienteService.procuraTodos();
 		if (clientes.isEmpty()) {
 			System.out.println("Nenhum cliente cadastrado");
@@ -150,7 +159,8 @@ public class ClienteGUI {
 		}
 	}
 	
-	public static void clienteDetalhado(int id) {
+	@Override
+	public void clienteDetalhado(int id) {
 		Cliente c = clienteService.procuraPeloId(id);
 		if (c == null) {
 			System.out.println("Cliente não encontrado");
@@ -163,7 +173,8 @@ public class ClienteGUI {
 		}
 	}
 	
-	public static void telaConsultar(int a) {
+	@Override
+	public void telaConsultar(int a) {
 		int opt = -1;
 		int opt2 = -1;
 
@@ -198,7 +209,8 @@ public class ClienteGUI {
 		} while (opt != 0);
 	}
 	
-	public static void removerCliente(int id) {
+	@Override
+	public void removerCliente(int id) {
 		try{
 			clienteService.remover(id);
 			System.out.println("Cliente de Id: "+ id + " removido");
@@ -208,7 +220,8 @@ public class ClienteGUI {
 		}
 	}
 	
-	public static void telaRemover(int a) {
+	@Override
+	public void telaRemover(int a) {
 		int opt = -1;
 		int opt2 = -1;
 

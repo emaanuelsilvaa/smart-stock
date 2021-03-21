@@ -35,8 +35,10 @@ public class Home {
 		funcoes.put(9, "Analisar Provisionamento");
 		funcoes.put(10, "Analisar Lucro");
 
+		IClienteGUI cliente = new ClienteGUI();
+		
 		funcoesPtr.put(0, Home::telaDespedida);
-		funcoesPtr.put(1, ClienteGUI::init);
+		funcoesPtr.put(1, cliente::init);
 		funcoesPtr.put(2, FornecedorGUI::init);
 		funcoesPtr.put(3, MateriaPrimaGUI::init);
 		funcoesPtr.put(4, MateriaPrimaRealGUI::init);
