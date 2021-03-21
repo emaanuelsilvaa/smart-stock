@@ -147,8 +147,64 @@ public class EncomendaGUI {
 		
 	}
 	
-	public static void telaConsultar (int a) {
+	private static void mostraEncomendaDetalhada(int id) {
+		IEncomendaService encomendaService = EncomendaService.getInstance();
+		IClienteService clienteService = ClienteService.getInstance();
+		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
+		Encomenda encomenda = encomendaService.procuraPeloId(id);
 		
+		if(encomenda == null) {
+			System.out.println("Encomenda não encontrada\n");
+		}
+		
+		else {
+			System.out.printf("\nId: %d\n", encomenda.getId());
+			System.out.printf("Cliente: %s\n", clienteService.procuraPeloId(encomenda.getIdCliente()).getNome());
+			System.out.printf("Valor: %.2f\n", encomenda.getValor());
+			System.out.println("Data de pedido: " + encomenda.getData());
+			System.out.println("Data de entrega: " + encomenda.getDataEntrega());
+			System.out.printf("Produtos inclusos na encomenda: \n");
+			for(int produtoID : encomenda.getListaProdutos().keySet()) {
+			
+				System.out.println("Produto = [" + produtoFinalService.procuraPeloId(produtoID).getNome() 
+								  + "] Quantidade = [" + encomenda.getListaProdutos().get(produtoID)+ "]");
+			}
+		}
+	}
+	
+	public static void telaConsultar (int a) {
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Consultar Encomenda ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Encomendas realizadas");
+			System.out.printf("[%d] %s \n", 2, "Ver uma Encomenda Detalhadamente");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					mostraTodasAsEncomendas();
+					break;
+				case 2:
+					System.out.print("Digite o id da Encomenda: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					mostraEncomendaDetalhada(opt2);
+					break;
+				default:
+					throw new Exception("Valor Inválido");
+
+				}
+			} catch (Exception e) {
+				System.out.println("Digite um valor válido");
+				e.printStackTrace();
+			}
+		} while (opt != 0);
 	}
 	
 	public static void removerEncomenda(int id) {
