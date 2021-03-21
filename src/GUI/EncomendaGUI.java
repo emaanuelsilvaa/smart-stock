@@ -130,6 +130,23 @@ public class EncomendaGUI {
 		
 	}
 	
+	private static void mostraTodasAsEncomendas() {
+		IEncomendaService encomendaService = EncomendaService.getInstance();
+		IClienteService clienteService = ClienteService.getInstance();
+		
+		ArrayList<Encomenda> listaDeEncomendas = encomendaService.procuraTodos();
+		if(listaDeEncomendas.isEmpty()) {
+			System.out.println("Nenhuma Encomenda realizada\n");
+		}
+		else {
+			System.out.println("Encomendas Cadastradas: \n");
+			for(Encomenda encomenda : listaDeEncomendas) {
+				System.out.printf("[%d] Cliente: %s / Valor: %.2f\n", encomenda.getId(), clienteService.procuraPeloId(encomenda.getIdCliente()).getNome(), encomenda.getValor());
+			}
+		}
+		
+	}
+	
 	public static void telaConsultar (int a) {
 		
 	}
