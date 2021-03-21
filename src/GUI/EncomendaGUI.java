@@ -86,7 +86,7 @@ public class EncomendaGUI {
 					
 					if(!listaDeProdutos.containsKey(idProduto)) {
 						listaDeProdutos.put(idProduto, qtdProduto);
-						System.out.print("Deseja inserir outro produto na compra? [1 - sim] [2 - não]: ");
+						System.out.print("Deseja inserir outro produto na encomenda? [1 - sim] [2 - não]: ");
 						checadorDeContinuidade = Integer.parseInt(input.nextLine());
 						System.out.println();
 						if(checadorDeContinuidade == 1) {
@@ -96,12 +96,12 @@ public class EncomendaGUI {
 							aux2 = -1;
 						}
 						else {
-							System.out.println("Você não digitou um valor válido, encerrando a inserção de produtos na compra...\n");
+							System.out.println("Você não digitou um valor válido, encerrando a inserção de produtos na encomenda...\n");
 							aux2 = -1;
 						}
 					}
 					else {
-						System.out.println("Você digitou o ID de um produto que já constava na compra, encerrando a inserção de produtos na compra...\n");
+						System.out.println("Você digitou o ID de um produto que já constava na compra, encerrando a inserção de produtos na encomenda...\n");
 						aux2 = -1;
 					}
 					
@@ -127,7 +127,86 @@ public class EncomendaGUI {
 	}
 	
 	public static void telaAlterar(int a) {
+		IVendaService vendaService = VendaService.getInstance();
+		IEncomendaService encomendaService = EncomendaService.getInstance();
+		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
+		IClienteService clienteService = ClienteService.getInstance();
 		
+		int id = 0;
+		int idASubstituir = 0;
+		int aux = 0;
+		int aux2 = 0;
+		int idCliente = 0;
+		int idProduto = 0;
+		int qtdProduto = 0;
+		int checadorDeContinuidade = 0;
+		float valorDaNovaEncomenda = 0;
+		String dataASerConvertida = new String ();
+		Date dataDeEntrega = new Date ();
+		HashMap<Integer, Integer> listaDeProdutos = new HashMap<Integer, Integer> ();
+		//ArrayList <ProdutoFinal> listaDeProdutosFinaisDisponiveis = produtoFinalService.procuraTodos();
+		
+		System.out.println("===== Alterar Encomenda =====");
+		do {
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("[Int] Entre com o id da encomenda a ser alterada: ");
+				idASubstituir = Integer.parseInt(input.nextLine());
+				System.out.print("[Int] Entre com o id do cliente da encomenda: ");
+				idCliente = Integer.parseInt(input.nextLine());
+				System.out.print("[dd/mm/aaaa] Entre a data de entrega da encomenda: ");
+				dataASerConvertida = input.nextLine();
+				dataDeEntrega = new SimpleDateFormat("dd/MM/yyyy").parse(dataASerConvertida);
+				mostraTodosOSProdutosFinais();
+				do {
+					System.out.print("Dentre os produtos finais listados acima, selecione o ID de um produto: ");
+					idProduto = Integer.parseInt(input.nextLine());
+					System.out.print("Agora, selecione a quantidade desse produto na compra: ");
+					qtdProduto = Integer.parseInt(input.nextLine());
+					
+					if(!listaDeProdutos.containsKey(idProduto)) {
+						listaDeProdutos.put(idProduto, qtdProduto);
+						valorDaNovaEncomenda += produtoFinalService.procuraPeloId(idProduto).getPreco() * qtdProduto;
+						System.out.print("Deseja inserir outro produto na encomenda? [1 - sim] [2 - não]: ");
+						checadorDeContinuidade = Integer.parseInt(input.nextLine());
+						System.out.println();
+						if(checadorDeContinuidade == 1) {
+							aux2=0;
+						}
+						else if (checadorDeContinuidade == 2) {
+							aux2 = -1;
+						}
+						else {
+							System.out.println("Você não digitou um valor válido, encerrando a inserção de produtos na encomenda...\n");
+							aux2 = -1;
+						}
+					}
+					else {
+						System.out.println("Você digitou o ID de um produto que já constava na compra, encerrando a inserção de produtos na encomenda...\n");
+						aux2 = -1;
+					}
+					
+				}while(aux2 != -1);
+				
+				aux = -1;
+			} catch (Exception e) {
+				System.out.println("\nErro de parâmetros, digite novamente seguindo os tipos\n");
+				aux = 0;
+			}
+
+		}while (aux != -1);
+		try {
+			id = encomendaService.alterar(idASubstituir, new Encomenda(idASubstituir, valorDaNovaEncomenda, idCliente, listaDeProdutos, new Date (), dataDeEntrega));
+			if(encomendaService.procuraPeloId(id) != null) {
+			System.out.println("Encomenda alterada, com o ID: " + id + " e preço: " + encomendaService.procuraPeloId(id).getValor() + 
+							   " com entrega em: " + encomendaService.procuraPeloId(id).getDataEntrega());
+			}
+		}catch (BusinessRuleException bre)
+		{
+			System.out.println("Encomenda não alterada pelo(s) seguinte(s) motivo(s)\n");
+			System.out.println(bre.getMessage());
+		}
+	
 	}
 	
 	private static void mostraTodasAsEncomendas() {
@@ -265,13 +344,15 @@ public class EncomendaGUI {
 
 		funcoes.put(0, "Voltar");
 		funcoes.put(1, "Realizar Encomenda");
-		funcoes.put(2, "Consultar Encomenda");
-		funcoes.put(3, "Remover Encomenda");
+		funcoes.put(2, "Alterar Encomenda");
+		funcoes.put(3, "Consultar Encomenda");
+		funcoes.put(4, "Remover Encomenda");
 
 		funcoesPtr.put(0, EncomendaGUI::sair);
 		funcoesPtr.put(1, EncomendaGUI::telaCadastrar);
-		funcoesPtr.put(2, EncomendaGUI::telaConsultar);
-		funcoesPtr.put(3, EncomendaGUI::telaRemover);
+		funcoesPtr.put(2, EncomendaGUI::telaAlterar);
+		funcoesPtr.put(3, EncomendaGUI::telaConsultar);
+		funcoesPtr.put(4, EncomendaGUI::telaRemover);
 
 		while (opt != 0) {
 			System.out.println("===== Menu Encomenda =====");
