@@ -72,6 +72,7 @@ public final class EncomendaService implements IEncomendaService {
 	@Override
 	public int consumarEncomenda(int id) throws BusinessRuleException {
 		this.vendaService.realizarVenda(encomendaDAO.procuraPeloId(id).getListaProdutos(), encomendaDAO.procuraPeloId(id).getIdCliente());
+		remover(id);
 		return id;
 	}
 	@Override

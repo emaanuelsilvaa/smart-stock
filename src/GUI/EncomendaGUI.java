@@ -120,7 +120,7 @@ public class EncomendaGUI {
 		}while (aux != -1);
 		if(clienteService.procuraPeloId(idCliente) != null) {
 			id = encomendaService.realizarEncomenda(listaDeProdutos, idCliente, dataDeEntrega);
-			System.out.println("Encomenda Realizada com o ID " + id + " e preço: " + encomendaService.procuraPeloId(id).getValor() + 
+			System.out.println("Encomenda agendada com o ID " + id + " e preço: " + encomendaService.procuraPeloId(id).getValor() + 
 							   " com entrega em: " + encomendaService.procuraPeloId(id).getDataEntrega());
 		} 
 		else
@@ -211,10 +211,10 @@ public class EncomendaGUI {
 	private static void mostraTodasAsEncomendas() {		
 		ArrayList<Encomenda> listaDeEncomendas = encomendaService.procuraTodos();
 		if(listaDeEncomendas.isEmpty()) {
-			System.out.println("Nenhuma Encomenda realizada\n");
+			System.out.println("Nenhuma Encomenda agendada\n");
 		}
 		else {
-			System.out.println("Encomendas Cadastradas: \n");
+			System.out.println("Encomendas agendadas: \n");
 			for(Encomenda encomenda : listaDeEncomendas) {
 				System.out.printf("[%d] Cliente: %s / Valor: %.2f\n", encomenda.getId(), clienteService.procuraPeloId(encomenda.getIdCliente()).getNome(), encomenda.getValor());
 			}
@@ -251,8 +251,8 @@ public class EncomendaGUI {
 		do {
 			System.out.println("\n ===== Consultar Encomenda ===== \n");
 			System.out.printf("[%d] %s \n", 0, "Voltar");
-			System.out.printf("[%d] %s \n", 1, "Ver Encomendas realizadas");
-			System.out.printf("[%d] %s \n", 2, "Ver uma Encomenda Detalhadamente");
+			System.out.printf("[%d] %s \n", 1, "Ver Encomendas agendadas");
+			System.out.printf("[%d] %s \n", 2, "Ver uma Encomenda detalhadamente");
 			try {
 				Scanner input = new Scanner(System.in);
 				System.out.print("Digite: ");
@@ -295,7 +295,7 @@ public class EncomendaGUI {
 		do {
 			System.out.println("\n ===== Remover Encomenda ===== \n");
 			System.out.printf("[%d] %s \n", 0, "Voltar");
-			System.out.printf("[%d] %s \n", 1, "Ver Encomendas Realizadas");
+			System.out.printf("[%d] %s \n", 1, "Ver Encomendas agendadas");
 			System.out.printf("[%d] %s \n", 2, "Remover Encomenda");
 			try {
 				Scanner input = new Scanner(System.in);
@@ -327,6 +327,41 @@ public class EncomendaGUI {
 		System.out.println("Saindo do Menu Encomenda");
 
 	}
+	public static void consumarEncomenda(int a) {
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Consumar Encomenda ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Encomendas agendadas");
+			System.out.printf("[%d] %s \n", 2, "Consumar Encomenda");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					mostraTodasAsEncomendas();
+					break;
+				case 2:
+					System.out.print("Digite o id da Encomenda: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					encomendaService.consumarEncomenda(opt2);
+					System.out.println("Encomenda consumada");
+					break;
+				default:
+					throw new Exception("Valor Inválido");
+
+				}
+			} catch (Exception bre) {
+				System.out.println("Encomenda não consumada pelos seguintes motivos");
+				System.out.println(bre.getMessage());
+			}
+		} while (opt != 0);
+	}
 	
 	public static void telaInicial(int a) {
 		HashMap<Integer, String> funcoes = new HashMap<Integer, String>();
@@ -335,16 +370,19 @@ public class EncomendaGUI {
 		int opt = -1;
 
 		funcoes.put(0, "Voltar");
-		funcoes.put(1, "Realizar Encomenda");
+		funcoes.put(1, "Agendar Encomenda");
 		funcoes.put(2, "Alterar Encomenda");
 		funcoes.put(3, "Consultar Encomenda");
 		funcoes.put(4, "Remover Encomenda");
+		funcoes.put(5, "Consumar Encomenda");
+
 
 		funcoesPtr.put(0, EncomendaGUI::sair);
 		funcoesPtr.put(1, EncomendaGUI::telaCadastrar);
 		funcoesPtr.put(2, EncomendaGUI::telaAlterar);
 		funcoesPtr.put(3, EncomendaGUI::telaConsultar);
 		funcoesPtr.put(4, EncomendaGUI::telaRemover);
+		funcoesPtr.put(5, EncomendaGUI::consumarEncomenda);
 
 		while (opt != 0) {
 			System.out.println("===== Menu Encomenda =====");
