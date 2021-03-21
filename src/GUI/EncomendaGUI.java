@@ -25,8 +25,16 @@ import ENTITY.ProdutoFinal;
 
 public class EncomendaGUI {
 	
+	protected static IVendaService vendaService = VendaService.getInstance();
+	protected static IEncomendaService encomendaService = EncomendaService.getInstance();
+	protected static IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
+	protected static IClienteService clienteService = ClienteService.getInstance();
+	
 	public EncomendaGUI () {
-		
+		  vendaService = VendaService.getInstance();
+		  encomendaService = EncomendaService.getInstance();
+		  produtoFinalService = ProdutoFinalService.getInstance();
+		  clienteService = ClienteService.getInstance();
 	}
 	
 	public static void init(int a) {
@@ -35,7 +43,6 @@ public class EncomendaGUI {
 	}
 	
 	private static void mostraTodosOSProdutosFinais() {
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
 		ArrayList<ProdutoFinal> listaDeProdutosFinais = produtoFinalService.procuraTodos();
 		if(listaDeProdutosFinais.isEmpty()) {
 			System.out.println("Nenhum Produto Final Cadastrado\n");
@@ -51,10 +58,7 @@ public class EncomendaGUI {
 	}
 	
 	public static void telaCadastrar(int a) {
-		IVendaService vendaService = VendaService.getInstance();
-		IEncomendaService encomendaService = EncomendaService.getInstance();
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
-		IClienteService clienteService = ClienteService.getInstance();
+
 		
 		int id = 0;
 		int aux = 0;
@@ -127,11 +131,6 @@ public class EncomendaGUI {
 	}
 	
 	public static void telaAlterar(int a) {
-		IVendaService vendaService = VendaService.getInstance();
-		IEncomendaService encomendaService = EncomendaService.getInstance();
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
-		IClienteService clienteService = ClienteService.getInstance();
-		
 		int id = 0;
 		int idASubstituir = 0;
 		int aux = 0;
@@ -209,10 +208,7 @@ public class EncomendaGUI {
 	
 	}
 	
-	private static void mostraTodasAsEncomendas() {
-		IEncomendaService encomendaService = EncomendaService.getInstance();
-		IClienteService clienteService = ClienteService.getInstance();
-		
+	private static void mostraTodasAsEncomendas() {		
 		ArrayList<Encomenda> listaDeEncomendas = encomendaService.procuraTodos();
 		if(listaDeEncomendas.isEmpty()) {
 			System.out.println("Nenhuma Encomenda realizada\n");
@@ -227,9 +223,6 @@ public class EncomendaGUI {
 	}
 	
 	private static void mostraEncomendaDetalhada(int id) {
-		IEncomendaService encomendaService = EncomendaService.getInstance();
-		IClienteService clienteService = ClienteService.getInstance();
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
 		Encomenda encomenda = encomendaService.procuraPeloId(id);
 		
 		if(encomenda == null) {
@@ -287,7 +280,6 @@ public class EncomendaGUI {
 	}
 	
 	public static void removerEncomenda(int id) {
-		IEncomendaService encomendaService = EncomendaService.getInstance();
 		try{
 			encomendaService.remover(id);
 			System.out.println("Encomenda de Id: "+ id + " foi removida");

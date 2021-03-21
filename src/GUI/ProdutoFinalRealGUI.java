@@ -8,19 +8,25 @@ import java.util.function.Consumer;
 
 import BUSINESS.IMateriaPrimaRealService;
 import BUSINESS.IProdutoFinalRealService;
+import BUSINESS.IProdutoFinalService;
 import BUSINESS.MateriaPrimaRealService;
 import BUSINESS.ProdutoFinalRealService;
+import BUSINESS.ProdutoFinalService;
 import ENTITY.MateriaPrimaReal;
 import ENTITY.ProdutoFinalReal;
 import UTIL.BusinessRuleException;
 
 public class ProdutoFinalRealGUI {
-	static IProdutoFinalRealService produtoFinalRealService;
-	static IMateriaPrimaRealService materiaPrimaRealService;
+	protected static IProdutoFinalRealService produtoFinalRealService;
+	protected static IMateriaPrimaRealService materiaPrimaRealService;
+	protected static IProdutoFinalService produtoFinalService;
+
+	
 	
 	public ProdutoFinalRealGUI() {
 		produtoFinalRealService = ProdutoFinalRealService.getInstance();
 		materiaPrimaRealService = MateriaPrimaRealService.getInstance();
+		produtoFinalService = ProdutoFinalService.getInstance();
 	}
 	
 	public static void init(int a) {
@@ -296,7 +302,7 @@ public class ProdutoFinalRealGUI {
 		else {
 			System.out.println("Produtos Finais Cadastrados: \n");
 			for(ProdutoFinalReal produtoFinal : listaProdutosFinaisReais) {
-				System.out.printf("[id=%d] idExterno=%d \n", produtoFinal.getId(), produtoFinal.getIdExterno());
+				System.out.printf("[%d] %s: %d. Vence em %s \n", produtoFinal.getId(), produtoFinalService.procuraPeloId(produtoFinal.getIdExterno()).getNome(), produtoFinal.getQuantidade(), produtoFinal.getValidade());
 			}
 		}
 	}

@@ -21,8 +21,14 @@ import ENTITY.ProdutoFinal;
 
 public class VendaGUI {
 	
+	protected static IVendaService vendaService;
+	protected static IProdutoFinalService produtoFinalService;
+	protected static IClienteService clienteService;
+	
 	public VendaGUI () {
-		
+		 vendaService = VendaService.getInstance();
+		 produtoFinalService = ProdutoFinalService.getInstance();
+		 clienteService = ClienteService.getInstance();
 	}
 	
 	public static void init(int a) {
@@ -31,7 +37,6 @@ public class VendaGUI {
 	}
 	
 	private static void mostraTodosOSProdutosFinais() {
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
 		ArrayList<ProdutoFinal> listaDeProdutosFinais = produtoFinalService.procuraTodos();
 		if(listaDeProdutosFinais.isEmpty()) {
 			System.out.println("Nenhum Produto Final Cadastrado\n");
@@ -47,9 +52,6 @@ public class VendaGUI {
 	}
 
 	public static void telaCadastrar(int a) {
-		IVendaService vendaService = VendaService.getInstance();
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
-		
 		int id = 0;
 		int aux = 0;
 		int aux2 = 0;
@@ -114,10 +116,7 @@ public class VendaGUI {
 	
 	}
 	
-	private static void mostraTodasAsVendas() {
-		IVendaService vendaService = VendaService.getInstance();
-		IClienteService clienteService = ClienteService.getInstance();
-		
+	private static void mostraTodasAsVendas() {		
 		ArrayList<Venda> listaDeVendas = vendaService.procuraTodos();
 		if(listaDeVendas.isEmpty()) {
 			System.out.println("Nenhuma Venda realizada\n");
@@ -132,9 +131,6 @@ public class VendaGUI {
 	}
 	
 	private static void mostraVendaDetalhada(int id) {
-		IVendaService vendaService = VendaService.getInstance();
-		IClienteService clienteService = ClienteService.getInstance();
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
 		Venda venda = vendaService.procuraPeloId(id);
 		
 		if(venda == null) {
@@ -192,7 +188,6 @@ public class VendaGUI {
 	
 	
 	public static void removerVenda(int id) {
-		IVendaService vendaService = VendaService.getInstance();
 		try{
 			vendaService.remover(id);
 			System.out.println("Venda de Id: "+ id + " foi removida");

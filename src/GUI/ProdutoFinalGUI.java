@@ -19,10 +19,13 @@ import UTIL.Colors;
 
 public class ProdutoFinalGUI {
 	
-	//IProdutoFinalService produtoFinalService;
+	protected static IProdutoFinalService produtoFinalService;
+	protected static IMateriaPrimaService materiaPrimaService;
 	
 	public ProdutoFinalGUI () {
-		//this.produtoFinalService = ProdutoFinalService.getInstance();
+		produtoFinalService = ProdutoFinalService.getInstance();
+		 materiaPrimaService = MateriaPrimaService.getInstance();
+		
 	}
 	
 	public static void init(int a) {
@@ -30,10 +33,7 @@ public class ProdutoFinalGUI {
 		telaInicial(1);
 	}
 	
-	public static void telaCadastrar (int a) {
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
-		IMateriaPrimaService materiaPrimaService = MateriaPrimaService.getInstance();
-		
+	public static void telaCadastrar (int a) {		
 		int id = 0;
 		String nome = new String ();
 		float preco = 0;
@@ -111,7 +111,6 @@ public class ProdutoFinalGUI {
 	}
 	
 	private static void mostraTodosOSProdutosFinais() {
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
 		ArrayList<ProdutoFinal> listaDeProdutosFinais = produtoFinalService.procuraTodos();
 		if(listaDeProdutosFinais.isEmpty()) {
 			System.out.println("Nenhum Produto Final Cadastrado\n");
@@ -126,8 +125,6 @@ public class ProdutoFinalGUI {
 	}
 	
 	private static void mostraProdutoFinalDetalhado(int id) {
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
-		IMateriaPrimaService materiaPrimaService = MateriaPrimaService.getInstance();
 		ProdutoFinal produtoFinal = produtoFinalService.procuraPeloId(id);
 		if(produtoFinal == null) {
 			System.out.println("Produto Final não encontrado\n");
@@ -147,10 +144,7 @@ public class ProdutoFinalGUI {
 		}
 	}
 	
-	public static void telaAlterar (int a) {
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
-		IMateriaPrimaService materiaPrimaService = MateriaPrimaService.getInstance();
-		
+	public static void telaAlterar (int a) {		
 		int id = 0;
 		int idASubstituir = 0;
 		String nome = new String ();
@@ -266,7 +260,6 @@ public class ProdutoFinalGUI {
 	}
 	
 	public static void removerProdutoFinal(int id) {
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
 		try{
 			produtoFinalService.remover(id);
 			System.out.println("Produto Final de Id: "+ id + " foi removido");
