@@ -10,16 +10,16 @@ import BUSINESS.IClienteService;
 import ENTITY.Cliente;
 import UTIL.BusinessRuleException;
 
-public class ClienteGUI {
+public final class ClienteGUI {
 	
 	static IClienteService clienteService;
 	
 	public ClienteGUI() {
-		// TODO Auto-generated constructor stub
+		// 	TODO Auto-generated constructor stub
 		clienteService = ClienteService.getInstance();
 	}
 
-	public static void init(int a) {
+	public  static void init(int a) {
 		new ClienteGUI();
 		telaInicial(1);
 	}

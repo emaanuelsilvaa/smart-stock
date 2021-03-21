@@ -92,7 +92,7 @@ public class ReposicaoGUI {
 			} else {
 				System.out.println("Matérias-Primas que faltarão: \n");
 				for(int id : materiasFaltantes.keySet()) {
-					System.out.printf("%s: %f\n", materiaPrimaService.procuraPeloId(id).getNome(), materiasFaltantes.get(id));
+					System.out.printf("%s: %f %s\n", materiaPrimaService.procuraPeloId(id).getNome(), materiasFaltantes.get(id), materiaPrimaService.procuraPeloId(id).getUnMedida());
 				}
 			}
 		} catch (BusinessRuleException bre) {
@@ -123,10 +123,16 @@ public class ReposicaoGUI {
 					data2 = new Date(input.nextLine());
 					mostrarListaReposicaoMateriaPrima(data1, data2);
 					break;
+				default:
+					System.out.println("Digite uma opção válida");
+					break;
 				}
-			} catch(Exception e) {
-				System.out.println(e.getMessage());
+			} catch(NumberFormatException n) {
+				System.out.println("Digite uma opção válida!");
 			}
+			catch(Exception e) {
+				System.out.println("Digite uma data válida!");
+			} 
 		} while (opt != 0);
 	}
 	public static void listaReposicaoProduto(int a) {
@@ -152,10 +158,15 @@ public class ReposicaoGUI {
 					data2 = new Date(input.nextLine());
 					mostrarListaReposicaoProduto(data1, data2);
 					break;
+				default:
+					System.out.println("Digite uma opção válida");
+					break;
 				}
+			} catch(NumberFormatException n) {
+				System.out.println("Digite uma opção válida!");
 			} catch(Exception e) {
-				System.out.println(e.getMessage());
-			}
+				System.out.println("Digite uma data válida!");
+			} 
 		} while (opt != 0);
 	}
 

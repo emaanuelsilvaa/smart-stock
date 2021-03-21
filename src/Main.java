@@ -126,15 +126,15 @@ public class Main {
 		fornecedorService.inserir(f4);
 		fornecedorService.inserir(f5);
 
-		MateriaPrimaReal mr1 = new MateriaPrimaReal(1, 4.5f, new Date(), 10, 1);
-		MateriaPrimaReal mr2 = new MateriaPrimaReal(2, 30f, new Date(), 5, 1);
-		MateriaPrimaReal mr3 = new MateriaPrimaReal(3, 10f, new Date(), 5, 1);
-		MateriaPrimaReal mr4 = new MateriaPrimaReal(4, 3f, new Date(), 2, 1);
-		MateriaPrimaReal mr5 = new MateriaPrimaReal(5, 0.5f, new Date(), 1 , 1);
-		MateriaPrimaReal mr6 = new MateriaPrimaReal(6, 13f, new Date(), 3, 1);
-		MateriaPrimaReal mr7 = new MateriaPrimaReal(7, 13f, new Date(), 5, 1);
-		MateriaPrimaReal mr8 = new MateriaPrimaReal(8, 1f, new Date(), 50, 1);
-		MateriaPrimaReal mr9 = new MateriaPrimaReal(9, 3f, new Date(), 10, 1);
+		MateriaPrimaReal mr1 = new MateriaPrimaReal(1, 4.5f, new Date(), 0, 1);
+		MateriaPrimaReal mr2 = new MateriaPrimaReal(2, 30f, new Date(), 0, 1);
+		MateriaPrimaReal mr3 = new MateriaPrimaReal(3, 10f, new Date(), 0, 1);
+		MateriaPrimaReal mr4 = new MateriaPrimaReal(4, 3f, new Date(), 0, 1);
+		MateriaPrimaReal mr5 = new MateriaPrimaReal(5, 0.5f, new Date(), 0 , 1);
+		MateriaPrimaReal mr6 = new MateriaPrimaReal(6, 13f, new Date(), 0, 1);
+		MateriaPrimaReal mr7 = new MateriaPrimaReal(7, 13f, new Date(), 0, 1);
+		MateriaPrimaReal mr8 = new MateriaPrimaReal(8, 1f, new Date(), 0, 1);
+		MateriaPrimaReal mr9 = new MateriaPrimaReal(9, 3f, new Date(), 0, 1);
 		
 		materiaPrimaRealService.inserir(mr1);
 		materiaPrimaRealService.inserir(mr2);
@@ -159,9 +159,9 @@ public class Main {
 		receita3.put(2, 0.1f);
 		receita3.put(4, 0.1f);
 		receita3.put(7, 0.01f);
-		ProdutoFinal p1 = new ProdutoFinal("Esfirra", 2, 30, receita1);
-		ProdutoFinal p2 = new ProdutoFinal("Empada", 4f, 30, receita1);
-		ProdutoFinal p3 = new ProdutoFinal("Pastel de Carne", 3.5f, 30, receita1);
+		ProdutoFinal p1 = new ProdutoFinal("Esfirra", 2, 10, receita1);
+		ProdutoFinal p2 = new ProdutoFinal("Empada", 4f, 13, receita1);
+		ProdutoFinal p3 = new ProdutoFinal("Pastel de Carne", 3.5f, 12, receita1);
 		
 		produtoFinalService.inserir(p1);
 		produtoFinalService.inserir(p2);
@@ -187,9 +187,9 @@ public class Main {
 		receitaReal3.put(7, 0.01f);
 
 
-		ProdutoFinalReal pr1 = new ProdutoFinalReal(1, data, 100, receitaReal1);
-		ProdutoFinalReal pr2 = new ProdutoFinalReal(2, data, 90, receitaReal2);
-		ProdutoFinalReal pr3 = new ProdutoFinalReal(3, data, 70, receitaReal3);
+		ProdutoFinalReal pr1 = new ProdutoFinalReal(1, data, 0, receitaReal1);
+		ProdutoFinalReal pr2 = new ProdutoFinalReal(2, data, 0, receitaReal2);
+		ProdutoFinalReal pr3 = new ProdutoFinalReal(3, data, 0, receitaReal3);
 		produtoFinalRealService.inserir(pr1);
 		produtoFinalRealService.inserir(pr2);
 		produtoFinalRealService.inserir(pr3);
