@@ -123,7 +123,7 @@ public class VendaGUI {
 			System.out.println("Nenhuma Venda realizada\n");
 		}
 		else {
-			System.out.println("Vendas Cadastrados: \n");
+			System.out.println("Vendas Cadastradas: \n");
 			for(Venda venda : listaDeVendas) {
 				System.out.printf("[%d] Cliente: %s / Valor: %.2f\n", venda.getId(), clienteService.procuraPeloId(venda.getIdCliente()).getNome(), venda.getValor());
 			}
@@ -146,7 +146,7 @@ public class VendaGUI {
 			System.out.printf("Cliente: %s\n", clienteService.procuraPeloId(venda.getIdCliente()).getNome());
 			System.out.printf("Valor: %.2f\n", venda.getValor());
 			System.out.println("Data: " + venda.getData());
-			System.out.printf("Produtos que inclusos na compra: \n");
+			System.out.printf("Produtos inclusos na venda: \n");
 			for(int produtoID : venda.getListaProdutos().keySet()) {
 			
 				System.out.println("Produto = [" + produtoFinalService.procuraPeloId(produtoID).getNome() 

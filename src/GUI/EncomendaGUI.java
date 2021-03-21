@@ -116,7 +116,8 @@ public class EncomendaGUI {
 		}while (aux != -1);
 		if(clienteService.procuraPeloId(idCliente) != null) {
 			id = encomendaService.realizarEncomenda(listaDeProdutos, idCliente, dataDeEntrega);
-			System.out.println("Encomenda Realizada com o ID " + id + " e preço: " + encomendaService.procuraPeloId(id).getValor());
+			System.out.println("Encomenda Realizada com o ID " + id + " e preço: " + encomendaService.procuraPeloId(id).getValor() + 
+							   " com entrega em: " + encomendaService.procuraPeloId(id).getDataEntrega());
 		} 
 		else
 		{
@@ -149,7 +150,7 @@ public class EncomendaGUI {
 		int opt = -1;
 
 		funcoes.put(0, "Voltar");
-		funcoes.put(1, "Realizar Encomendad");
+		funcoes.put(1, "Realizar Encomenda");
 		funcoes.put(2, "Consultar Encomenda");
 		funcoes.put(3, "Remover Encomenda");
 
