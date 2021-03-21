@@ -151,8 +151,49 @@ public class EncomendaGUI {
 		
 	}
 	
+	public static void removerEncomenda(int id) {
+		IEncomendaService encomendaService = EncomendaService.getInstance();
+		try{
+			encomendaService.remover(id);
+			System.out.println("Encomenda de Id: "+ id + " foi removida");
+		} catch (BusinessRuleException bre) {
+			System.out.println(bre.getMessage());
+		}
+	}
+	
 	public static void telaRemover(int a) {
-		
+		int opt = -1;
+		int opt2 = -1;
+
+		do {
+			System.out.println("\n ===== Remover Encomenda ===== \n");
+			System.out.printf("[%d] %s \n", 0, "Voltar");
+			System.out.printf("[%d] %s \n", 1, "Ver Encomendas Realizadas");
+			System.out.printf("[%d] %s \n", 2, "Remover Encomenda");
+			try {
+				Scanner input = new Scanner(System.in);
+				System.out.print("Digite: ");
+				opt = Integer.parseInt(input.nextLine());
+				switch (opt) {
+				case 0:
+					break;
+				case 1:
+					mostraTodasAsEncomendas();
+					break;
+				case 2:
+					System.out.print("Digite o id da Encomenda: ");
+					opt2 = Integer.parseInt(input.nextLine());
+					removerEncomenda(opt2);
+					break;
+				default:
+					throw new Exception("Valor Inválido");
+
+				}
+			} catch (Exception bre) {
+				System.out.println("Digite um valor válido");
+				bre.printStackTrace();
+			}
+		} while (opt != 0);
 	}
 	
 	public static void sair(int a) {
