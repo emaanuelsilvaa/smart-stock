@@ -159,7 +159,7 @@ public class Main {
 		receita3.put(2, 0.1f);
 		receita3.put(4, 0.1f);
 		receita3.put(7, 0.01f);
-		ProdutoFinal p1 = new ProdutoFinal("Esfirra", 2, 30, receita1);
+		ProdutoFinal p1 = new ProdutoFinal("Esfirra", 2f, 30, receita1);
 		ProdutoFinal p2 = new ProdutoFinal("Empada", 4f, 30, receita1);
 		ProdutoFinal p3 = new ProdutoFinal("Pastel de Carne", 3.5f, 30, receita1);
 		
@@ -209,9 +209,11 @@ public class Main {
 		
 		Date data4 = new Date("04/25/2021");
 
-		encomendaService.realizarEncomenda(listProdutos3, 1, data3);
-		encomendaService.realizarEncomenda(listProdutos4, 2, data4);
-
+//		encomendaService.realizarEncomenda(listProdutos3, 1, data3);
+//		encomendaService.realizarEncomenda(listProdutos4, 2, data4);
+		
+		vendaService.realizarVenda(listProdutos3, 1);
+		vendaService.realizarVenda(listProdutos4, 2);
 		
 		HashMap<Integer, Integer> listProdutos1 = new HashMap<Integer, Integer>();
 		listProdutos1.put(1, 10);
