@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 import DATA.IProdutoFinalDAO;
 import DATA.ProdutoFinalDAO;
+import ENTITY.Alimento;
+import ENTITY.Bone;
 import ENTITY.MateriaPrima;
 import ENTITY.ProdutoFinal;
+import ENTITY.Remedio;
 import UTIL.BusinessRuleException;
 
 public final class ProdutoFinalService implements IProdutoFinalService {
@@ -60,32 +63,19 @@ public final class ProdutoFinalService implements IProdutoFinalService {
 	
 	@Override
 	public void validarCadastro(ProdutoFinal produtoFinal) throws BusinessRuleException{
-		ArrayList<String> erros = new ArrayList<String>();
-		if(produtoFinal == null) {
-			erros.add("Tentou inserir um Produto Final nulo");
+		ValidarStrategy validar = null;
+		if(produtoFinal instanceof Alimento) {
+			validar = new ValidarAlimento();
 		}
-		if(produtoFinal.getNome() == "" || produtoFinal.getNome() == null ) {
-			erros.add("Tentou inserir uma ProdutoFinal com nome nulo");
+		if(produtoFinal instanceof Bone) {
+			validar = new ValidarBone();
 		}
-		if(produtoFinal.getQntMinima() < 0) {
-			erros.add("Tentou inserir uma quantidade mínima negativa");
+		if(produtoFinal instanceof Remedio) {
+			validar = new ValidarRemedio();
 		}
-		if(produtoFinal.getPreco() < 0) {
-			erros.add("Tentou inserir um preço negativo");
+		if (validar == null) {
+			throw new BusinessRuleException("Tipo de Produto Final não detectado");
 		}
-		if(produtoFinal.getReceita().isEmpty()) {
-			erros.add("Tentou inserir uma receita vazia");
-		} else {
-			for(int i : produtoFinal.getReceita().keySet()) {
-				if(this.materiaPrimaService.procuraPeloId(i) == null) {
-					erros.add("MatériaPrima de ID " + i + "não cadastrada");
-				}
-			}
-		}
-		if (erros.size()>0) {
-			throw new BusinessRuleException(erros);
-		}
+		validar.validarEspecificidades(produtoFinal);
 	}
-	
-
 }

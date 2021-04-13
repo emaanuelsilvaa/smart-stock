@@ -20,6 +20,8 @@ import DATA.MateriaPrimaRealDAO;
 import DATA.ProdutoFinalDAO;
 import DATA.ProdutoFinalRealDAO;
 import DATA.VendaDAO;
+import ENTITY.Alimento;
+import ENTITY.Bone;
 import ENTITY.Cliente;
 import ENTITY.Encomenda;
 import ENTITY.Fornecedor;
@@ -27,6 +29,7 @@ import ENTITY.MateriaPrima;
 import ENTITY.MateriaPrimaReal;
 import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
+import ENTITY.Remedio;
 import ENTITY.Venda;
 import GUI.Home;
 import UTIL.BusinessRuleException;
@@ -73,7 +76,7 @@ public class Main {
 		Cliente cliente4 = new Cliente("Ana", "12356271892", "Rua Palmares, 180", "84-33332222");
 		Cliente cliente5 = new Cliente("Cleber", "12356271892", "Rua Palmares, 180", "84-33332222");
 
-
+		
 
 		clienteService.inserir(cliente1);
 		clienteService.inserir(cliente2);
@@ -159,10 +162,14 @@ public class Main {
 		receita3.put(2, 0.1f);
 		receita3.put(4, 0.1f);
 		receita3.put(7, 0.01f);
-
-		ProdutoFinal p1 = new ProdutoFinal("Esfirra", 2f, 30, receita1);
-		ProdutoFinal p2 = new ProdutoFinal("Empada", 4f, 30, receita1);
-		ProdutoFinal p3 = new ProdutoFinal("Pastel de Carne", 3.5f, 30, receita1);
+		
+		ProdutoFinal p10 = new Remedio("Remedin", 2f, 30, receita1, "preta");
+		produtoFinalService.inserir(p10);
+		ProdutoFinal p11 = new Bone("BadBoy", 2f, 30, receita1, "azul", "aba reta", "blop");
+		produtoFinalService.inserir(p11);
+		ProdutoFinal p1 = new Alimento("Esfirra", 2f, 30, receita1, 120);
+		ProdutoFinal p2 = new Alimento("Empada", 4f, 30, receita1, 120);
+		ProdutoFinal p3 = new Alimento("Pastel de Carne", 3.5f, 30, receita1, 120);
 		
 		produtoFinalService.inserir(p1);
 		produtoFinalService.inserir(p2);
@@ -223,6 +230,7 @@ public class Main {
 		HashMap<Integer, Integer> listProdutos2 = new HashMap<Integer, Integer>();
 		listProdutos2.put(2, 5);
 		listProdutos2.put(1, 30);
+		
 	
 		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n\n");
 		Home.telaInicial(1);

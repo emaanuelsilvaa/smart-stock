@@ -14,6 +14,7 @@ import BUSINESS.MateriaPrimaService;
 import ENTITY.Fornecedor;
 import ENTITY.MateriaPrima;
 import ENTITY.ProdutoFinal;
+import ENTITY.Remedio;
 import UTIL.BusinessRuleException;
 import UTIL.Colors;
 
