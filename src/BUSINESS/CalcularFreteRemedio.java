@@ -25,7 +25,7 @@ public class CalcularFreteRemedio implements FreteStrategy {
 		for (int idRemedio : venda.getListaProdutos().keySet()) {
 			remedioAtual = (Remedio) this.produtoFinalService.procuraPeloId(idRemedio);
 			valorFinal += venda.getListaProdutos().get(idRemedio) * multiplicador;
-			if(remedioAtual.getTarja().equalsIgnoreCase("preto") || remedioAtual.getTarja().equalsIgnoreCase("preta")) {
+			if(remedioAtual.getTarja().equalsIgnoreCase("preta")) {
 				temRemedioTarjado = true;
 			}
 		}
