@@ -3,6 +3,7 @@ package BUSINESS;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ENTITY.Especificidade;
 import ENTITY.Venda;
 import UTIL.BusinessRuleException;
 
@@ -14,7 +15,7 @@ public interface IVendaService {
 	
 	Venda procuraPeloId(int id);
 	
-	int realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) throws BusinessRuleException;	
+	int realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Especificidade especificidade) throws BusinessRuleException;	
 	
 	int cancelarVenda(int id) throws BusinessRuleException;
 

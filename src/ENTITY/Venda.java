@@ -11,6 +11,15 @@ public class Venda {
 	protected HashMap<Integer, Integer> listaProdutos;
 	protected HashMap<Integer, Integer> listaProdutosReais;
 	protected Date data;
+	protected Especificidade especificidade;
+
+	public Especificidade getEspecificidade() {
+		return especificidade;
+	}
+
+	public void setEspecificidade(Especificidade especificidade) {
+		this.especificidade = especificidade;
+	}
 
 	public Venda() {
 

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import DATA.IVendaDAO;
 import DATA.VendaDAO;
 import ENTITY.Cliente;
+import ENTITY.Especificidade;
 import ENTITY.ProdutoFinalReal;
 import ENTITY.Venda;
 import UTIL.BusinessRuleException;
@@ -21,6 +22,7 @@ public final class VendaService implements IVendaService {
 	protected IMateriaPrimaService materiaPrimaService;
 	protected IMateriaPrimaRealService materiaPrimaRealService;
 	protected IClienteService clienteService;
+	protected int typeInstance;
 	private static IVendaService instance;
 	
 	private VendaService() {
@@ -31,8 +33,17 @@ public final class VendaService implements IVendaService {
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
 		this.materiaPrimaRealService = MateriaPrimaRealService.getInstance();
 		this.clienteService = ClienteService.getInstance();
+		this.typeInstance = 1;
 	};
 	
+	public int getTypeInstance() {
+		return typeInstance;
+	}
+
+	public void setTypeInstance(int typeInstance) {
+		this.typeInstance = typeInstance;
+	}
+
 	public static IVendaService getInstance() {
 		if(instance == null) {
 			instance = new VendaService();
@@ -59,7 +70,7 @@ public final class VendaService implements IVendaService {
 	}
 	
 	@Override
-	public int realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) throws BusinessRuleException {
+	public int realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Especificidade especificidade) throws BusinessRuleException {
 		Date data = new Date();
 		boolean temMateriaPrimaSuficiente = true;
 		HashMap <Integer, Integer> listaDeProdutosReais = new HashMap<Integer, Integer>();
@@ -95,6 +106,20 @@ public final class VendaService implements IVendaService {
 			// Gerando um ID automaticamente para a nova venda
 			Venda vendaASerInserida = new Venda(valorDaVenda, idCliente, listaProdutos, data);
 			vendaASerInserida.setListaProdutosReais(listaDeProdutosReais);
+			EspecificidadeVendaStrategy especificidadeVenda = null;
+			switch (this.typeInstance) {
+			case 1:
+				break;
+			case 2: 
+				especificidadeVenda = new ValidarEspecificidadesVendaBone();
+				break;
+			case 3:
+				especificidadeVenda = new ValidarEspecificidadeVendaRemedio();
+				break;
+			default:
+				throw new BusinessRuleException("Argumento de Framework inválido");
+			}
+			especificidadeVenda.validarEspecificidades(especificidade, vendaASerInserida);
 			
 			validarCadastro(vendaASerInserida);
 			this.vendaDAO.inserir(vendaASerInserida);
