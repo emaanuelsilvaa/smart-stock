@@ -9,6 +9,10 @@ import DATA.IEncomendaDAO;
 import ENTITY.Cliente;
 import ENTITY.Encomenda;
 import ENTITY.Especificidade;
+import ENTITY.Frete;
+import ENTITY.FreteAlimento;
+import ENTITY.FreteBone;
+import ENTITY.FreteRemedio;
 import UTIL.BusinessRuleException;
 
 public final class EncomendaService implements IEncomendaService {
@@ -72,21 +76,32 @@ public final class EncomendaService implements IEncomendaService {
 		Encomenda newEncomenda = new Encomenda(valorDaEncomenda, idCliente, listaProdutos, data, dataEntrega);
 		
 		EspecificidadeVendaStrategy especificidadeVenda = null;
+		FreteStrategy freteEncomenda = null;
+		Frete tipoDeFrete = null;
 		switch (this.typeInstance) {
 		case 1:
 			especificidadeVenda = new ValidarEspecificidadesVendaAlimento();
+			freteEncomenda = new CalcularFreteAlimento();
+			tipoDeFrete = new FreteAlimento();
 			break;
 		case 2: 
 			especificidadeVenda = new ValidarEspecificidadesVendaBone();
+			freteEncomenda = new CalcularFreteBone();
+			tipoDeFrete = new FreteBone();
 			break;
 		case 3:
 			especificidadeVenda = new ValidarEspecificidadeVendaRemedio();
+			freteEncomenda = new CalcularFreteRemedio();
+			tipoDeFrete = new FreteRemedio();
 			break;
 		default:
 			throw new BusinessRuleException("Argumento de Framework inválido");
 		}
 		especificidadeVenda.validarEspecificidades(especificidade, newEncomenda);
 		
+		double frete = freteEncomenda.calcularFrete(tipoDeFrete, newEncomenda);
+
+		newEncomenda.setFrete(frete);
 		validarCadastro(newEncomenda);
 		this.encomendaDAO.inserir(newEncomenda);
 		return newEncomenda.getId();

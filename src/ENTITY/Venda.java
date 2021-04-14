@@ -12,6 +12,7 @@ public class Venda {
 	protected HashMap<Integer, Integer> listaProdutosReais;
 	protected Date data;
 	protected Especificidade especificidade;
+	protected double frete;
 
 	public Especificidade getEspecificidade() {
 		return especificidade;
@@ -88,6 +89,14 @@ public class Venda {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public double getFrete() {
+		return frete;
+	}
+
+	public void setFrete(double frete) {
+		this.frete = frete;
 	}
 
 }

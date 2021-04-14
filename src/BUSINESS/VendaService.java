@@ -11,6 +11,10 @@ import ENTITY.Cliente;
 import ENTITY.Especificidade;
 import ENTITY.ProdutoFinalReal;
 import ENTITY.Venda;
+import ENTITY.Frete;
+import ENTITY.FreteAlimento;
+import ENTITY.FreteBone;
+import ENTITY.FreteRemedio;
 import UTIL.BusinessRuleException;
 
 public final class VendaService implements IVendaService {
@@ -107,21 +111,31 @@ public final class VendaService implements IVendaService {
 			Venda vendaASerInserida = new Venda(valorDaVenda, idCliente, listaProdutos, data);
 			vendaASerInserida.setListaProdutosReais(listaDeProdutosReais);
 			EspecificidadeVendaStrategy especificidadeVenda = null;
+			FreteStrategy freteVenda = null;
+			Frete tipoDeFrete = null;
 			switch (this.typeInstance) {
 			case 1:
 				especificidadeVenda = new ValidarEspecificidadesVendaAlimento();
+				freteVenda = new CalcularFreteAlimento();
+				tipoDeFrete = new FreteAlimento();
 				break;
 			case 2: 
 				especificidadeVenda = new ValidarEspecificidadesVendaBone();
+				freteVenda = new CalcularFreteBone();
+				tipoDeFrete = new FreteBone();
 				break;
 			case 3:
 				especificidadeVenda = new ValidarEspecificidadeVendaRemedio();
+				freteVenda = new CalcularFreteRemedio();
+				tipoDeFrete = new FreteRemedio();
 				break;
 			default:
 				throw new BusinessRuleException("Argumento de Framework inválido");
 			}
 			especificidadeVenda.validarEspecificidades(especificidade, vendaASerInserida);
+			double frete = freteVenda.calcularFrete(tipoDeFrete, vendaASerInserida);
 			
+			vendaASerInserida.setFrete(frete);
 			validarCadastro(vendaASerInserida);
 			this.vendaDAO.inserir(vendaASerInserida);
 			return vendaASerInserida.getId();

@@ -146,6 +146,7 @@ public class VendaGUI {
 			System.out.printf("Cliente: %s\n", clienteService.procuraPeloId(venda.getIdCliente()).getNome());
 			System.out.printf("Valor: %.2f\n", venda.getValor());
 			System.out.println("Data: " + venda.getData());
+			System.out.println("Frete: " + venda.getFrete());
 			System.out.printf("Produtos inclusos na venda: \n");
 			for(int produtoID : venda.getListaProdutos().keySet()) {
 			
