@@ -8,6 +8,7 @@ import DATA.EncomendaDAO;
 import DATA.IEncomendaDAO;
 import ENTITY.Cliente;
 import ENTITY.Encomenda;
+import ENTITY.Especificidade;
 import UTIL.BusinessRuleException;
 
 public final class EncomendaService implements IEncomendaService {
@@ -19,6 +20,7 @@ public final class EncomendaService implements IEncomendaService {
 	protected IMateriaPrimaService materiaPrimaService;
 	protected IClienteService clienteService;
 	private static IEncomendaService instance;
+	protected int typeInstance;
 
 	private EncomendaService() {
 		// TODO Auto-generated constructor stub
@@ -28,7 +30,18 @@ public final class EncomendaService implements IEncomendaService {
 		this.produtoFinalService = ProdutoFinalService.getInstance();
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
 		this.clienteService = ClienteService.getInstance();
+		this.typeInstance = 1;
 	}
+
+	public int getTypeInstance() {
+		return typeInstance;
+	}
+
+	public void setTypeInstance(int typeInstance) {
+		this.typeInstance = typeInstance;
+	}
+
+
 
 	public static IEncomendaService getInstance() {
 		if (instance == null) {
@@ -48,7 +61,7 @@ public final class EncomendaService implements IEncomendaService {
 	}
 
 	@Override
-	public int realizarEncomenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Date dataEntrega) {
+	public int realizarEncomenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Date dataEntrega, Especificidade especificidade) throws BusinessRuleException {
 		Date data = new Date();
 		float valorDaEncomenda = 0;
 		for (int id : listaProdutos.keySet()) {
@@ -57,6 +70,24 @@ public final class EncomendaService implements IEncomendaService {
 		}
 		
 		Encomenda newEncomenda = new Encomenda(valorDaEncomenda, idCliente, listaProdutos, data, dataEntrega);
+		
+		EspecificidadeVendaStrategy especificidadeVenda = null;
+		switch (this.typeInstance) {
+		case 1:
+			especificidadeVenda = new ValidarEspecificidadesVendaAlimento();
+			break;
+		case 2: 
+			especificidadeVenda = new ValidarEspecificidadesVendaBone();
+			break;
+		case 3:
+			especificidadeVenda = new ValidarEspecificidadeVendaRemedio();
+			break;
+		default:
+			throw new BusinessRuleException("Argumento de Framework inválido");
+		}
+		especificidadeVenda.validarEspecificidades(especificidade, newEncomenda);
+		
+		validarCadastro(newEncomenda);
 		this.encomendaDAO.inserir(newEncomenda);
 		return newEncomenda.getId();
 	}
@@ -71,7 +102,7 @@ public final class EncomendaService implements IEncomendaService {
 	
 	@Override
 	public int consumarEncomenda(int id) throws BusinessRuleException {
-		this.vendaService.realizarVenda(encomendaDAO.procuraPeloId(id).getListaProdutos(), encomendaDAO.procuraPeloId(id).getIdCliente());
+		this.vendaService.realizarVenda(encomendaDAO.procuraPeloId(id).getListaProdutos(), encomendaDAO.procuraPeloId(id).getIdCliente(), encomendaDAO.procuraPeloId(id).getEspecificidade());
 		remover(id);
 		return id;
 	}
@@ -87,7 +118,6 @@ public final class EncomendaService implements IEncomendaService {
 
 	@Override
 	public int inserir(Encomenda encomenda) throws BusinessRuleException {
-		validarCadastro(encomenda);
 		if (this.encomendaDAO.procuraPeloId(encomenda.getId()) != null) {
 			throw new BusinessRuleException("Tentou inserir uma encomenda já existente");
 		}

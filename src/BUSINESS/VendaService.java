@@ -109,6 +109,7 @@ public final class VendaService implements IVendaService {
 			EspecificidadeVendaStrategy especificidadeVenda = null;
 			switch (this.typeInstance) {
 			case 1:
+				especificidadeVenda = new ValidarEspecificidadesVendaAlimento();
 				break;
 			case 2: 
 				especificidadeVenda = new ValidarEspecificidadesVendaBone();

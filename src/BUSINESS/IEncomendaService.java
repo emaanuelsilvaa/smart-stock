@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import ENTITY.Encomenda;
+import ENTITY.Especificidade;
 import UTIL.BusinessRuleException;
 
 public interface IEncomendaService {
@@ -21,7 +22,7 @@ public interface IEncomendaService {
 
 	int alterar(int id, Encomenda encomenda) throws BusinessRuleException;
 
-	int realizarEncomenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Date dataEntrega);
+	int realizarEncomenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Date dataEntrega, Especificidade especificidade) throws BusinessRuleException;
 
 	int validarCadastro(Encomenda encomenda) throws BusinessRuleException;
 

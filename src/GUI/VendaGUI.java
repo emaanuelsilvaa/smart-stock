@@ -16,6 +16,8 @@ import BUSINESS.ClienteService;
 
 import ENTITY.Venda;
 import UTIL.BusinessRuleException;
+import ENTITY.Especificidade;
+import ENTITY.EspecificidadeAlimento;
 import ENTITY.ProdutoFinal;
 
 
@@ -27,6 +29,7 @@ public class VendaGUI {
 	
 	public VendaGUI () {
 		 vendaService = VendaService.getInstance();
+		 ((VendaService)vendaService).setTypeInstance(1);
 		 produtoFinalService = ProdutoFinalService.getInstance();
 		 clienteService = ClienteService.getInstance();
 	}
@@ -107,7 +110,8 @@ public class VendaGUI {
 		}while (aux != -1);
 		
 		try {
-			id = vendaService.realizarVenda(listaDeProdutos, idCliente);
+			Especificidade especificidade = new EspecificidadeAlimento();
+			id = vendaService.realizarVenda(listaDeProdutos, idCliente, especificidade);
 			System.out.println("Venda Realizada com o ID " + id + " e preço: " + vendaService.procuraPeloId(id).getValor());
 		} catch (BusinessRuleException bre) {
 			System.out.println("Venda não realizada pelo(s) seguinte(s) motivo(s): ");

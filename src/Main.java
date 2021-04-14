@@ -24,6 +24,8 @@ import ENTITY.Alimento;
 import ENTITY.Bone;
 import ENTITY.Cliente;
 import ENTITY.Encomenda;
+import ENTITY.Especificidade;
+import ENTITY.EspecificidadeAlimento;
 import ENTITY.Fornecedor;
 import ENTITY.MateriaPrima;
 import ENTITY.MateriaPrimaReal;
@@ -216,12 +218,14 @@ public class Main {
 		listProdutos4.put(3, 50);
 		
 		Date data4 = new Date("04/25/2021");
-
-//		encomendaService.realizarEncomenda(listProdutos3, 1, data3);
-//		encomendaService.realizarEncomenda(listProdutos4, 2, data4);
 		
-		vendaService.realizarVenda(listProdutos3, 1);
-		vendaService.realizarVenda(listProdutos4, 2);
+		Especificidade especificidade = new EspecificidadeAlimento();
+
+//		encomendaService.realizarEncomenda(listProdutos3, 1, data3, especificidade);
+//		encomendaService.realizarEncomenda(listProdutos4, 2, data4, especificidade);
+		
+		vendaService.realizarVenda(listProdutos3, 1, especificidade);
+		vendaService.realizarVenda(listProdutos4, 2, especificidade);
 		
 		HashMap<Integer, Integer> listProdutos1 = new HashMap<Integer, Integer>();
 		listProdutos1.put(1, 10);

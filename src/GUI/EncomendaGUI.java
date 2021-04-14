@@ -20,6 +20,8 @@ import BUSINESS.EncomendaService;
 
 import ENTITY.Venda;
 import ENTITY.Encomenda;
+import ENTITY.Especificidade;
+import ENTITY.EspecificidadeAlimento;
 import UTIL.BusinessRuleException;
 import ENTITY.ProdutoFinal;
 
@@ -35,6 +37,7 @@ public class EncomendaGUI {
 		  encomendaService = EncomendaService.getInstance();
 		  produtoFinalService = ProdutoFinalService.getInstance();
 		  clienteService = ClienteService.getInstance();
+		  ((EncomendaService)encomendaService).setTypeInstance(1);
 	}
 	
 	public static void init(int a) {
@@ -119,7 +122,13 @@ public class EncomendaGUI {
 
 		}while (aux != -1);
 		if(clienteService.procuraPeloId(idCliente) != null) {
-			id = encomendaService.realizarEncomenda(listaDeProdutos, idCliente, dataDeEntrega);
+			try {
+				Especificidade especificidade = new EspecificidadeAlimento();
+				id = encomendaService.realizarEncomenda(listaDeProdutos, idCliente, dataDeEntrega, especificidade);
+			} catch (BusinessRuleException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.out.println("Encomenda agendada com o ID " + id + " e preço: " + encomendaService.procuraPeloId(id).getValor() + 
 							   " com entrega em: " + encomendaService.procuraPeloId(id).getDataEntrega());
 		} 
