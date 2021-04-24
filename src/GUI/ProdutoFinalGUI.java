@@ -10,6 +10,7 @@ import BUSINESS.FornecedorService;
 import BUSINESS.IFornecedorService;
 import BUSINESS.IMateriaPrimaService;
 import BUSINESS.ProdutoFinalService;
+import BUSINESS.ValidarAlimento;
 import BUSINESS.MateriaPrimaService;
 import ENTITY.Fornecedor;
 import ENTITY.MateriaPrima;
@@ -24,8 +25,8 @@ public class ProdutoFinalGUI {
 	protected static IMateriaPrimaService materiaPrimaService;
 	
 	public ProdutoFinalGUI () {
-		produtoFinalService = ProdutoFinalService.getInstance();
-		 materiaPrimaService = MateriaPrimaService.getInstance();
+		produtoFinalService = ProdutoFinalService.getInstance(new ValidarAlimento());
+		materiaPrimaService = MateriaPrimaService.getInstance();
 		
 	}
 	
