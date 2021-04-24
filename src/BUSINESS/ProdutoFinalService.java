@@ -15,6 +15,7 @@ public final class ProdutoFinalService implements IProdutoFinalService {
 	protected IProdutoFinalDAO produtoFinalDAO;
 	protected IMateriaPrimaService materiaPrimaService;
 	private static IProdutoFinalService instance;
+	private static ValidarStrategy validar;
 
 	private ProdutoFinalService() {
 		// TODO Auto-generated constructor stub
@@ -25,6 +26,14 @@ public final class ProdutoFinalService implements IProdutoFinalService {
 		if(instance == null) {
 			instance = new ProdutoFinalService();
 		}
+		return instance;
+	}
+	
+	public static IProdutoFinalService getInstance(ValidarStrategy validarStrategy) {
+		if(instance == null) {
+			instance = new ProdutoFinalService();
+		}
+		validar = validarStrategy;
 		return instance;
 	}
 	
@@ -63,16 +72,6 @@ public final class ProdutoFinalService implements IProdutoFinalService {
 	
 	@Override
 	public void validarCadastro(ProdutoFinal produtoFinal) throws BusinessRuleException{
-		ValidarStrategy validar = null;
-		if(produtoFinal instanceof Alimento) {
-			validar = new ValidarAlimento();
-		}
-		if(produtoFinal instanceof Bone) {
-			validar = new ValidarBone();
-		}
-		if(produtoFinal instanceof Remedio) {
-			validar = new ValidarRemedio();
-		}
 		if (validar == null) {
 			throw new BusinessRuleException("Tipo de Produto Final não detectado");
 		}

@@ -14,6 +14,7 @@ import BUSINESS.MateriaPrimaService;
 import BUSINESS.ProdutoFinalRealService;
 import BUSINESS.ProdutoFinalService;
 import BUSINESS.RelatorioService;
+import BUSINESS.ValidarAlimento;
 import BUSINESS.VendaService;
 import DATA.MateriaPrimaDAO;
 import DATA.MateriaPrimaRealDAO;
@@ -63,7 +64,7 @@ public class Main {
 		IFornecedorService fornecedorService = FornecedorService.getInstance();
 		IMateriaPrimaService materiaPrimaService = MateriaPrimaService.getInstance();
 		IMateriaPrimaRealService materiaPrimaRealService = MateriaPrimaRealService.getInstance();
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
+		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance(new ValidarAlimento());
 		IProdutoFinalRealService produtoFinalRealService = ProdutoFinalRealService.getInstance();
 		IVendaService vendaService = VendaService.getInstance();
 		IEstoqueService estoqueService = EstoqueService.getInstance();
