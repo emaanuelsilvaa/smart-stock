@@ -19,6 +19,6 @@ public interface IVendaService {
 	
 	int cancelarVenda(int id) throws BusinessRuleException;
 
-	void validarCadastro(Venda venda) throws BusinessRuleException;
+	void validarCadastro(Venda venda, ArrayList<String> errosEspecificidade) throws BusinessRuleException;
 	
 }

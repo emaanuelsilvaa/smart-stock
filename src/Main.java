@@ -50,6 +50,7 @@ import DATA.FornecedorDAO;
 import BUSINESS.RelatorioService;
 import BUSINESS.IRelatorioService;
 import BUSINESS.IAnaliseLucro;
+import BUSINESS.ValidarEspecificidadesVendaAlimento;
 
 public class Main {
 
@@ -66,9 +67,9 @@ public class Main {
 		IMateriaPrimaRealService materiaPrimaRealService = MateriaPrimaRealService.getInstance();
 		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance(new ValidarAlimento());
 		IProdutoFinalRealService produtoFinalRealService = ProdutoFinalRealService.getInstance();
-		IVendaService vendaService = VendaService.getInstance();
+		IVendaService vendaService = VendaService.getInstance(new ValidarEspecificidadesVendaAlimento());
 		IEstoqueService estoqueService = EstoqueService.getInstance();
-		IEncomendaService encomendaService = EncomendaService.getInstance();
+		IEncomendaService encomendaService = EncomendaService.getInstance(new ValidarEspecificidadesVendaAlimento());
 		IRelatorioService relatorioService = RelatorioService.getInstance();
 		IAnaliseLucro analiseLucro = AnaliseLucro.getInstance();
 		
@@ -166,10 +167,10 @@ public class Main {
 		receita3.put(4, 0.1f);
 		receita3.put(7, 0.01f);
 		
-		ProdutoFinal p10 = new Remedio("Remedin", 2f, 30, receita1, "preta");
-		produtoFinalService.inserir(p10);
-		ProdutoFinal p11 = new Bone("BadBoy", 2f, 30, receita1, "azul", "aba reta", "blop");
-		produtoFinalService.inserir(p11);
+//		ProdutoFinal p10 = new Remedio("Remedin", 2f, 30, receita1, "preta");
+//		produtoFinalService.inserir(p10);
+//		ProdutoFinal p11 = new Bone("BadBoy", 2f, 30, receita1, "azul", "aba reta", "blop");
+//		produtoFinalService.inserir(p11);
 		ProdutoFinal p1 = new Alimento("Esfirra", 2f, 30, receita1, 120);
 		ProdutoFinal p2 = new Alimento("Empada", 4f, 30, receita1, 120);
 		ProdutoFinal p3 = new Alimento("Pastel de Carne", 3.5f, 30, receita1, 120);
@@ -180,7 +181,7 @@ public class Main {
 
 
 
-		Date data = new Date("04/21/2021");
+		Date data = new Date("06/21/2021");
 
 		HashMap<Integer, Float> receitaReal1 = new HashMap<Integer, Float>();
 		receitaReal1.put(1, 0.05f);

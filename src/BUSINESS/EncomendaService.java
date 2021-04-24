@@ -25,6 +25,7 @@ public final class EncomendaService implements IEncomendaService {
 	protected IClienteService clienteService;
 	private static IEncomendaService instance;
 	protected int typeInstance;
+	private static EspecificidadeVendaStrategy especificidadeEncomenda;
 
 	private EncomendaService() {
 		// TODO Auto-generated constructor stub
@@ -54,6 +55,14 @@ public final class EncomendaService implements IEncomendaService {
 		return instance;
 	}
 
+	public static IEncomendaService getInstance(EspecificidadeVendaStrategy especificidadeEncomendaStrategy) {
+		if (instance == null) {
+			instance = new EncomendaService();
+		}
+		especificidadeEncomenda = especificidadeEncomendaStrategy;
+		return instance;
+	}
+	
 	@Override
 	public ArrayList<Encomenda> procuraTodos() {
 		return this.encomendaDAO.procuraTodos();
@@ -75,34 +84,34 @@ public final class EncomendaService implements IEncomendaService {
 		
 		Encomenda newEncomenda = new Encomenda(valorDaEncomenda, idCliente, listaProdutos, data, dataEntrega);
 		
-		EspecificidadeVendaStrategy especificidadeVenda = null;
 		FreteStrategy freteEncomenda = null;
 		Frete tipoDeFrete = null;
 		switch (this.typeInstance) {
 		case 1:
-			especificidadeVenda = new ValidarEspecificidadesVendaAlimento();
 			freteEncomenda = new CalcularFreteAlimento();
 			tipoDeFrete = new FreteAlimento();
 			break;
-		case 2: 
-			especificidadeVenda = new ValidarEspecificidadesVendaBone();
+		case 2:
 			freteEncomenda = new CalcularFreteBone();
 			tipoDeFrete = new FreteBone();
 			break;
 		case 3:
-			especificidadeVenda = new ValidarEspecificidadeVendaRemedio();
 			freteEncomenda = new CalcularFreteRemedio();
 			tipoDeFrete = new FreteRemedio();
 			break;
 		default:
 			throw new BusinessRuleException("Argumento de Framework inválido");
 		}
-		especificidadeVenda.validarEspecificidades(especificidade, newEncomenda);
-		
 		double frete = freteEncomenda.calcularFrete(tipoDeFrete, newEncomenda);
-
 		newEncomenda.setFrete(frete);
-		validarCadastro(newEncomenda);
+		
+		if (especificidadeEncomenda == null) {
+			throw new BusinessRuleException("Tipo de Encomenda não detectado");
+		}
+		ArrayList<String> errosEspecificidade = especificidadeEncomenda.validarEspecificidades(especificidade, newEncomenda);
+		
+		validarCadastro(newEncomenda, errosEspecificidade);
+		
 		this.encomendaDAO.inserir(newEncomenda);
 		return newEncomenda.getId();
 	}
@@ -122,8 +131,9 @@ public final class EncomendaService implements IEncomendaService {
 		return id;
 	}
 	@Override
-	public int alterar(int id, Encomenda encomenda) throws BusinessRuleException {
-		validarCadastro(encomenda);
+	public int alterar(int id, Encomenda encomenda, Especificidade especificidade) throws BusinessRuleException {
+		ArrayList<String> errosEspecificidade = especificidadeEncomenda.validarEspecificidades(especificidade, encomenda);
+		validarCadastro(encomenda, errosEspecificidade);
 		if (this.encomendaDAO.procuraPeloId(id) == null) {
 			throw new BusinessRuleException("ID inexistente");
 		}
@@ -140,7 +150,7 @@ public final class EncomendaService implements IEncomendaService {
 	}
 	
 	@Override
-	public int validarCadastro(Encomenda encomenda) throws BusinessRuleException {
+	public int validarCadastro(Encomenda encomenda, ArrayList<String> errosEspecificidade) throws BusinessRuleException {
 		ArrayList<String> erros = new ArrayList<String>();
 		if(encomenda == null) {
 			erros.add("Tentou inserir uma Encomenda nula");
@@ -170,6 +180,7 @@ public final class EncomendaService implements IEncomendaService {
 				}
 			}
 		}
+		erros.addAll(errosEspecificidade);
 		if (erros.size() > 0) {
 			throw new BusinessRuleException(erros);
 		}

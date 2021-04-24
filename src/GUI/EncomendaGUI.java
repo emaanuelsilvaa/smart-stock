@@ -204,7 +204,8 @@ public class EncomendaGUI {
 
 		}while (aux != -1);
 		try {
-			id = encomendaService.alterar(idASubstituir, new Encomenda(idASubstituir, valorDaNovaEncomenda, idCliente, listaDeProdutos, new Date (), dataDeEntrega));
+			Especificidade especificidade = new EspecificidadeAlimento();
+			id = encomendaService.alterar(idASubstituir, new Encomenda(idASubstituir, valorDaNovaEncomenda, idCliente, listaDeProdutos, new Date (), dataDeEntrega), especificidade);
 			if(encomendaService.procuraPeloId(id) != null) {
 			System.out.println("Encomenda alterada, com o ID: " + id + " e preço: " + encomendaService.procuraPeloId(id).getValor() + 
 							   " com entrega em: " + encomendaService.procuraPeloId(id).getDataEntrega());

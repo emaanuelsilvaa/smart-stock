@@ -20,10 +20,10 @@ public interface IEncomendaService {
 
 	int consumarEncomenda(int id) throws BusinessRuleException;
 
-	int alterar(int id, Encomenda encomenda) throws BusinessRuleException;
+	int alterar(int id, Encomenda encomenda, Especificidade especificidade) throws BusinessRuleException;
 
 	int realizarEncomenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Date dataEntrega, Especificidade especificidade) throws BusinessRuleException;
 
-	int validarCadastro(Encomenda encomenda) throws BusinessRuleException;
+	int validarCadastro(Encomenda encomenda, ArrayList<String> errosEspecificidade) throws BusinessRuleException;
 
 }

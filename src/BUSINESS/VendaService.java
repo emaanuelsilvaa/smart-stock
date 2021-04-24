@@ -15,6 +15,7 @@ import ENTITY.Frete;
 import ENTITY.FreteAlimento;
 import ENTITY.FreteBone;
 import ENTITY.FreteRemedio;
+import ENTITY.ProdutoFinal;
 import UTIL.BusinessRuleException;
 
 public final class VendaService implements IVendaService {
@@ -28,6 +29,7 @@ public final class VendaService implements IVendaService {
 	protected IClienteService clienteService;
 	protected int typeInstance;
 	private static IVendaService instance;
+	private static EspecificidadeVendaStrategy especificidadeVenda;
 	
 	private VendaService() {
 		this.vendaDAO = new VendaDAO();
@@ -54,7 +56,15 @@ public final class VendaService implements IVendaService {
 		}
 		return instance;
 	}
-
+	
+	public static IVendaService getInstance(EspecificidadeVendaStrategy especificidadeVendaStrategy) {
+		if(instance == null) {
+			instance = new VendaService();
+		}
+		especificidadeVenda = especificidadeVendaStrategy;
+		return instance;
+	}
+	
 	@Override
 	public int remover (int id) throws BusinessRuleException {
 		if(this.vendaDAO.procuraPeloId(id) == null) {
@@ -110,33 +120,34 @@ public final class VendaService implements IVendaService {
 			// Gerando um ID automaticamente para a nova venda
 			Venda vendaASerInserida = new Venda(valorDaVenda, idCliente, listaProdutos, data);
 			vendaASerInserida.setListaProdutosReais(listaDeProdutosReais);
-			EspecificidadeVendaStrategy especificidadeVenda = null;
 			FreteStrategy freteVenda = null;
 			Frete tipoDeFrete = null;
 			switch (this.typeInstance) {
 			case 1:
-				especificidadeVenda = new ValidarEspecificidadesVendaAlimento();
 				freteVenda = new CalcularFreteAlimento();
 				tipoDeFrete = new FreteAlimento();
 				break;
 			case 2: 
-				especificidadeVenda = new ValidarEspecificidadesVendaBone();
 				freteVenda = new CalcularFreteBone();
 				tipoDeFrete = new FreteBone();
 				break;
 			case 3:
-				especificidadeVenda = new ValidarEspecificidadeVendaRemedio();
 				freteVenda = new CalcularFreteRemedio();
 				tipoDeFrete = new FreteRemedio();
 				break;
 			default:
 				throw new BusinessRuleException("Argumento de Framework inválido");
-			}
-			especificidadeVenda.validarEspecificidades(especificidade, vendaASerInserida);
+			}			
 			double frete = freteVenda.calcularFrete(tipoDeFrete, vendaASerInserida);
-			
 			vendaASerInserida.setFrete(frete);
-			validarCadastro(vendaASerInserida);
+			
+			if (especificidadeVenda == null) {
+				throw new BusinessRuleException("Tipo de Venda não detectado");
+			}
+			ArrayList<String> errosEspecificidade = especificidadeVenda.validarEspecificidades(especificidade, vendaASerInserida);
+			
+			validarCadastro(vendaASerInserida, errosEspecificidade);
+			
 			this.vendaDAO.inserir(vendaASerInserida);
 			return vendaASerInserida.getId();
 		}
@@ -166,7 +177,7 @@ public final class VendaService implements IVendaService {
 	}
 	
 	@Override
-	public void validarCadastro(Venda venda) throws BusinessRuleException{
+	public void validarCadastro(Venda venda, ArrayList<String> errosEspecificidade) throws BusinessRuleException{
 		ArrayList<String> erros = new ArrayList<String>();
 		if(venda == null) {
 			erros.add("Tentou inserir um Venda nula");
@@ -205,7 +216,8 @@ public final class VendaService implements IVendaService {
 				}
 			}
 		}
-		if (erros.size()>0) {
+		erros.addAll(errosEspecificidade);
+		if (erros.size() > 0) {
 			throw new BusinessRuleException(erros);
 		}
 	}
