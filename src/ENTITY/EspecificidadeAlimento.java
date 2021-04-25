@@ -2,8 +2,8 @@ package ENTITY;
 
 public class EspecificidadeAlimento extends Especificidade {
 	
-	protected boolean buffetCadastrado; // informa se é para um buffet cadastrado
-	protected float fatorDeDesconto; // caso seja, tem fator de desconto
+	boolean buffetCadastrado; // informa se é para um buffet cadastrado
+	float fatorDeDesconto; // caso seja, tem fator de desconto
 	
 	public EspecificidadeAlimento() {
 		// TODO Auto-generated constructor stub

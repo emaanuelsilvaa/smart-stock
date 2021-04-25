@@ -71,7 +71,7 @@ public class Main {
 		IProdutoFinalRealService produtoFinalRealService = ProdutoFinalRealService.getInstance();
 		IVendaService vendaService = VendaService.getInstance(new ValidarEspecificidadesVendaAlimento(), new CalcularFreteAlimento(), new FreteAlimento());
 		IEstoqueService estoqueService = EstoqueService.getInstance();
-		IEncomendaService encomendaService = EncomendaService.getInstance(new ValidarEspecificidadesVendaAlimento());
+		IEncomendaService encomendaService = EncomendaService.getInstance(new ValidarEspecificidadesVendaAlimento(), new CalcularFreteAlimento(), new FreteAlimento());
 		IRelatorioService relatorioService = RelatorioService.getInstance();
 		IAnaliseLucro analiseLucro = AnaliseLucro.getInstance();
 		
@@ -240,7 +240,8 @@ public class Main {
 		listProdutos2.put(1, 30);
 		
 	
-		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n\n");
+		System.out.print("//=== Bem-vindo ao SmartStock! ===//\n");
+		System.out.print("  *Loja de Produção de Alimentos*\n\n");
 		Home.telaInicial(1);
 	}
 }

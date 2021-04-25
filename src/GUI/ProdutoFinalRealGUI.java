@@ -41,10 +41,10 @@ public class ProdutoFinalRealGUI {
 		int opt = -1;
 
 		funcoes.put(0, "Voltar");
-		funcoes.put(1, "Cadastrar Produto Final Real");
-		funcoes.put(2, "Alterar Produto Final Real");
-		funcoes.put(3, "Consultar Produto Final Real");
-		funcoes.put(4, "Remover Produto Final Real");
+		funcoes.put(1, "Cadastrar Alimento em Estoque");
+		funcoes.put(2, "Alterar Alimento em Estoque");
+		funcoes.put(3, "Consultar Alimento em Estoque");
+		funcoes.put(4, "Remover Alimento em Estoque");
 
 		funcoesPtr.put(0, ProdutoFinalRealGUI::sair);
 		funcoesPtr.put(1, ProdutoFinalRealGUI::telaCadastrar);
@@ -53,7 +53,7 @@ public class ProdutoFinalRealGUI {
 		funcoesPtr.put(4, ProdutoFinalRealGUI::telaRemover);
 
 		while (opt != 0) {
-			System.out.println("===== Menu Produto Final Real =====");
+			System.out.println("===== Menu Alimento em Estoque =====");
 			System.out.println("\nOperações disponíveis:\n");
 			for (int i : funcoes.keySet()) {
 				System.out.printf("[%d] %s \n", i, funcoes.get(i));
@@ -72,7 +72,7 @@ public class ProdutoFinalRealGUI {
 	}
 	
 	public static void sair(int a) {
-		System.out.println("Saindo do Menu Produto Final Real");
+		System.out.println("Saindo do Menu Alimento em Estoque");
 	}
 		
 	public static void telaCadastrar(int a) {		
@@ -88,11 +88,11 @@ public class ProdutoFinalRealGUI {
 		Boolean temMateriaPrimaRealCorrespondente;
 		HashMap<Integer, Float> receitaReal = new HashMap<Integer, Float>();
 		
-		System.out.println("===== Cadastrar Produto Final =====");
+		System.out.println("===== Cadastrar Alimento em Estoque =====");
 		do {
 			try {
 				Scanner input = new Scanner(System.in);
-				System.out.print("[Int] Entre com o id do Produto Final genérico: ");
+				System.out.print("[Int] Entre com o id do Alimento genérico: ");
 				idExterno = Integer.parseInt(input.nextLine());
 				System.out.print("[Date] Entre com a validade: (mês/dia/ano)");
 				validade = new Date(input.nextLine());
@@ -101,7 +101,7 @@ public class ProdutoFinalRealGUI {
 
 				do {
 					temMateriaPrimaRealCorrespondente = false;
-					System.out.print("[Int] Entre com o id de uma Matéria Prima Real que compõe esse Produto Final Real: ");
+					System.out.print("[Int] Entre com o id de uma Matéria Prima Real que compõe esse Alimento em Estoque: ");
 					idMateriaPrimaRealReceitaReal = Integer.parseInt(input.nextLine());
 					System.out.print("[Float] Entre com a quantidade dessa Matéria Prima Real na Receita Real: ");
 					qtdMateriaPrimaRealReceitaReal = Float.parseFloat(input.nextLine());
@@ -143,10 +143,10 @@ public class ProdutoFinalRealGUI {
 		
 		try {
 			id = produtoFinalRealService.inserir(new ProdutoFinalReal(idExterno, validade, quantidade, receitaReal)); 
-			System.out.println("Produto Final Real Cadastrado com o ID " + id);
+			System.out.println("Alimento em Estoque Cadastrado com o ID " + id);
 
 		} catch (BusinessRuleException bre) {
-			System.out.println("Produto Final Real não cadastrado pelo(s) seguinte(s) motivo(s):");
+			System.out.println("Alimento em Estoque não cadastrado pelo(s) seguinte(s) motivo(s):");
 			System.out.println(bre.getMessage());
 		}
 		
@@ -166,13 +166,13 @@ public class ProdutoFinalRealGUI {
 		Boolean temMateriaPrimaRealCorrespondente;
 		HashMap<Integer, Float> receitaReal = new HashMap<Integer, Float>();
 		
-		System.out.println("===== Alterar Produto Final =====");
+		System.out.println("===== Alterar Alimento em Estoque =====");
 		do {
 			try {
 				Scanner input = new Scanner(System.in);
-				System.out.print("[Int] Entre com o Id do Produto Final Real a ser alterado: ");
+				System.out.print("[Int] Entre com o Id do Alimento em Estoque a ser alterado: ");
 				idASubstituir = Integer.parseInt(input.nextLine());
-				System.out.print("[Int] Entre com o id do Produto Final genérico: ");
+				System.out.print("[Int] Entre com o id do Alimento genérico: ");
 				idExterno = Integer.parseInt(input.nextLine());
 				System.out.print("[Date] Entre com a validade: (mês/dia/ano)");
 				validade = new Date(input.nextLine());
@@ -181,7 +181,7 @@ public class ProdutoFinalRealGUI {
 
 				do {
 					temMateriaPrimaRealCorrespondente = false;
-					System.out.print("[Int] Entre com o id de uma Matéria Prima Real que compõe esse Produto Final Real: ");
+					System.out.print("[Int] Entre com o id de uma Matéria Prima Real que compõe esse Alimento em Estoque: ");
 					idMateriaPrimaRealReceitaReal = Integer.parseInt(input.nextLine());
 					System.out.print("[Float] Entre com a quantidade dessa Matéria Prima Real na Receita Real: ");
 					qtdMateriaPrimaRealReceitaReal = Float.parseFloat(input.nextLine());
@@ -223,10 +223,10 @@ public class ProdutoFinalRealGUI {
 		
 		try {
 			id = produtoFinalRealService.alterar(idASubstituir, new ProdutoFinalReal(idExterno, validade, quantidade, receitaReal)); 
-			System.out.println("Produto Final Real alterado com o ID " + id);
+			System.out.println("Alimento em Estoque alterado com o ID " + id);
 
 		} catch (BusinessRuleException bre) {
-			System.out.println("Produto Final Real não alterado pelo(s) seguinte(s) motivo(s):");
+			System.out.println("Alimento em Estoque não alterado pelo(s) seguinte(s) motivo(s):");
 			System.out.println(bre.getMessage());
 		}
 	}
@@ -236,10 +236,10 @@ public class ProdutoFinalRealGUI {
 		int opt2 = -1;
 
 		do {
-			System.out.println("\n ===== Consultar ProdutoFinalReal ===== \n");
+			System.out.println("\n ===== Consultar Alimento em Estoque ===== \n");
 			System.out.printf("[%d] %s \n", 0, "Voltar");
-			System.out.printf("[%d] %s \n", 1, "Ver Produtos Finais Reais cadastrados");
-			System.out.printf("[%d] %s \n", 2, "Ver um Produto Final Real Detalhadamente");
+			System.out.printf("[%d] %s \n", 1, "Ver Alimentos em Estoque cadastrados");
+			System.out.printf("[%d] %s \n", 2, "Ver um Alimento em Estoque Detalhadamente");
 			try {
 				Scanner input = new Scanner(System.in);
 				System.out.print("Digite: ");
@@ -251,7 +251,7 @@ public class ProdutoFinalRealGUI {
 					mostrarTodosProdutosFinaisReais();
 					break;
 				case 2:
-					System.out.print("Digite o id do Produto Final Real: ");
+					System.out.print("Digite o id do Alimento em Estoque: ");
 					opt2 = Integer.parseInt(input.nextLine());
 					mostrarProdutoFinalRealDetalhado(opt2);
 					break;
@@ -269,7 +269,7 @@ public class ProdutoFinalRealGUI {
 	public static void removerProdutoFinalReal(int id) {
 		try{
 			produtoFinalRealService.remover(id);
-			System.out.println("Produto Final de Id: "+ id + " foi removido");
+			System.out.println("Alimento em Estoque de Id: "+ id + " foi removido");
 		} catch (BusinessRuleException bre) {
 			System.out.println(bre.getMessage());
 		}
@@ -278,15 +278,15 @@ public class ProdutoFinalRealGUI {
 	public static void mostrarProdutoFinalRealDetalhado(int id) {
 		ProdutoFinalReal produtoFinalReal = produtoFinalRealService.procuraPeloId(id);
 		if(produtoFinalReal == null) {
-			System.out.println("Produto Final Real não encontrado\n");
+			System.out.println("Alimento em Estoque não encontrado\n");
 		}
 		
 		else {
 			System.out.printf("\nId: %d\n", produtoFinalReal.getId());
-			System.out.printf("Id Produto Final Genérico: %s\n", produtoFinalReal.getIdExterno());
+			System.out.printf("Id Alimento Genérico: %s\n", produtoFinalReal.getIdExterno());
 			System.out.printf("Validade: " + produtoFinalReal.getValidade() + "\n");
 			System.out.printf("Quantidade: %d\n", produtoFinalReal.getQuantidade());
-			System.out.printf("Receita real referente a esse Produto Final Real: \n");
+			System.out.printf("Receita real referente a esse Alimento em Estoque: \n");
 			for(int materiaPrimaRealID : produtoFinalReal.getReceitaReal().keySet()) {
 				System.out.println("ID Matéria Prima Real = [" + materiaPrimaRealID
 								  + "] Quantidade = [" + produtoFinalReal.getReceitaReal().get(materiaPrimaRealID)+ "]");
@@ -297,10 +297,10 @@ public class ProdutoFinalRealGUI {
 	public static void mostrarTodosProdutosFinaisReais() {
 		ArrayList<ProdutoFinalReal> listaProdutosFinaisReais = produtoFinalRealService.procuraTodos();
 		if(listaProdutosFinaisReais.isEmpty()) {
-			System.out.println("Nenhum Produto Final Cadastrado\n");
+			System.out.println("Nenhum Alimento em Estoque Cadastrado\n");
 		}
 		else {
-			System.out.println("Produtos Finais Cadastrados: \n");
+			System.out.println("Alimentos em Estoque Cadastrados: \n");
 			for(ProdutoFinalReal produtoFinal : listaProdutosFinaisReais) {
 				System.out.printf("[%d] %s: %d. Vence em %s \n", produtoFinal.getId(), produtoFinalService.procuraPeloId(produtoFinal.getIdExterno()).getNome(), produtoFinal.getQuantidade(), produtoFinal.getValidade());
 			}
@@ -312,10 +312,10 @@ public class ProdutoFinalRealGUI {
 		int opt2 = -1;
 
 		do {
-			System.out.println("\n ===== Remover Produto Final Real ===== \n");
+			System.out.println("\n ===== Remover Alimento em Estoque ===== \n");
 			System.out.printf("[%d] %s \n", 0, "Voltar");
-			System.out.printf("[%d] %s \n", 1, "Ver Produtos Finais Reais cadastrados");
-			System.out.printf("[%d] %s \n", 2, "Remover Produto Final Real");
+			System.out.printf("[%d] %s \n", 1, "Ver Alimentos em Estoque cadastrados");
+			System.out.printf("[%d] %s \n", 2, "Remover Alimento em Estoque");
 			try {
 				Scanner input = new Scanner(System.in);
 				System.out.print("Digite: ");
@@ -327,7 +327,7 @@ public class ProdutoFinalRealGUI {
 					mostrarTodosProdutosFinaisReais();
 					break;
 				case 2:
-					System.out.print("Digite o id do Produto Final Real: ");
+					System.out.print("Digite o id do Alimento em Estoque: ");
 					opt2 = Integer.parseInt(input.nextLine());
 					removerProdutoFinalReal(opt2);
 					break;

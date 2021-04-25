@@ -37,19 +37,8 @@ public final class EncomendaService implements IEncomendaService {
 		this.produtoFinalService = ProdutoFinalService.getInstance();
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
 		this.clienteService = ClienteService.getInstance();
-		this.typeInstance = 1;
 	}
-
-	public int getTypeInstance() {
-		return typeInstance;
-	}
-
-	public void setTypeInstance(int typeInstance) {
-		this.typeInstance = typeInstance;
-	}
-
-
-
+	
 	public static IEncomendaService getInstance() {
 		if (instance == null) {
 			instance = new EncomendaService();
@@ -107,6 +96,7 @@ public final class EncomendaService implements IEncomendaService {
 		}
 		
 		ArrayList<String> errosEspecificidade = especificidadeEncomenda.validarEspecificidades(especificidade, newEncomenda);
+		newEncomenda.setEspecificidade(especificidade);
 		double frete = freteDaEncomenda.calcularFrete(tipoDeFrete, newEncomenda);
 		newEncomenda.setFrete(frete);
 		

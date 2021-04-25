@@ -12,8 +12,10 @@ import BUSINESS.MateriaPrimaService;
 import BUSINESS.VendaService;
 import BUSINESS.IProdutoFinalService;
 import BUSINESS.ProdutoFinalService;
+import BUSINESS.ValidarEspecificidadesVendaAlimento;
 import BUSINESS.IClienteService;
 import BUSINESS.IMateriaPrimaService;
+import BUSINESS.CalcularFreteAlimento;
 import BUSINESS.ClienteService;
 import BUSINESS.IEncomendaService;
 import BUSINESS.EncomendaService;
@@ -22,13 +24,14 @@ import ENTITY.Venda;
 import ENTITY.Encomenda;
 import ENTITY.Especificidade;
 import ENTITY.EspecificidadeAlimento;
+import ENTITY.FreteAlimento;
 import UTIL.BusinessRuleException;
 import ENTITY.ProdutoFinal;
 
 public class EncomendaGUI {
 	
 	protected static IVendaService vendaService = VendaService.getInstance();
-	protected static IEncomendaService encomendaService = EncomendaService.getInstance();
+	protected static IEncomendaService encomendaService = EncomendaService.getInstance(new ValidarEspecificidadesVendaAlimento(), new CalcularFreteAlimento(), new FreteAlimento());
 	protected static IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance();
 	protected static IClienteService clienteService = ClienteService.getInstance();
 	
@@ -37,7 +40,6 @@ public class EncomendaGUI {
 		  encomendaService = EncomendaService.getInstance();
 		  produtoFinalService = ProdutoFinalService.getInstance();
 		  clienteService = ClienteService.getInstance();
-		  ((EncomendaService)encomendaService).setTypeInstance(1);
 	}
 	
 	public static void init(int a) {
@@ -48,10 +50,10 @@ public class EncomendaGUI {
 	private static void mostraTodosOSProdutosFinais() {
 		ArrayList<ProdutoFinal> listaDeProdutosFinais = produtoFinalService.procuraTodos();
 		if(listaDeProdutosFinais.isEmpty()) {
-			System.out.println("Nenhum Produto Final Cadastrado\n");
+			System.out.println("Nenhum Alimento Cadastrado\n");
 		}
 		else {
-			System.out.println("Produtos Finais Cadastrados: ");
+			System.out.println("Alimentos Cadastrados: ");
 			for(ProdutoFinal produtoFinal : listaDeProdutosFinais) {
 				System.out.printf("[%d] %s ", produtoFinal.getId(), produtoFinal.getNome());
 			}
@@ -60,10 +62,11 @@ public class EncomendaGUI {
 		
 	}
 	
-	public static void telaCadastrar(int a) {
-
-		
+	public static void telaCadastrar(int a) {		
 		int id = 0;
+		int buffetCadastrado = 0;
+		boolean isBuffetCadastrado = false;
+		float fatorDeDesconto = 0;
 		int aux = 0;
 		int aux2 = 0;
 		int idCliente = 0;
@@ -84,16 +87,30 @@ public class EncomendaGUI {
 				System.out.print("[dd/mm/aaaa] Entre a data de entrega da encomenda: ");
 				dataASerConvertida = input.nextLine();
 				dataDeEntrega = new SimpleDateFormat("dd/MM/yyyy").parse(dataASerConvertida);
+				
+				System.out.print("Esta encomenda será realizada para um Buffet cadastrado? [1 - sim] [2 - não]: ");
+				buffetCadastrado = Integer.parseInt(input.nextLine());
+				while((Integer)buffetCadastrado > 2 || (Integer)buffetCadastrado < 1) {
+					System.out.print("Digite um valor válido [1 - sim] [2 - não]: ");
+					buffetCadastrado = Integer.parseInt(input.nextLine());
+				}
+				if(buffetCadastrado == 1) {
+					System.out.print("[Float] Entre com o fator de desconto da encomenda: ");
+					fatorDeDesconto = Float.parseFloat(input.nextLine());
+					isBuffetCadastrado = true;
+				}
+				else isBuffetCadastrado = false;
+				
 				mostraTodosOSProdutosFinais();
 				do {
-					System.out.print("Dentre os produtos finais listados acima, selecione o ID de um produto: ");
+					System.out.print("Dentre os alimentos listados acima, selecione o ID de um alimento: ");
 					idProduto = Integer.parseInt(input.nextLine());
-					System.out.print("Agora, selecione a quantidade desse produto na compra: ");
+					System.out.print("Agora, selecione a quantidade desse alimento na compra: ");
 					qtdProduto = Integer.parseInt(input.nextLine());
 					
 					if(!listaDeProdutos.containsKey(idProduto)) {
 						listaDeProdutos.put(idProduto, qtdProduto);
-						System.out.print("Deseja inserir outro produto na encomenda? [1 - sim] [2 - não]: ");
+						System.out.print("Deseja inserir outro alimento na encomenda? [1 - sim] [2 - não]: ");
 						checadorDeContinuidade = Integer.parseInt(input.nextLine());
 						System.out.println();
 						if(checadorDeContinuidade == 1) {
@@ -103,12 +120,12 @@ public class EncomendaGUI {
 							aux2 = -1;
 						}
 						else {
-							System.out.println("Você não digitou um valor válido, encerrando a inserção de produtos na encomenda...\n");
+							System.out.println("Você não digitou um valor válido, encerrando a inserção de alimentos na encomenda...\n");
 							aux2 = -1;
 						}
 					}
 					else {
-						System.out.println("Você digitou o ID de um produto que já constava na compra, encerrando a inserção de produtos na encomenda...\n");
+						System.out.println("Você digitou o ID de um alimento que já constava na compra, encerrando a inserção de alimentos na encomenda...\n");
 						aux2 = -1;
 					}
 					
@@ -124,6 +141,8 @@ public class EncomendaGUI {
 		if(clienteService.procuraPeloId(idCliente) != null) {
 			try {
 				Especificidade especificidade = new EspecificidadeAlimento();
+				((EspecificidadeAlimento) especificidade).setBuffetCadastrado(isBuffetCadastrado);
+				((EspecificidadeAlimento) especificidade).setFatorDeDesconto(fatorDeDesconto);
 				id = encomendaService.realizarEncomenda(listaDeProdutos, idCliente, dataDeEntrega, especificidade);
 			} catch (BusinessRuleException e) {
 				// TODO Auto-generated catch block
@@ -141,6 +160,9 @@ public class EncomendaGUI {
 	
 	public static void telaAlterar(int a) {
 		int id = 0;
+		int buffetCadastrado = 0;
+		boolean isBuffetCadastrado = false;
+		float fatorDeDesconto = 0;
 		int idASubstituir = 0;
 		int aux = 0;
 		int aux2 = 0;
@@ -165,17 +187,31 @@ public class EncomendaGUI {
 				System.out.print("[dd/mm/aaaa] Entre a data de entrega da encomenda: ");
 				dataASerConvertida = input.nextLine();
 				dataDeEntrega = new SimpleDateFormat("dd/MM/yyyy").parse(dataASerConvertida);
+				
+				System.out.print("Esta encomenda será realizada para um Buffet cadastrado? [1 - sim] [2 - não]: ");
+				buffetCadastrado = Integer.parseInt(input.nextLine());
+				while((Integer)buffetCadastrado > 2 || (Integer)buffetCadastrado < 1) {
+					System.out.print("Digite um valor válido [1 - sim] [2 - não]: ");
+					buffetCadastrado = Integer.parseInt(input.nextLine());
+				}
+				if(buffetCadastrado == 1) {
+					System.out.print("[Float] Entre com o fator de desconto da encomenda: ");
+					fatorDeDesconto = Float.parseFloat(input.nextLine());
+					isBuffetCadastrado = true;
+				}
+				else isBuffetCadastrado = false;
+				
 				mostraTodosOSProdutosFinais();
 				do {
-					System.out.print("Dentre os produtos finais listados acima, selecione o ID de um produto: ");
+					System.out.print("Dentre os alimentos listados acima, selecione o ID de um alimento: ");
 					idProduto = Integer.parseInt(input.nextLine());
-					System.out.print("Agora, selecione a quantidade desse produto na compra: ");
+					System.out.print("Agora, selecione a quantidade desse alimento na compra: ");
 					qtdProduto = Integer.parseInt(input.nextLine());
 					
 					if(!listaDeProdutos.containsKey(idProduto)) {
 						listaDeProdutos.put(idProduto, qtdProduto);
 						valorDaNovaEncomenda += produtoFinalService.procuraPeloId(idProduto).getPreco() * qtdProduto;
-						System.out.print("Deseja inserir outro produto na encomenda? [1 - sim] [2 - não]: ");
+						System.out.print("Deseja inserir outro alimento na encomenda? [1 - sim] [2 - não]: ");
 						checadorDeContinuidade = Integer.parseInt(input.nextLine());
 						System.out.println();
 						if(checadorDeContinuidade == 1) {
@@ -185,12 +221,12 @@ public class EncomendaGUI {
 							aux2 = -1;
 						}
 						else {
-							System.out.println("Você não digitou um valor válido, encerrando a inserção de produtos na encomenda...\n");
+							System.out.println("Você não digitou um valor válido, encerrando a inserção de alimentos na encomenda...\n");
 							aux2 = -1;
 						}
 					}
 					else {
-						System.out.println("Você digitou o ID de um produto que já constava na compra, encerrando a inserção de produtos na encomenda...\n");
+						System.out.println("Você digitou o ID de um alimento que já constava na compra, encerrando a inserção de alimentos na encomenda...\n");
 						aux2 = -1;
 					}
 					
@@ -205,6 +241,8 @@ public class EncomendaGUI {
 		}while (aux != -1);
 		try {
 			Especificidade especificidade = new EspecificidadeAlimento();
+			((EspecificidadeAlimento) especificidade).setBuffetCadastrado(isBuffetCadastrado);
+			((EspecificidadeAlimento) especificidade).setFatorDeDesconto(fatorDeDesconto);
 			id = encomendaService.alterar(idASubstituir, new Encomenda(idASubstituir, valorDaNovaEncomenda, idCliente, listaDeProdutos, new Date (), dataDeEntrega), especificidade);
 			if(encomendaService.procuraPeloId(id) != null) {
 			System.out.println("Encomenda alterada, com o ID: " + id + " e preço: " + encomendaService.procuraPeloId(id).getValor() + 
@@ -243,12 +281,13 @@ public class EncomendaGUI {
 			System.out.printf("\nId: %d\n", encomenda.getId());
 			System.out.printf("Cliente: %s\n", clienteService.procuraPeloId(encomenda.getIdCliente()).getNome());
 			System.out.printf("Valor: %.2f\n", encomenda.getValor());
+			System.out.printf("Fator de Desconto: %.1f\n", ((EspecificidadeAlimento)encomenda.getEspecificidade()).getFatorDeDesconto());
 			System.out.println("Data de pedido: " + encomenda.getData());
 			System.out.println("Data de entrega: " + encomenda.getDataEntrega());
-			System.out.printf("Produtos inclusos na encomenda: \n");
+			System.out.printf("Alimentos inclusos na encomenda: \n");
 			for(int produtoID : encomenda.getListaProdutos().keySet()) {
 			
-				System.out.println("Produto = [" + produtoFinalService.procuraPeloId(produtoID).getNome() 
+				System.out.println("Alimento = [" + produtoFinalService.procuraPeloId(produtoID).getNome() 
 								  + "] Quantidade = [" + encomenda.getListaProdutos().get(produtoID)+ "]");
 			}
 		}

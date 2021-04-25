@@ -10,14 +10,17 @@ import BUSINESS.MateriaPrimaService;
 import BUSINESS.VendaService;
 import BUSINESS.IProdutoFinalService;
 import BUSINESS.ProdutoFinalService;
+import BUSINESS.ValidarEspecificidadesVendaAlimento;
 import BUSINESS.IClienteService;
 import BUSINESS.IMateriaPrimaService;
+import BUSINESS.CalcularFreteAlimento;
 import BUSINESS.ClienteService;
 
 import ENTITY.Venda;
 import UTIL.BusinessRuleException;
 import ENTITY.Especificidade;
 import ENTITY.EspecificidadeAlimento;
+import ENTITY.FreteAlimento;
 import ENTITY.ProdutoFinal;
 
 
@@ -28,8 +31,7 @@ public class VendaGUI {
 	protected static IClienteService clienteService;
 	
 	public VendaGUI () {
-		 vendaService = VendaService.getInstance();
-		 ((VendaService)vendaService).setTypeInstance(1);
+		 vendaService = VendaService.getInstance(new ValidarEspecificidadesVendaAlimento(), new CalcularFreteAlimento(), new FreteAlimento());
 		 produtoFinalService = ProdutoFinalService.getInstance();
 		 clienteService = ClienteService.getInstance();
 	}
@@ -42,10 +44,10 @@ public class VendaGUI {
 	private static void mostraTodosOSProdutosFinais() {
 		ArrayList<ProdutoFinal> listaDeProdutosFinais = produtoFinalService.procuraTodos();
 		if(listaDeProdutosFinais.isEmpty()) {
-			System.out.println("Nenhum Produto Final Cadastrado\n");
+			System.out.println("Nenhum Alimento Cadastrado\n");
 		}
 		else {
-			System.out.println("Produtos Finais Cadastrados: ");
+			System.out.println("Alimentos Cadastrados: ");
 			for(ProdutoFinal produtoFinal : listaDeProdutosFinais) {
 				System.out.printf("[%d] %s ", produtoFinal.getId(), produtoFinal.getNome());
 			}
@@ -56,6 +58,9 @@ public class VendaGUI {
 
 	public static void telaCadastrar(int a) {
 		int id = 0;
+		int buffetCadastrado = 0;
+		boolean isBuffetCadastrado = false;
+		float fatorDeDesconto = 0;
 		int aux = 0;
 		int aux2 = 0;
 		int idCliente = 0;
@@ -71,16 +76,30 @@ public class VendaGUI {
 				Scanner input = new Scanner(System.in);
 				System.out.print("[Int] Entre com o id do cliente da compra: ");
 				idCliente = Integer.parseInt(input.nextLine());
+				
+				System.out.print("Esta venda será realizada para um Buffet cadastrado? [1 - sim] [2 - não]: ");
+				buffetCadastrado = Integer.parseInt(input.nextLine());
+				while((Integer)buffetCadastrado > 2 || (Integer)buffetCadastrado < 1) {
+					System.out.print("Digite um valor válido [1 - sim] [2 - não]: ");
+					buffetCadastrado = Integer.parseInt(input.nextLine());
+				}
+				if(buffetCadastrado == 1) {
+					System.out.print("[Float] Entre com o fator de desconto da compra: ");
+					fatorDeDesconto = Float.parseFloat(input.nextLine());
+					isBuffetCadastrado = true;
+				}
+				else isBuffetCadastrado = false;
+				
 				mostraTodosOSProdutosFinais();
 				do {
-					System.out.print("Dentre os produtos finais listados acima, selecione o ID de um produto: ");
+					System.out.print("Dentre os alimentos listados acima, selecione o ID de um alimento: ");
 					idProduto = Integer.parseInt(input.nextLine());
-					System.out.print("Agora, selecione a quantidade desse produto na compra: ");
+					System.out.print("Agora, selecione a quantidade desse alimento na compra: ");
 					qtdProduto = Integer.parseInt(input.nextLine());
 					
 					if(!listaDeProdutos.containsKey(idProduto)) {
 						listaDeProdutos.put(idProduto, qtdProduto);
-						System.out.print("Deseja inserir outro produto na compra? [1 - sim] [2 - não]: ");
+						System.out.print("Deseja inserir outro alimento na compra? [1 - sim] [2 - não]: ");
 						checadorDeContinuidade = Integer.parseInt(input.nextLine());
 						System.out.println();
 						if(checadorDeContinuidade == 1) {
@@ -90,12 +109,12 @@ public class VendaGUI {
 							aux2 = -1;
 						}
 						else {
-							System.out.println("Você não digitou um valor válido, encerrando a inserção de produtos na compra...\n");
+							System.out.println("Você não digitou um valor válido, encerrando a inserção de alimentos na compra...\n");
 							aux2 = -1;
 						}
 					}
 					else {
-						System.out.println("Você digitou o ID de um produto que já constava na compra, encerrando a inserção de produtos na compra...\n");
+						System.out.println("Você digitou o ID de um alimento que já constava na compra, encerrando a inserção de alimentos na compra...\n");
 						aux2 = -1;
 					}
 					
@@ -111,6 +130,8 @@ public class VendaGUI {
 		
 		try {
 			Especificidade especificidade = new EspecificidadeAlimento();
+			((EspecificidadeAlimento) especificidade).setBuffetCadastrado(isBuffetCadastrado);
+			((EspecificidadeAlimento) especificidade).setFatorDeDesconto(fatorDeDesconto);
 			id = vendaService.realizarVenda(listaDeProdutos, idCliente, especificidade);
 			System.out.println("Venda Realizada com o ID " + id + " e preço: " + vendaService.procuraPeloId(id).getValor());
 		} catch (BusinessRuleException bre) {
@@ -145,9 +166,10 @@ public class VendaGUI {
 			System.out.printf("\nId: %d\n", venda.getId());
 			System.out.printf("Cliente: %s\n", clienteService.procuraPeloId(venda.getIdCliente()).getNome());
 			System.out.printf("Valor: %.2f\n", venda.getValor());
+			System.out.printf("Fator de Desconto: %.1f\n", ((EspecificidadeAlimento)venda.getEspecificidade()).getFatorDeDesconto());
 			System.out.println("Data: " + venda.getData());
 			System.out.println("Frete: " + venda.getFrete());
-			System.out.printf("Produtos inclusos na venda: \n");
+			System.out.printf("Alimentos inclusos na venda: \n");
 			for(int produtoID : venda.getListaProdutos().keySet()) {
 			
 				System.out.println("Produto = [" + produtoFinalService.procuraPeloId(produtoID).getNome() 

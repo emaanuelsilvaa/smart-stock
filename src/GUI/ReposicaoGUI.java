@@ -37,7 +37,7 @@ public class ReposicaoGUI {
 		int opt = -1;
 
 		funcoes.put(0, "Voltar");
-		funcoes.put(1, "Lista de Reposição de Produto Final");
+		funcoes.put(1, "Lista de Reposição de Alimento");
 		funcoes.put(2, "Lista de Reposição de Matéria-Prima");
 
 		funcoesPtr.put(0, ReposicaoGUI::sair);
@@ -72,15 +72,15 @@ public class ReposicaoGUI {
 		try {
 			HashMap<Integer, Integer> produtosFaltantes = relatorioService.listarReposicaoProduto(data1, data2);
 			if (produtosFaltantes.isEmpty()) {
-				System.out.println("Nenhum Produto Final faltará!");
+				System.out.println("Nenhum Alimento faltará!");
 			} else {
-				System.out.println(" Produtos Finais que faltarão: \n");
+				System.out.println("Alimentos que faltarão: \n");
 				for(int id : produtosFaltantes.keySet()) {
 					System.out.printf("%s: %d\n", produtoFinalService.procuraPeloId(id).getNome(), produtosFaltantes.get(id));
 				}
 			}
 		} catch (BusinessRuleException bre) {
-			System.out.println("Lista de Produtos Finais não encotrado pelo seguinte motivo:");
+			System.out.println("Lista de Alimentos não encotrada pelo seguinte motivo:");
 			System.out.println(bre.getMessage());
 		}
 	}
@@ -96,7 +96,7 @@ public class ReposicaoGUI {
 				}
 			}
 		} catch (BusinessRuleException bre) {
-			System.out.println("Lista de Produtos Finais não encotrado pelo seguinte motivo:");
+			System.out.println("Lista de Matérias Primas não encotrada pelo seguinte motivo:");
 			System.out.println(bre.getMessage());
 		}
 	}
@@ -141,9 +141,9 @@ public class ReposicaoGUI {
 		Date data2 = new Date();
 		
 		do {
-			System.out.println("\n ===== Menu de análise de Produtos Finais ===== \n");
+			System.out.println("\n ===== Menu de análise de Alimentos ===== \n");
 			System.out.printf("[%d] %s \n", 0, "Voltar");
-			System.out.printf("[%d] %s \n", 1, "Ver Produtos Finais que faltarão");
+			System.out.printf("[%d] %s \n", 1, "Ver Alimentos que faltarão");
 			try {
 				Scanner input = new Scanner(System.in);
 				System.out.print("Digite: ");

@@ -11,6 +11,7 @@ import BUSINESS.IFornecedorService;
 import BUSINESS.IMateriaPrimaService;
 import BUSINESS.ProdutoFinalService;
 import BUSINESS.ValidarAlimento;
+import ENTITY.Alimento;
 import BUSINESS.MateriaPrimaService;
 import ENTITY.Fornecedor;
 import ENTITY.MateriaPrima;
@@ -40,6 +41,7 @@ public class ProdutoFinalGUI {
 		String nome = new String ();
 		float preco = 0;
 		int qtdMinima = 0;
+		float calorias = 0;
 		int aux = -1;
 		int auxMateriaPrima = 0;
 		String nomeMateriaPrimaDaReceita = new String ();
@@ -50,7 +52,7 @@ public class ProdutoFinalGUI {
 		HashMap <Integer, Float> receita = new HashMap <Integer, Float> ();
 		listaDeMateriasPrimas = materiaPrimaService.procuraTodos();
 		
-		System.out.println("===== Cadastrar Produto Final =====");
+		System.out.println("===== Cadastrar Alimento =====");
 		do {
 			try {
 				Scanner input = new Scanner(System.in);
@@ -60,10 +62,12 @@ public class ProdutoFinalGUI {
 				preco = Float.parseFloat(input.nextLine());
 				System.out.print("[Int] Entre com a quantidade mínima: ");
 				qtdMinima = Integer.parseInt(input.nextLine());
+				System.out.print("[Float] Entre com as calorias: ");
+				calorias = Float.parseFloat(input.nextLine());
 
 				do {
 					temMateriaPrimaCorrespondente = false;
-					System.out.print("[String] Entre com o nome de uma Matéria Prima que compõe esse Produto Final: ");
+					System.out.print("[String] Entre com o nome de uma Matéria Prima que compõe esse Alimento: ");
 					nomeMateriaPrimaDaReceita = (input.nextLine());
 					System.out.print("[Float] Entre com a quantidade dessa Matéria Prima na Receita: ");
 					qtdMateriaPrimaDaReceita = Float.parseFloat(input.nextLine());
@@ -103,11 +107,11 @@ public class ProdutoFinalGUI {
 			}
 		} while (aux != 0);
 		try {
-			id = produtoFinalService.inserir(new ProdutoFinal(nome, preco, qtdMinima, receita)); 
-			System.out.println("Produto Final Cadastrado com o ID " + id);
+			id = produtoFinalService.inserir(new Alimento(nome, preco, qtdMinima, receita, calorias)); 
+			System.out.println("Alimento Cadastrado com o ID " + id);
 
 		} catch (BusinessRuleException bre) {
-			System.out.println("Produto Final não cadastrado pelo(s) seguinte(s) motivo(s):");
+			System.out.println("Alimento não cadastrado pelo(s) seguinte(s) motivo(s):");
 			System.out.println(bre.getMessage());
 		}
 	}
@@ -115,10 +119,10 @@ public class ProdutoFinalGUI {
 	private static void mostraTodosOSProdutosFinais() {
 		ArrayList<ProdutoFinal> listaDeProdutosFinais = produtoFinalService.procuraTodos();
 		if(listaDeProdutosFinais.isEmpty()) {
-			System.out.println("Nenhum Produto Final Cadastrado\n");
+			System.out.println("Nenhum Alimento Cadastrado\n");
 		}
 		else {
-			System.out.println("Produtos Finais Cadastrados: \n");
+			System.out.println("Alimentos Cadastrados: \n");
 			for(ProdutoFinal produtoFinal : listaDeProdutosFinais) {
 				System.out.printf("[%d] %s \n", produtoFinal.getId(), produtoFinal.getNome());
 			}
@@ -127,9 +131,9 @@ public class ProdutoFinalGUI {
 	}
 	
 	private static void mostraProdutoFinalDetalhado(int id) {
-		ProdutoFinal produtoFinal = produtoFinalService.procuraPeloId(id);
+		ProdutoFinal produtoFinal = (Alimento) produtoFinalService.procuraPeloId(id);
 		if(produtoFinal == null) {
-			System.out.println("Produto Final não encontrado\n");
+			System.out.println("Alimento não encontrado\n");
 		}
 		
 		else {
@@ -137,6 +141,7 @@ public class ProdutoFinalGUI {
 			System.out.printf("Nome: %s\n", produtoFinal.getNome());
 			System.out.printf("Preço: %.2f\n", produtoFinal.getPreco());
 			System.out.printf("Quantidade Mínima: %d\n", produtoFinal.getQntMinima());
+			System.out.printf("Calorias: %.2f\n", ((Alimento) produtoFinal).getCalorias());
 			System.out.printf("Receita referente a esse produtoFinal: \n");
 			for(int materiaPrimaID : produtoFinal.getReceita().keySet()) {
 			
@@ -152,6 +157,7 @@ public class ProdutoFinalGUI {
 		String nome = new String ();
 		float preco = 0;
 		int qtdMinima = 0;
+		float calorias = 0;
 		int aux = -1;
 		int auxMateriaPrima = 0;
 		String nomeMateriaPrimaDaReceita = new String ();
@@ -162,11 +168,11 @@ public class ProdutoFinalGUI {
 		HashMap <Integer, Float> receita = new HashMap <Integer, Float> ();
 		listaDeMateriasPrimas = materiaPrimaService.procuraTodos();
 		
-		System.out.println("===== Alterar Produto Final =====");
+		System.out.println("===== Alterar Alimento =====");
 		do {
 			try {
 				Scanner input = new Scanner(System.in);
-				System.out.print("[Int] Entre com o Id do Produto Final a ser alterado: ");
+				System.out.print("[Int] Entre com o Id do Alimento a ser alterado: ");
 				idASubstituir = Integer.parseInt(input.nextLine());
 				System.out.print("[String] Entre com o nome: ");
 				nome = input.nextLine();
@@ -174,10 +180,12 @@ public class ProdutoFinalGUI {
 				preco = Float.parseFloat(input.nextLine());
 				System.out.print("[Int] Entre com a quantidade mínima: ");
 				qtdMinima = Integer.parseInt(input.nextLine());
-
+				System.out.print("[Float] Entre com as calorias: ");
+				calorias = Float.parseFloat(input.nextLine());
+				
 				do {
 					temMateriaPrimaCorrespondente = false;
-					System.out.print("[String] Entre com o nome de uma Matéria Prima que compõe esse Produto Final: ");
+					System.out.print("[String] Entre com o nome de uma Matéria Prima que compõe esse Alimento: ");
 					nomeMateriaPrimaDaReceita = (input.nextLine());
 					System.out.print("[Float] Entre com a quantidade dessa Matéria Prima na Receita: ");
 					qtdMateriaPrimaDaReceita = Float.parseFloat(input.nextLine());
@@ -217,11 +225,11 @@ public class ProdutoFinalGUI {
 			}
 		} while (aux != 0);
 		try {
-			id = produtoFinalService.alterar(idASubstituir, new ProdutoFinal(nome, preco, qtdMinima, receita)); 
-			System.out.println("Produto Final alterado com o ID " + id);
+			id = produtoFinalService.alterar(idASubstituir, new Alimento(nome, preco, qtdMinima, receita, calorias)); 
+			System.out.println("Alimento alterado com o ID " + id);
 
 		} catch (BusinessRuleException bre) {
-			System.out.println("Produto Final não alterado pelo(s) seguinte(s) motivo(s):");
+			System.out.println("Alimento não alterado pelo(s) seguinte(s) motivo(s):");
 			System.out.println(bre.getMessage());
 		}
 	}
@@ -231,10 +239,10 @@ public class ProdutoFinalGUI {
 		int opt2 = -1;
 
 		do {
-			System.out.println("\n ===== Consultar ProdutoFinal ===== \n");
+			System.out.println("\n ===== Consultar Alimento ===== \n");
 			System.out.printf("[%d] %s \n", 0, "Voltar");
-			System.out.printf("[%d] %s \n", 1, "Ver Produtos Finais cadastrados");
-			System.out.printf("[%d] %s \n", 2, "Ver um Produto Final Detalhadamente");
+			System.out.printf("[%d] %s \n", 1, "Ver Alimentos cadastrados");
+			System.out.printf("[%d] %s \n", 2, "Ver um Alimento Detalhadamente");
 			try {
 				Scanner input = new Scanner(System.in);
 				System.out.print("Digite: ");
@@ -246,7 +254,7 @@ public class ProdutoFinalGUI {
 					mostraTodosOSProdutosFinais();
 					break;
 				case 2:
-					System.out.print("Digite o id do Produto Final: ");
+					System.out.print("Digite o id do Alimento: ");
 					opt2 = Integer.parseInt(input.nextLine());
 					mostraProdutoFinalDetalhado(opt2);
 					break;
@@ -264,7 +272,7 @@ public class ProdutoFinalGUI {
 	public static void removerProdutoFinal(int id) {
 		try{
 			produtoFinalService.remover(id);
-			System.out.println("Produto Final de Id: "+ id + " foi removido");
+			System.out.println("Alimento de Id: "+ id + " foi removido");
 		} catch (BusinessRuleException bre) {
 			System.out.println(bre.getMessage());
 		}
@@ -275,10 +283,10 @@ public class ProdutoFinalGUI {
 		int opt2 = -1;
 
 		do {
-			System.out.println("\n ===== Remover Produto Final ===== \n");
+			System.out.println("\n ===== Remover Alimento ===== \n");
 			System.out.printf("[%d] %s \n", 0, "Voltar");
-			System.out.printf("[%d] %s \n", 1, "Ver Produtos Finais cadastrados");
-			System.out.printf("[%d] %s \n", 2, "Remover Produto Final");
+			System.out.printf("[%d] %s \n", 1, "Ver Alimentos cadastrados");
+			System.out.printf("[%d] %s \n", 2, "Remover Alimento");
 			try {
 				Scanner input = new Scanner(System.in);
 				System.out.print("Digite: ");
@@ -290,7 +298,7 @@ public class ProdutoFinalGUI {
 					mostraTodosOSProdutosFinais();
 					break;
 				case 2:
-					System.out.print("Digite o id do Produto Final: ");
+					System.out.print("Digite o id do Alimento: ");
 					opt2 = Integer.parseInt(input.nextLine());
 					removerProdutoFinal(opt2);
 					break;
@@ -306,7 +314,7 @@ public class ProdutoFinalGUI {
 	}
 	
 	public static void sair(int a) {
-		System.out.println("Saindo do Menu Produto Final");
+		System.out.println("Saindo do Menu Alimento");
 
 	}
 	
@@ -319,10 +327,10 @@ public class ProdutoFinalGUI {
 		int opt = -1;
 
 		funcoes.put(0, "Voltar");
-		funcoes.put(1, "Cadastrar Produto Final");
-		funcoes.put(2, "Alterar Produto Final");
-		funcoes.put(3, "Consultar Produto Final");
-		funcoes.put(4, "Remover Produto Final");
+		funcoes.put(1, "Cadastrar Alimento");
+		funcoes.put(2, "Alterar Alimento");
+		funcoes.put(3, "Consultar Alimento");
+		funcoes.put(4, "Remover Alimento");
 
 		funcoesPtr.put(0, ProdutoFinalGUI::sair);
 		funcoesPtr.put(1, ProdutoFinalGUI::telaCadastrar);
@@ -331,7 +339,7 @@ public class ProdutoFinalGUI {
 		funcoesPtr.put(4, ProdutoFinalGUI::telaRemover);
 
 		while (opt != 0) {
-			System.out.println("===== Menu Produto Final =====");
+			System.out.println("===== Menu Alimento =====");
 			System.out.println("\nOperações disponíveis:\n");
 			for (int i : funcoes.keySet()) {
 				System.out.printf("[%d] %s \n", i, funcoes.get(i));

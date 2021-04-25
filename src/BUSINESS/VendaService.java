@@ -27,7 +27,6 @@ public final class VendaService implements IVendaService {
 	protected IMateriaPrimaService materiaPrimaService;
 	protected IMateriaPrimaRealService materiaPrimaRealService;
 	protected IClienteService clienteService;
-	protected int typeInstance;
 	private static IVendaService instance;
 	private static EspecificidadeVendaStrategy especificidadeVenda;
 	private static FreteStrategy freteDaVenda;
@@ -41,16 +40,7 @@ public final class VendaService implements IVendaService {
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
 		this.materiaPrimaRealService = MateriaPrimaRealService.getInstance();
 		this.clienteService = ClienteService.getInstance();
-		this.typeInstance = 1;
 	};
-	
-	public int getTypeInstance() {
-		return typeInstance;
-	}
-
-	public void setTypeInstance(int typeInstance) {
-		this.typeInstance = typeInstance;
-	}
 
 	public static IVendaService getInstance() {
 		if(instance == null) {
@@ -142,6 +132,7 @@ public final class VendaService implements IVendaService {
 			}
 			
 			ArrayList<String> errosEspecificidade = especificidadeVenda.validarEspecificidades(especificidade, vendaASerInserida);
+			vendaASerInserida.setEspecificidade(especificidade);
 			double frete = freteDaVenda.calcularFrete(tipoDeFrete, vendaASerInserida);
 			vendaASerInserida.setFrete(frete);
 			
