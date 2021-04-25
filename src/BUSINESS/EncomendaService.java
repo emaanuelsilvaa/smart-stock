@@ -26,6 +26,8 @@ public final class EncomendaService implements IEncomendaService {
 	private static IEncomendaService instance;
 	protected int typeInstance;
 	private static EspecificidadeVendaStrategy especificidadeEncomenda;
+	private static FreteStrategy freteDaEncomenda;
+	private static Frete tipoDeFrete;
 
 	private EncomendaService() {
 		// TODO Auto-generated constructor stub
@@ -63,6 +65,16 @@ public final class EncomendaService implements IEncomendaService {
 		return instance;
 	}
 	
+	public static IEncomendaService getInstance(EspecificidadeVendaStrategy especificidadeEncomendaStrategy,  FreteStrategy freteStrategy, Frete tipoDeFreteStrategy) {
+		if (instance == null) {
+			instance = new EncomendaService();
+		}
+		especificidadeEncomenda = especificidadeEncomendaStrategy;
+		freteDaEncomenda = freteStrategy;
+		tipoDeFrete = tipoDeFreteStrategy;
+		return instance;
+	}
+	
 	@Override
 	public ArrayList<Encomenda> procuraTodos() {
 		return this.encomendaDAO.procuraTodos();
@@ -84,31 +96,19 @@ public final class EncomendaService implements IEncomendaService {
 		
 		Encomenda newEncomenda = new Encomenda(valorDaEncomenda, idCliente, listaProdutos, data, dataEntrega);
 		
-		FreteStrategy freteEncomenda = null;
-		Frete tipoDeFrete = null;
-		switch (this.typeInstance) {
-		case 1:
-			freteEncomenda = new CalcularFreteAlimento();
-			tipoDeFrete = new FreteAlimento();
-			break;
-		case 2:
-			freteEncomenda = new CalcularFreteBone();
-			tipoDeFrete = new FreteBone();
-			break;
-		case 3:
-			freteEncomenda = new CalcularFreteRemedio();
-			tipoDeFrete = new FreteRemedio();
-			break;
-		default:
-			throw new BusinessRuleException("Argumento de Framework inválido");
-		}
-		double frete = freteEncomenda.calcularFrete(tipoDeFrete, newEncomenda);
-		newEncomenda.setFrete(frete);
+	
 		
 		if (especificidadeEncomenda == null) {
 			throw new BusinessRuleException("Tipo de Encomenda não detectado");
 		}
+		
+		if(freteDaEncomenda == null || tipoDeFrete == null) {
+			throw new BusinessRuleException("Tipo de Frete não detectado");
+		}
+		
 		ArrayList<String> errosEspecificidade = especificidadeEncomenda.validarEspecificidades(especificidade, newEncomenda);
+		double frete = freteDaEncomenda.calcularFrete(tipoDeFrete, newEncomenda);
+		newEncomenda.setFrete(frete);
 		
 		validarCadastro(newEncomenda, errosEspecificidade);
 		

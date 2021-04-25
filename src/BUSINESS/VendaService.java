@@ -30,6 +30,8 @@ public final class VendaService implements IVendaService {
 	protected int typeInstance;
 	private static IVendaService instance;
 	private static EspecificidadeVendaStrategy especificidadeVenda;
+	private static FreteStrategy freteDaVenda;
+	private static Frete tipoDeFrete;
 	
 	private VendaService() {
 		this.vendaDAO = new VendaDAO();
@@ -62,6 +64,16 @@ public final class VendaService implements IVendaService {
 			instance = new VendaService();
 		}
 		especificidadeVenda = especificidadeVendaStrategy;
+		return instance;
+	}
+	
+	public static IVendaService getInstance(EspecificidadeVendaStrategy especificidadeVendaStrategy, FreteStrategy freteStrategy, Frete tipoDeFreteStrategy) {
+		if(instance == null) {
+			instance = new VendaService();
+		}
+		especificidadeVenda = especificidadeVendaStrategy;
+		freteDaVenda = freteStrategy;
+		tipoDeFrete = tipoDeFreteStrategy;
 		return instance;
 	}
 	
@@ -120,31 +132,18 @@ public final class VendaService implements IVendaService {
 			// Gerando um ID automaticamente para a nova venda
 			Venda vendaASerInserida = new Venda(valorDaVenda, idCliente, listaProdutos, data);
 			vendaASerInserida.setListaProdutosReais(listaDeProdutosReais);
-			FreteStrategy freteVenda = null;
-			Frete tipoDeFrete = null;
-			switch (this.typeInstance) {
-			case 1:
-				freteVenda = new CalcularFreteAlimento();
-				tipoDeFrete = new FreteAlimento();
-				break;
-			case 2: 
-				freteVenda = new CalcularFreteBone();
-				tipoDeFrete = new FreteBone();
-				break;
-			case 3:
-				freteVenda = new CalcularFreteRemedio();
-				tipoDeFrete = new FreteRemedio();
-				break;
-			default:
-				throw new BusinessRuleException("Argumento de Framework inválido");
-			}			
-			double frete = freteVenda.calcularFrete(tipoDeFrete, vendaASerInserida);
-			vendaASerInserida.setFrete(frete);
 			
 			if (especificidadeVenda == null) {
 				throw new BusinessRuleException("Tipo de Venda não detectado");
 			}
+			
+			if(freteDaVenda == null || tipoDeFrete == null) {
+				throw new BusinessRuleException("Tipo de Frete não detectado");
+			}
+			
 			ArrayList<String> errosEspecificidade = especificidadeVenda.validarEspecificidades(especificidade, vendaASerInserida);
+			double frete = freteDaVenda.calcularFrete(tipoDeFrete, vendaASerInserida);
+			vendaASerInserida.setFrete(frete);
 			
 			validarCadastro(vendaASerInserida, errosEspecificidade);
 			

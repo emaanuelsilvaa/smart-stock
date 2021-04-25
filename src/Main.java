@@ -51,6 +51,8 @@ import BUSINESS.RelatorioService;
 import BUSINESS.IRelatorioService;
 import BUSINESS.IAnaliseLucro;
 import BUSINESS.ValidarEspecificidadesVendaAlimento;
+import BUSINESS.CalcularFreteAlimento;
+import ENTITY.FreteAlimento;
 
 public class Main {
 
@@ -67,7 +69,7 @@ public class Main {
 		IMateriaPrimaRealService materiaPrimaRealService = MateriaPrimaRealService.getInstance();
 		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance(new ValidarAlimento());
 		IProdutoFinalRealService produtoFinalRealService = ProdutoFinalRealService.getInstance();
-		IVendaService vendaService = VendaService.getInstance(new ValidarEspecificidadesVendaAlimento());
+		IVendaService vendaService = VendaService.getInstance(new ValidarEspecificidadesVendaAlimento(), new CalcularFreteAlimento(), new FreteAlimento());
 		IEstoqueService estoqueService = EstoqueService.getInstance();
 		IEncomendaService encomendaService = EncomendaService.getInstance(new ValidarEspecificidadesVendaAlimento());
 		IRelatorioService relatorioService = RelatorioService.getInstance();
