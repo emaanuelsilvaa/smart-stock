@@ -39,10 +39,6 @@ public final class ProdutoFinalService implements IProdutoFinalService {
 	
 	@Override
 	public int inserir(ProdutoFinal produto) throws BusinessRuleException {
-		if (validar == null) {
-			throw new BusinessRuleException("Validação não encontrada");
-		}
-		validar.validarEspecificidades(produto);
 		this.validarCadastro(produto);
 		return produtoFinalDAO.inserir(produto);
 	}
