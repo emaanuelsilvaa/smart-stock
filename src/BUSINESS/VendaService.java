@@ -27,7 +27,6 @@ public final class VendaService implements IVendaService {
 	protected IMateriaPrimaService materiaPrimaService;
 	protected IMateriaPrimaRealService materiaPrimaRealService;
 	protected IClienteService clienteService;
-	protected int typeInstance;
 	private static IVendaService instance;
 	private static EspecificidadeVendaStrategy especificidadeVenda;
 	private static FreteStrategy freteDaVenda;
@@ -41,15 +40,6 @@ public final class VendaService implements IVendaService {
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
 		this.materiaPrimaRealService = MateriaPrimaRealService.getInstance();
 		this.clienteService = ClienteService.getInstance();
-		this.typeInstance = 1;
-	};
-	
-	public int getTypeInstance() {
-		return typeInstance;
-	}
-
-	public void setTypeInstance(int typeInstance) {
-		this.typeInstance = typeInstance;
 	}
 
 	public static IVendaService getInstance() {
@@ -201,8 +191,8 @@ public final class VendaService implements IVendaService {
 			erros.add("Tentou vender uma lista de produtos vazia");
 		} else {
 			for(int i : venda.getListaProdutos().keySet()) {
-				if(this.materiaPrimaService.procuraPeloId(i) == null) {
-					erros.add("MatériaPrima de ID " + i + "não cadastrada");
+				if(this.produtoFinalService.procuraPeloId(i) == null) {
+					erros.add("Remedio de ID " + i + "não cadastrado");
 				}
 			}
 		}
@@ -210,8 +200,8 @@ public final class VendaService implements IVendaService {
 			erros.add("Tentou vender uma lista de produtos reais vazia");
 		} else {
 			for(int i : venda.getListaProdutosReais().keySet()) {
-				if(this.materiaPrimaRealService.procuraPeloId(i) == null) {
-					erros.add("MatériaPrimaReal de ID " + i + "não cadastrada");
+				if(this.produtoFinalRealService.procuraPeloId(i) == null) {
+					erros.add("ProdutoFinalReal de ID " + i + "não cadastrado");
 				}
 			}
 		}

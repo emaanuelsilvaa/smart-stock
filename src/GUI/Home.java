@@ -12,7 +12,7 @@ public class Home {
 	}
 
 	public static void telaDespedida(int a) {
-		System.out.println("Obrigado por usar SmartStock, até logo!");
+		System.out.println("Obrigado por usar SmartFarmácia, até logo!");
 	}
 
 	public static void telaInicial(int a) {
@@ -28,8 +28,8 @@ public class Home {
 		funcoes.put(2, "Gerenciar Fornecedores");
 		funcoes.put(3, "Gerenciar Matéria-Prima");
 		funcoes.put(4, "Gerenciar Matéria-Prima Real");
-		funcoes.put(5, "Gerenciar Produto Final");
-		funcoes.put(6, "Gerenciar Produto Final Real");
+		funcoes.put(5, "Gerenciar Remédios");
+		funcoes.put(6, "Gerenciar Remédios em Estoque");
 		funcoes.put(7, "Gerenciar Venda");
 		funcoes.put(8, "Gerenciar Encomenda");
 		funcoes.put(9, "Analisar Provisionamento");

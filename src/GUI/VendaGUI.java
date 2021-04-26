@@ -2,7 +2,9 @@ package GUI;
 
 import java.util.HashMap;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.function.Consumer;
 
 import BUSINESS.IVendaService;
@@ -10,15 +12,20 @@ import BUSINESS.MateriaPrimaService;
 import BUSINESS.VendaService;
 import BUSINESS.IProdutoFinalService;
 import BUSINESS.ProdutoFinalService;
+import BUSINESS.ValidarEspecificidadeVendaRemedio;
 import BUSINESS.IClienteService;
 import BUSINESS.IMateriaPrimaService;
+import BUSINESS.CalcularFreteRemedio;
 import BUSINESS.ClienteService;
 
 import ENTITY.Venda;
 import UTIL.BusinessRuleException;
 import ENTITY.Especificidade;
 import ENTITY.EspecificidadeAlimento;
+import ENTITY.EspecificidadeRemedio;
+import ENTITY.FreteRemedio;
 import ENTITY.ProdutoFinal;
+import ENTITY.Remedio;
 
 
 public class VendaGUI {
@@ -28,8 +35,7 @@ public class VendaGUI {
 	protected static IClienteService clienteService;
 	
 	public VendaGUI () {
-		 vendaService = VendaService.getInstance();
-		 ((VendaService)vendaService).setTypeInstance(1);
+		 vendaService = VendaService.getInstance(new ValidarEspecificidadeVendaRemedio(), new CalcularFreteRemedio(), new FreteRemedio());
 		 produtoFinalService = ProdutoFinalService.getInstance();
 		 clienteService = ClienteService.getInstance();
 	}
@@ -42,10 +48,10 @@ public class VendaGUI {
 	private static void mostraTodosOSProdutosFinais() {
 		ArrayList<ProdutoFinal> listaDeProdutosFinais = produtoFinalService.procuraTodos();
 		if(listaDeProdutosFinais.isEmpty()) {
-			System.out.println("Nenhum Produto Final Cadastrado\n");
+			System.out.println("Nenhum Remédio Cadastrado\n");
 		}
 		else {
-			System.out.println("Produtos Finais Cadastrados: ");
+			System.out.println("Remédios Cadastrados: ");
 			for(ProdutoFinal produtoFinal : listaDeProdutosFinais) {
 				System.out.printf("[%d] %s ", produtoFinal.getId(), produtoFinal.getNome());
 			}
@@ -62,6 +68,9 @@ public class VendaGUI {
 		int idProduto = 0;
 		int qtdProduto = 0;
 		int checadorDeContinuidade = 0;
+		boolean necessitaReceita = false;
+		String crm = new String();
+		Date data = new Date();
 		HashMap<Integer, Integer> listaDeProdutos = new HashMap<Integer, Integer> ();
 		ArrayList <ProdutoFinal> listaDeProdutosFinaisDisponiveis = produtoFinalService.procuraTodos();
 		
@@ -73,14 +82,18 @@ public class VendaGUI {
 				idCliente = Integer.parseInt(input.nextLine());
 				mostraTodosOSProdutosFinais();
 				do {
-					System.out.print("Dentre os produtos finais listados acima, selecione o ID de um produto: ");
+					System.out.print("Dentre os remédios listados acima, selecione o ID de um produto: ");
 					idProduto = Integer.parseInt(input.nextLine());
-					System.out.print("Agora, selecione a quantidade desse produto na compra: ");
+					System.out.print("Agora, selecione a quantidade desse remédio na compra: ");
 					qtdProduto = Integer.parseInt(input.nextLine());
 					
 					if(!listaDeProdutos.containsKey(idProduto)) {
 						listaDeProdutos.put(idProduto, qtdProduto);
-						System.out.print("Deseja inserir outro produto na compra? [1 - sim] [2 - não]: ");
+						if (!((Remedio) produtoFinalService.procuraPeloId(idProduto)).getTarja().equals("sem tarja") 
+								&& !((Remedio) produtoFinalService.procuraPeloId(idProduto)).getTarja().equals("amarela")) {
+							necessitaReceita = true;
+						}
+						System.out.print("Deseja inserir outro remédio na compra? [1 - sim] [2 - não]: ");
 						checadorDeContinuidade = Integer.parseInt(input.nextLine());
 						System.out.println();
 						if(checadorDeContinuidade == 1) {
@@ -90,17 +103,21 @@ public class VendaGUI {
 							aux2 = -1;
 						}
 						else {
-							System.out.println("Você não digitou um valor válido, encerrando a inserção de produtos na compra...\n");
+							System.out.println("Você não digitou um valor válido, encerrando a inserção de remédios na compra...\n");
 							aux2 = -1;
 						}
 					}
 					else {
-						System.out.println("Você digitou o ID de um produto que já constava na compra, encerrando a inserção de produtos na compra...\n");
+						System.out.println("Você digitou o ID de um remédio que já constava na compra, encerrando a inserção de remédios na compra...\n");
 						aux2 = -1;
 					}
-					
 				}while(aux2 != -1);
-				
+				if (necessitaReceita) {
+					System.out.print("[String] Entre com o CRM do médico da receita: ");
+					crm = input.nextLine();
+					System.out.print("[dd/mm/aaaa] Entre com a data de validade da receita: ");
+					data = new SimpleDateFormat("dd/MM/yyyy").parse(input.nextLine());
+				}
 				aux = -1;
 			} catch (Exception e) {
 				System.out.println("\nErro de parâmetros, digite novamente seguindo os tipos\n");
@@ -108,11 +125,15 @@ public class VendaGUI {
 			}
 
 		}while (aux != -1);
-		
 		try {
-			Especificidade especificidade = new EspecificidadeAlimento();
+			Especificidade especificidade;
+			if (necessitaReceita) {
+				especificidade = new EspecificidadeRemedio(crm, data);
+			} else {
+				especificidade = new EspecificidadeRemedio();
+			}
 			id = vendaService.realizarVenda(listaDeProdutos, idCliente, especificidade);
-			System.out.println("Venda Realizada com o ID " + id + " e preço: " + vendaService.procuraPeloId(id).getValor());
+			System.out.println("Venda Realizada com o ID " + id + " e preço: " + vendaService.procuraPeloId(id).getValor()+" frete: "+ vendaService.procuraPeloId(id).getFrete());
 		} catch (BusinessRuleException bre) {
 			System.out.println("Venda não realizada pelo(s) seguinte(s) motivo(s): ");
 			System.out.println(bre.getMessage());
@@ -147,12 +168,13 @@ public class VendaGUI {
 			System.out.printf("Valor: %.2f\n", venda.getValor());
 			System.out.println("Data: " + venda.getData());
 			System.out.println("Frete: " + venda.getFrete());
-			System.out.printf("Produtos inclusos na venda: \n");
+			System.out.printf("Remédios inclusos na venda: \n");
 			for(int produtoID : venda.getListaProdutos().keySet()) {
 			
-				System.out.println("Produto = [" + produtoFinalService.procuraPeloId(produtoID).getNome() 
+				System.out.println("Remedio = [" + produtoFinalService.procuraPeloId(produtoID).getNome() 
 								  + "] Quantidade = [" + venda.getListaProdutos().get(produtoID)+ "]");
 			}
+			System.out.println("Frete: " +  venda.getFrete());
 		}
 	}
 	

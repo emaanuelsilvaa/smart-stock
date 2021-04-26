@@ -27,10 +27,10 @@ public class ValidarRemedio implements ValidarStrategy {
 	    tarjas.add("vermelha");
 	    tarjas.add("preta");
 		if(produtoFinal == null) {
-			erros.add("Tentou inserir um Produto Final nulo");
+			erros.add("Tentou inserir um remédio nulo");
 		}
 		if(produtoFinal.getNome() == "" || produtoFinal.getNome() == null ) {
-			erros.add("Tentou inserir uma ProdutoFinal com nome nulo");
+			erros.add("Tentou inserir um remédio com nome nulo");
 		}
 		if(produtoFinal.getQntMinima() < 0) {
 			erros.add("Tentou inserir uma quantidade mínima negativa");

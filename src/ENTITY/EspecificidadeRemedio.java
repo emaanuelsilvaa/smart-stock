@@ -8,6 +8,13 @@ public class EspecificidadeRemedio extends Especificidade {
 	public EspecificidadeRemedio() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public EspecificidadeRemedio(String crm, Date data) {
+		super();
+		this.crm = crm;
+		this.data = data;
+	}
+
 	public String getCrm() {
 		return crm;
 	}

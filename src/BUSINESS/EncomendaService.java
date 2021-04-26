@@ -24,7 +24,6 @@ public final class EncomendaService implements IEncomendaService {
 	protected IMateriaPrimaService materiaPrimaService;
 	protected IClienteService clienteService;
 	private static IEncomendaService instance;
-	protected int typeInstance;
 	private static EspecificidadeVendaStrategy especificidadeEncomenda;
 	private static FreteStrategy freteDaEncomenda;
 	private static Frete tipoDeFrete;
@@ -37,18 +36,7 @@ public final class EncomendaService implements IEncomendaService {
 		this.produtoFinalService = ProdutoFinalService.getInstance();
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
 		this.clienteService = ClienteService.getInstance();
-		this.typeInstance = 1;
 	}
-
-	public int getTypeInstance() {
-		return typeInstance;
-	}
-
-	public void setTypeInstance(int typeInstance) {
-		this.typeInstance = typeInstance;
-	}
-
-
 
 	public static IEncomendaService getInstance() {
 		if (instance == null) {
