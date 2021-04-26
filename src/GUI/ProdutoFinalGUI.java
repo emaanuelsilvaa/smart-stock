@@ -11,10 +11,12 @@ import BUSINESS.IFornecedorService;
 import BUSINESS.IMateriaPrimaService;
 import BUSINESS.ProdutoFinalService;
 import BUSINESS.ValidarAlimento;
+import BUSINESS.ValidarBone;
 import BUSINESS.MateriaPrimaService;
 import ENTITY.Fornecedor;
 import ENTITY.MateriaPrima;
 import ENTITY.ProdutoFinal;
+import ENTITY.Bone;
 import ENTITY.Remedio;
 import UTIL.BusinessRuleException;
 import UTIL.Colors;
@@ -25,7 +27,7 @@ public class ProdutoFinalGUI {
 	protected static IMateriaPrimaService materiaPrimaService;
 	
 	public ProdutoFinalGUI () {
-		produtoFinalService = ProdutoFinalService.getInstance(new ValidarAlimento());
+		produtoFinalService = ProdutoFinalService.getInstance(new ValidarBone());
 		materiaPrimaService = MateriaPrimaService.getInstance();
 		
 	}
@@ -38,6 +40,9 @@ public class ProdutoFinalGUI {
 	public static void telaCadastrar (int a) {		
 		int id = 0;
 		String nome = new String ();
+		String estilo = new String ();
+		String cor = new String ();
+		String fecho = new String ();
 		float preco = 0;
 		int qtdMinima = 0;
 		int aux = -1;
@@ -58,6 +63,12 @@ public class ProdutoFinalGUI {
 				nome = input.nextLine();
 				System.out.print("[Float] Entre com o preço: ");
 				preco = Float.parseFloat(input.nextLine());
+				System.out.print("[String] Entre com o estilo: ");
+				estilo = input.nextLine();
+				System.out.print("[String] Entre com a cor: ");
+				cor = input.nextLine();
+				System.out.print("[String] Entre com o tipo de fecho: ");
+				fecho = input.nextLine();
 				System.out.print("[Int] Entre com a quantidade mínima: ");
 				qtdMinima = Integer.parseInt(input.nextLine());
 
@@ -103,7 +114,7 @@ public class ProdutoFinalGUI {
 			}
 		} while (aux != 0);
 		try {
-			id = produtoFinalService.inserir(new ProdutoFinal(nome, preco, qtdMinima, receita)); 
+			id = produtoFinalService.inserir(new Bone(nome, preco, qtdMinima, receita, cor, estilo, fecho)); 
 			System.out.println("Produto Final Cadastrado com o ID " + id);
 
 		} catch (BusinessRuleException bre) {

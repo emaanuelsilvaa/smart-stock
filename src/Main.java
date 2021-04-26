@@ -15,6 +15,7 @@ import BUSINESS.ProdutoFinalRealService;
 import BUSINESS.ProdutoFinalService;
 import BUSINESS.RelatorioService;
 import BUSINESS.ValidarAlimento;
+import BUSINESS.ValidarBone;
 import BUSINESS.VendaService;
 import DATA.MateriaPrimaDAO;
 import DATA.MateriaPrimaRealDAO;
@@ -27,12 +28,14 @@ import ENTITY.Cliente;
 import ENTITY.Encomenda;
 import ENTITY.Especificidade;
 import ENTITY.EspecificidadeAlimento;
+import ENTITY.EspecificidadeBone;
 import ENTITY.Fornecedor;
 import ENTITY.MateriaPrima;
 import ENTITY.MateriaPrimaReal;
 import ENTITY.ProdutoFinal;
 import ENTITY.ProdutoFinalReal;
 import ENTITY.Remedio;
+import ENTITY.Bone;
 import ENTITY.Venda;
 import GUI.Home;
 import UTIL.BusinessRuleException;
@@ -51,7 +54,10 @@ import BUSINESS.RelatorioService;
 import BUSINESS.IRelatorioService;
 import BUSINESS.IAnaliseLucro;
 import BUSINESS.ValidarEspecificidadesVendaAlimento;
+import BUSINESS.ValidarEspecificidadesVendaBone;
 import BUSINESS.CalcularFreteAlimento;
+import BUSINESS.CalcularFreteBone;
+import ENTITY.FreteBone;
 import ENTITY.FreteAlimento;
 
 public class Main {
@@ -67,11 +73,11 @@ public class Main {
 		IFornecedorService fornecedorService = FornecedorService.getInstance();
 		IMateriaPrimaService materiaPrimaService = MateriaPrimaService.getInstance();
 		IMateriaPrimaRealService materiaPrimaRealService = MateriaPrimaRealService.getInstance();
-		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance(new ValidarAlimento());
+		IProdutoFinalService produtoFinalService = ProdutoFinalService.getInstance(new ValidarBone());
 		IProdutoFinalRealService produtoFinalRealService = ProdutoFinalRealService.getInstance();
-		IVendaService vendaService = VendaService.getInstance(new ValidarEspecificidadesVendaAlimento(), new CalcularFreteAlimento(), new FreteAlimento());
+		IVendaService vendaService = VendaService.getInstance(new ValidarEspecificidadesVendaBone(), new CalcularFreteBone(), new FreteBone());
 		IEstoqueService estoqueService = EstoqueService.getInstance();
-		IEncomendaService encomendaService = EncomendaService.getInstance(new ValidarEspecificidadesVendaAlimento());
+		IEncomendaService encomendaService = EncomendaService.getInstance(new ValidarEspecificidadesVendaBone(), new CalcularFreteBone(), new FreteBone());
 		IRelatorioService relatorioService = RelatorioService.getInstance();
 		IAnaliseLucro analiseLucro = AnaliseLucro.getInstance();
 		
@@ -90,15 +96,15 @@ public class Main {
 		clienteService.inserir(cliente4);
 		clienteService.inserir(cliente5);
 
-		MateriaPrima mp1 = new MateriaPrima("Farinha de Trigo", "alimento", true, "kilos", (float) 4.5);
-		MateriaPrima mp2 = new MateriaPrima("Carne de Sol", "alimento", true, "kilos", (float) 4.5);
-		MateriaPrima mp3 = new MateriaPrima("Frango", "alimento", true, "kilos", (float) 4.5);
-		MateriaPrima mp4 = new MateriaPrima("Óleo", "alimento", true, "litros", (float) 4.5);
-		MateriaPrima mp5 = new MateriaPrima("Fermento", "alimento", true, "kilos", (float) 2.5);
-		MateriaPrima mp6 = new MateriaPrima("Margarina", "alimento", true, "kilos", (float) 4.5);
-		MateriaPrima mp7 = new MateriaPrima("Manteiga", "alimento", true, "kilos", (float) 4.5);
-		MateriaPrima mp8 = new MateriaPrima("Ovo", "alimento", true, "unidades", (float) 4.5);
-		MateriaPrima mp9 = new MateriaPrima("Leite", "alimento", true, "litros", (float) 4.5);
+		MateriaPrima mp1 = new MateriaPrima("Linha Fina", "textil", true, "metros", (float) 4.5);
+		MateriaPrima mp2 = new MateriaPrima("Tecido", "textil", true, "metros", (float) 4.5);
+		MateriaPrima mp3 = new MateriaPrima("botão", "textil", true, "unidades", (float) 4);
+		MateriaPrima mp4 = new MateriaPrima("Linha Grossa", "textil", true, "metros", (float) 4.5);
+		MateriaPrima mp5 = new MateriaPrima("Aba", "textil", true, "unidade", (float) 4);
+		MateriaPrima mp6 = new MateriaPrima("Fivela", "artigo", true, "unidade", (float) 4);
+		MateriaPrima mp7 = new MateriaPrima("Tinta Vermelha", "artigo", true, "litros", (float) 4.5);
+		MateriaPrima mp8 = new MateriaPrima("Tinta Verde", "artigo", true, "litros", (float) 4.5);
+		MateriaPrima mp9 = new MateriaPrima("Tinta Amarela", "artigo", true, "litros", (float) 4.5);
 
 		materiaPrimaService.inserir(mp1);
 		materiaPrimaService.inserir(mp2);
@@ -139,7 +145,7 @@ public class Main {
 		MateriaPrimaReal mr2 = new MateriaPrimaReal(2, 30f, new Date(), 5, 1);
 		MateriaPrimaReal mr3 = new MateriaPrimaReal(3, 10f, new Date(), 5, 1);
 		MateriaPrimaReal mr4 = new MateriaPrimaReal(4, 3f, new Date(), 2, 1);
-		MateriaPrimaReal mr5 = new MateriaPrimaReal(5, 0.5f, new Date(), 1 , 1);
+		MateriaPrimaReal mr5 = new MateriaPrimaReal(5, 5f, new Date(), 1 , 1);
 		MateriaPrimaReal mr6 = new MateriaPrimaReal(6, 13f, new Date(), 3, 1);
 		MateriaPrimaReal mr7 = new MateriaPrimaReal(7, 13f, new Date(), 5, 1);
 		MateriaPrimaReal mr8 = new MateriaPrimaReal(8, 1f, new Date(), 50, 1);
@@ -161,7 +167,7 @@ public class Main {
 		receita1.put(4, 0.1f);
 		HashMap<Integer, Float> receita2 = new HashMap<Integer, Float>();
 		receita2.put(1, 0.08f);
-		receita2.put(3, 0.1f);
+		receita2.put(3, 1f);
 		receita2.put(4, 0.1f);
 		HashMap<Integer, Float> receita3 = new HashMap<Integer, Float>();
 		receita3.put(1, 0.05f);
@@ -173,9 +179,9 @@ public class Main {
 //		produtoFinalService.inserir(p10);
 //		ProdutoFinal p11 = new Bone("BadBoy", 2f, 30, receita1, "azul", "aba reta", "blop");
 //		produtoFinalService.inserir(p11);
-		ProdutoFinal p1 = new Alimento("Esfirra", 2f, 30, receita1, 120);
-		ProdutoFinal p2 = new Alimento("Empada", 4f, 30, receita1, 120);
-		ProdutoFinal p3 = new Alimento("Pastel de Carne", 3.5f, 30, receita1, 120);
+		ProdutoFinal p1 = new Bone("Hang loose", 2f, 30, receita1, "azul", "aba reta", "cromado");
+		ProdutoFinal p2 = new Bone("New Era", 4f, 30, receita1, "vermelho", "aba reta", "cromado");
+		ProdutoFinal p3 = new Bone("Bad Boy", 3.5f, 30, receita1, "verde", "aba reta", "cromado");
 		
 		produtoFinalService.inserir(p1);
 		produtoFinalService.inserir(p2);
@@ -223,7 +229,7 @@ public class Main {
 		
 		Date data4 = new Date("04/25/2021");
 		
-		Especificidade especificidade = new EspecificidadeAlimento();
+		Especificidade especificidade = new EspecificidadeBone();
 
 //		encomendaService.realizarEncomenda(listProdutos3, 1, data3, especificidade);
 //		encomendaService.realizarEncomenda(listProdutos4, 2, data4, especificidade);
