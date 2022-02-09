@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import ENTITY.Fornecedor;
 
 public class FornecedorDAO implements IFornecedorDAO {
-	protected ArrayList<Fornecedor> fornecedores;
-	protected int idSerial;
+	protected /*@ spec_public nullable @*/ArrayList<Fornecedor> fornecedores;
+	protected /*@ spec_public @*/int idSerial;
 	
 	// Construtores
+	/*@ ensures fornecedores != null; 
+	  @ ensures idSerial > 0; @*/
 	public FornecedorDAO() {
 		this.fornecedores = new ArrayList<Fornecedor>();
 		this.idSerial = 1;
 	}
-
+	/*@ ensures fornecedores != null; 
+	  @*/
 	public FornecedorDAO(ArrayList<Fornecedor> fornecedores) {
 		super();
 		this.fornecedores = fornecedores;
