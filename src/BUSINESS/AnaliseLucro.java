@@ -28,7 +28,7 @@ public class AnaliseLucro implements IAnaliseLucro {
 	public float analisarLucro(Date dataInicio, Date dataFim) {
 		float gastoMateriaPrima = 0;
 		float ganhoVenda = 0;
-		float preçoMateriaInd = 0;
+		float precoMateriaInd = 0;
 		float quantidadeMateriaInd = 0;
 		
 		for (Venda v : this.vendaService.procuraTodos()) {
@@ -51,10 +51,10 @@ public class AnaliseLucro implements IAnaliseLucro {
 					
 					// Para cada matéria prima da receita recuperada
 					for (Integer id_m : receitaReal.keySet()) {
-						preçoMateriaInd = materiaPrimaRealService.procuraPeloId(id_m).getPreço();
+						precoMateriaInd = materiaPrimaRealService.procuraPeloId(id_m).getPreco();
 						quantidadeMateriaInd = receitaReal.get(id_m);
 //						
-						gastoMateriaPrima = gastoMateriaPrima + (preçoMateriaInd*quantidadeMateriaInd);
+						gastoMateriaPrima = gastoMateriaPrima + (precoMateriaInd*quantidadeMateriaInd);
 					}
 				}
 			}

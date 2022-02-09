@@ -148,7 +148,7 @@ public class FornecedorGUI {
 			System.out.printf("\nId: %d\n", fornecedor.getId());
 			System.out.printf("Nome: %s\n", fornecedor.getNome());
 			System.out.printf("CNPJ: %s\n", fornecedor.getCnpj());
-			System.out.printf("Endereço: %s\n", fornecedor.getEndereço());
+			System.out.printf("Endereço: %s\n", fornecedor.getEndereco());
 			System.out.printf("Telefone: %s\n", fornecedor.getTelefone());
 			System.out.printf("Email: %s\n", fornecedor.getEmail());
 			System.out.printf("Matérias Primas que o Fornecedor dispõe: \n");

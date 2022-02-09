@@ -44,7 +44,7 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 			if (m.getId() == id) {
 				m.setId(id);
 				m.setIdExterno(materiaPrima.getIdExterno());
-				m.setPreço(materiaPrima.getPreço());
+				m.setPreco(materiaPrima.getPreco());
 				m.setValidade(materiaPrima.getValidade());
 				m.setQuantidade(materiaPrima.getQuantidade());
 				m.setFornecedor(materiaPrima.getFornecedor());

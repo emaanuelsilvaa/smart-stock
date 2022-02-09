@@ -6,7 +6,7 @@ public class Fornecedor {
 	protected int id;
 	protected String nome;
 	protected String cnpj;
-	protected String endereço;
+	protected String endereco;
 	protected String telefone;
 	protected String email;
 	protected ArrayList<MateriaPrima> listaProdutos;
@@ -16,24 +16,24 @@ public class Fornecedor {
 		
 	}
 	
-	public Fornecedor(int id, String nome, String cnpj, String endereço, String telefone, String email,
+	public Fornecedor(int id, String nome, String cnpj, String endereco, String telefone, String email,
 			ArrayList<MateriaPrima> listaProdutos) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cnpj = cnpj;
-		this.endereço = endereço;
+		this.endereco = endereco;
 		this.telefone = telefone;
 		this.email = email;
 		this.listaProdutos = listaProdutos;
 	}
 	
-	public Fornecedor(String nome, String cnpj, String endereço, String telefone, String email,
+	public Fornecedor(String nome, String cnpj, String endereco, String telefone, String email,
 			ArrayList<MateriaPrima> listaProdutos) {
 		super();
 		this.nome = nome;
 		this.cnpj = cnpj;
-		this.endereço = endereço;
+		this.endereco = endereco;
 		this.telefone = telefone;
 		this.email = email;
 		this.listaProdutos = listaProdutos;
@@ -64,12 +64,12 @@ public class Fornecedor {
 		this.cnpj = cnpj;
 	}
 
-	public String getEndereço() {
-		return endereço;
+	public String getEndereco() {
+		return endereco;
 	}
 
-	public void setEndereço(String endereço) {
-		this.endereço = endereço;
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 
 	public String getTelefone() {

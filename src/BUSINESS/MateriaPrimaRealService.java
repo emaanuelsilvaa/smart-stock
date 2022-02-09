@@ -88,7 +88,7 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 		if(this.materiaPrimaService.procuraPeloId(materiaPrimaReal.getIdExterno())== null) {
 			erros.add("Tentou inserir sem um tipo de matéria-prima");
 		}
-		if(materiaPrimaReal.getPreço() < 0) {
+		if(materiaPrimaReal.getPreco() < 0) {
 			erros.add("Tentou inserir um preço negativo");
 		}
 		if(materiaPrimaReal.getQuantidade() < 0) {

@@ -68,7 +68,7 @@ public final class ClienteGUI {
 	public static void telaCadastrar(int a) {
 		String nome = "";
 		String cpf = "";
-		String endereço = "";
+		String endereco = "";
 		String telefone = "";
 		int aux = -1;
 		int id;
@@ -81,7 +81,7 @@ public final class ClienteGUI {
 				System.out.print("[String] Entre com o cpf: ");
 				cpf = input.nextLine();
 				System.out.print("[String] Entre com o endereço: ");
-				endereço = input.nextLine();
+				endereco = input.nextLine();
 				System.out.print("[String] Entre com o telefone: ");
 				telefone = input.nextLine();
 				aux = 0;
@@ -91,7 +91,7 @@ public final class ClienteGUI {
 			}
 		} while (aux != 0);
 		try {
-			id = clienteService.inserir(new Cliente(nome, cpf, endereço, telefone));
+			id = clienteService.inserir(new Cliente(nome, cpf, endereco, telefone));
 			System.out.println("Cliente cadastrado com o ID " + id);
 
 		} catch (BusinessRuleException bre) {
@@ -103,7 +103,7 @@ public final class ClienteGUI {
 	public static void telaAlterar(int a) {
 		String nome = "";
 		String cpf = "";
-		String endereço = "";
+		String endereco = "";
 		String telefone = "";
 		int aux = -1;
 		int id;
@@ -119,7 +119,7 @@ public final class ClienteGUI {
 				System.out.print("[String] Entre com o cpf: ");
 				cpf = input.nextLine();
 				System.out.print("[String] Entre com o endereço: ");
-				endereço = input.nextLine();
+				endereco = input.nextLine();
 				System.out.print("[String] Entre com o telefone: ");
 				telefone = input.nextLine();
 				aux = 0;
@@ -129,7 +129,7 @@ public final class ClienteGUI {
 			}
 		} while (aux != 0);
 		try {
-			id = clienteService.alterar(idASubstituir, new Cliente(nome, cpf, endereço, telefone));
+			id = clienteService.alterar(idASubstituir, new Cliente(nome, cpf, endereco, telefone));
 			System.out.println("Cliente alterado com o ID " + id);
 
 		} catch (BusinessRuleException bre) {
@@ -158,7 +158,7 @@ public final class ClienteGUI {
 			System.out.printf("\nId: %d\n", c.getId());
 			System.out.printf("Nome: %s\n", c.getNome());
 			System.out.printf("CPF: %s\n", c.getCpf());
-			System.out.printf("Endereço: %s\n", c.getEndereço());
+			System.out.printf("Endereço: %s\n", c.getEndereco());
 			System.out.printf("Telefone: %s\n", c.getTelefone());
 		}
 	}

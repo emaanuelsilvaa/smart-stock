@@ -72,7 +72,7 @@ public final class FornecedorService implements IFornecedorService {
 		if(fornecedor.getCnpj().length() != 14) {
 			erros.add("CNPJ deve possuir 14 dígitos");
 		}
-		if(fornecedor.getEndereço() == "" || fornecedor.getEndereço() == null) {
+		if(fornecedor.getEndereco() == "" || fornecedor.getEndereco() == null) {
 			erros.add("Tentou inserir um endereço nulo");
 		}
 		// Validação de Telefone (Padrão: DDD-8números ou DDD-9números. Exemplo: 89-33332222)

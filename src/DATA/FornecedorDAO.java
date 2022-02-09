@@ -46,7 +46,7 @@ public class FornecedorDAO implements IFornecedorDAO {
 				f.setId(id);
 				f.setNome(fornecedor.getNome());
 				f.setCnpj(fornecedor.getCnpj());
-				f.setEndereço(fornecedor.getEndereço());
+				f.setEndereco(fornecedor.getEndereco()); 
 				f.setTelefone(fornecedor.getTelefone());
 				f.setEmail(fornecedor.getEmail());
 				f.setListaProdutos(fornecedor.getListaProdutos());

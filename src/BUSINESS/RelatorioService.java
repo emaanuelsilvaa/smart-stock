@@ -71,7 +71,7 @@ public final class RelatorioService implements IRelatorioService {
 		//MateriaPrima materiaPrimaASerReposta = new MateriaPrima ();
 		ProdutoFinal produtoFinalASerReposto = new ProdutoFinal ();
 		HashMap<Integer, Float> receita = new HashMap <Integer, Float> (); 
-		float valor_residual, valor_de_reposição, valor_final, diferença_de_estoque = 0;
+		float valor_residual, valor_de_reposicao, valor_final, diferenca_de_estoque = 0;
 		int quantidade_de_produtos = 0;
 		
 		if(!listaDeProdutosFaltantes.isEmpty()) {
@@ -86,8 +86,8 @@ public final class RelatorioService implements IRelatorioService {
 					if(listaDeMateriaPrimaFaltanteTotal.containsKey(ide_receita)) {
 						
 						valor_residual = listaDeMateriaPrimaFaltanteTotal.get(ide_receita);
-						valor_de_reposição = quantidade_de_produtos * receita.get(ide_receita);
-						valor_final = valor_residual + valor_de_reposição;
+						valor_de_reposicao = quantidade_de_produtos * receita.get(ide_receita);
+						valor_final = valor_residual + valor_de_reposicao;
 						listaDeMateriaPrimaFaltanteTotal.put(ide_receita, valor_final);
 					}
 					
@@ -100,9 +100,9 @@ public final class RelatorioService implements IRelatorioService {
 			}
 			
 			for (int id_materia : listaDeMateriaPrimaFaltanteTotal.keySet()) {
-				diferença_de_estoque = estoqueService.verificaDisponibilidadeMateriaPrima(id_materia, listaDeMateriaPrimaFaltanteTotal.get(id_materia));
-				if(diferença_de_estoque < 0) {
-					listaDeMateriaPrimaFaltante.put(id_materia, -1 * diferença_de_estoque);
+				diferenca_de_estoque = estoqueService.verificaDisponibilidadeMateriaPrima(id_materia, listaDeMateriaPrimaFaltanteTotal.get(id_materia));
+				if(diferenca_de_estoque < 0) {
+					listaDeMateriaPrimaFaltante.put(id_materia, -1 * diferenca_de_estoque);
 				}
 			}
 		}

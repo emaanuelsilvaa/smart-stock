@@ -72,7 +72,7 @@ public final class ClienteService implements IClienteService {
 		if(cliente.getCpf().length() != 11) {
 			erros.add("CPF deve possuir 11 dígitos");
 		}
-		if(cliente.getEndereço() == "" || cliente.getEndereço() == null) {
+		if(cliente.getEndereco() == "" || cliente.getEndereco() == null) {
 			erros.add("Tentou inserir um endereço nulo");
 		}
 		// Validação de Telefone (Padrão: DDD-8números ou DDD-9números. Exemplo: 89-33332222)

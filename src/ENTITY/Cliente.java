@@ -4,7 +4,7 @@ public class Cliente {
 	protected int id;
 	protected String nome;
 	protected String cpf;
-	protected String endereço;
+	protected String endereco;
 	protected String telefone;
 	
 	// Construtores
@@ -12,20 +12,20 @@ public class Cliente {
 		
 	}
 	
-	public Cliente(int id, String nome, String cpf, String endereço, String telefone) {
+	public Cliente(int id, String nome, String cpf, String endereco, String telefone) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
-		this.endereço = endereço;
+		this.endereco = endereco;
 		this.telefone = telefone;
 	}
 	
-	public Cliente(String nome, String cpf, String endereço, String telefone) {
+	public Cliente(String nome, String cpf, String endereco, String telefone) {
 		super();
 		this.nome = nome;
 		this.cpf = cpf;
-		this.endereço = endereço;
+		this.endereco = endereco;
 		this.telefone = telefone;
 	}
 
@@ -54,12 +54,12 @@ public class Cliente {
 		this.cpf = cpf;
 	}
 
-	public String getEndereço() {
-		return endereço;
+	public String getEndereco() {
+		return endereco;
 	}
 
-	public void setEndereço(String endereço) {
-		this.endereço = endereço;
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 
 	public String getTelefone() {

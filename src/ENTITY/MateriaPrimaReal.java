@@ -5,7 +5,7 @@ import java.util.Date;
 public class MateriaPrimaReal{
     protected int id;
     protected int idExterno;
-	protected float preço;
+	protected float preco;
     protected  Date validade;
     protected float quantidade;
 	protected int idFornecedor;
@@ -14,22 +14,22 @@ public class MateriaPrimaReal{
 		super();
 	}
 
-	public MateriaPrimaReal(int id, int idExterno, float preço, Date validade, float quantidade,
+	public MateriaPrimaReal(int id, int idExterno, float preco, Date validade, float quantidade,
 			int idFornecedor) {
 		super();
 		this.id = id;
 		this.idExterno = idExterno;
-		this.preço = preço;
+		this.preco= preco;
 		this.validade = validade;
 		this.quantidade = quantidade;
 		this.idFornecedor = idFornecedor;
 	}
 	
 
-	public MateriaPrimaReal(int idExterno, float preço, Date validade, float quantidade, int idFornecedor) {
+	public MateriaPrimaReal(int idExterno, float preco, Date validade, float quantidade, int idFornecedor) {
 		super();
 		this.idExterno = idExterno;
-		this.preço = preço;
+		this.preco = preco;
 		this.validade = validade;
 		this.quantidade = quantidade;
 		this.idFornecedor = idFornecedor;
@@ -51,12 +51,12 @@ public class MateriaPrimaReal{
 		this.idExterno = idExterno;
 	}
 
-	public float getPreço() {
-		return preço;
+	public float getPreco() {
+		return preco;
 	}
 
-	public void setPreço(float preço) {
-		this.preço = preço;
+	public void setPreco(float preco) {
+		this.preco = preco;
 	}
 
 	public Date getValidade() {

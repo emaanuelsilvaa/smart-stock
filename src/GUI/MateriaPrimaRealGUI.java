@@ -81,7 +81,7 @@ public class MateriaPrimaRealGUI {
 		} else {
 			System.out.printf("\nId: %d\n", m.getId());
 			System.out.printf("Nome: %s\n", materiaPrimaService.procuraPeloId(m.getIdExterno()).getNome());
-			System.out.printf("Preço: %f\n", m.getPreço());
+			System.out.printf("Preço: %f\n", m.getPreco());
 			System.out.printf("Quantidade: %f %s\n", m.getQuantidade(), materiaPrimaService.procuraPeloId(m.getIdExterno()).getUnMedida());
 			System.out.printf("Validade: %s\n", m.getValidade());
 		}
