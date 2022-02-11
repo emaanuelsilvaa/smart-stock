@@ -34,7 +34,8 @@ public class FornecedorDAO implements IFornecedorDAO {
 
 	@Override
 	/*@ ensures 0 <= id; 
-	  ensures id;
+	  assignable id, fornecedores;
+	  ensures \result == \old (fornecedores.getId())
 	  @*/
 	public int remover(int id) {
 		Fornecedor aux = new Fornecedor();
