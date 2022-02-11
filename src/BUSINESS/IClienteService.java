@@ -6,16 +6,18 @@ import ENTITY.Cliente;
 import UTIL.BusinessRuleException;
 
 public interface IClienteService {
+	//@ public model instance IClienteDAO clienteDAO;
 
 	int inserir(Cliente cliente) throws BusinessRuleException;
 
 	int remover(int id) throws BusinessRuleException;
 
 	int alterar(int id, Cliente cliente) throws BusinessRuleException;
+	
+	//@ ensures \result == clienteDAO.procuraPeloId(id);
+	/*@ pure @*/ Cliente procuraPeloId(int id);
 
-	Cliente procuraPeloId(int id);
-
-	ArrayList<Cliente> procuraTodos();
+	/*@ pure @*/ ArrayList<Cliente> procuraTodos();
 
 	int validarCadastro(Cliente cliente) throws BusinessRuleException;
 
