@@ -10,20 +10,26 @@ import UTIL.BusinessRuleException;
 
 public final class FornecedorService implements IFornecedorService {
 	
-	protected IFornecedorDAO fornecedorDAO;
-	private static IFornecedorService instance;
+	protected/*@ spec_public nullable @*/ IFornecedorDAO fornecedorDAO;
+	private/*@ spec_public nullable @*/ static IFornecedorService instance;
 	
+
 	public FornecedorService() {
 		this.fornecedorDAO = new FornecedorDAO();
 	}
+	
+	/*@ assignable instance; 
+	  @ ensures \result != null; @*/
 	public static IFornecedorService getInstance() {
 		if(instance == null) {
 			instance = new FornecedorService();
 		}
 		return instance;
 	}
-
+	
 	@Override
+	/*@ requires invariant fornecedor != null;
+	 @ ensures \result != null; @*/
 	public int inserir(Fornecedor fornecedor) throws BusinessRuleException {
 		validarCadastro(fornecedor);
 		if (this.fornecedorDAO.procuraPeloId(fornecedor.getId()) != null) {
@@ -33,6 +39,8 @@ public final class FornecedorService implements IFornecedorService {
 	}
 
 	@Override
+	/*@ requires invariant id != null;
+	 @ ensures \result == id; @*/
 	public int remover(int id) throws BusinessRuleException {
 		if (this.fornecedorDAO.procuraPeloId(id) == null) {
 			throw new BusinessRuleException("Tentou excluir um fornecedor inexistente");
@@ -41,6 +49,8 @@ public final class FornecedorService implements IFornecedorService {
 	}
 
 	@Override
+	/*@ requires invariant id != null;
+	 @ ensures \result == id; @*/
 	public int alterar(int id, Fornecedor fornecedor) throws BusinessRuleException {
 		validarCadastro(fornecedor);
 		if (this.fornecedorDAO.procuraPeloId(id) == null) {
@@ -50,16 +60,20 @@ public final class FornecedorService implements IFornecedorService {
 	}
 
 	@Override
+	/*@ assignable \nothing; @*/
 	public Fornecedor procuraPeloId(int id) {
 		return this.fornecedorDAO.procuraPeloId(id);
 	}
 
 	@Override
+	/*@ assignable \nothing; @*/
 	public ArrayList<Fornecedor> procuraTodos() {
 		return this.fornecedorDAO.procuraTodos();
 	}
 	
 	@Override
+	/*@ assignable \nothing; 
+	  @ ensures \result == 0 ; @*/
 	public int validarCadastro(Fornecedor fornecedor) throws BusinessRuleException {
 		ArrayList<String> erros = new ArrayList<String>();
 		if(fornecedor == null) {
