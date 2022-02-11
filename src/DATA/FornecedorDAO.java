@@ -23,6 +23,9 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	@Override
+	/*@ ensures fornecedor != null; 
+	  ensures fornecedor.length == fornecedor.getId();
+	  @*/
 	public int inserir(Fornecedor fornecedor) {
 		fornecedor.setId(this.pegaEIncremanetaId());
 		this.fornecedores.add(fornecedor);
@@ -30,6 +33,9 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	@Override
+	/*@ ensures 0 <= id; 
+	  ensures id;
+	  @*/
 	public int remover(int id) {
 		Fornecedor aux = new Fornecedor();
 		for (Fornecedor f : this.fornecedores) {
@@ -43,6 +49,7 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	@Override
+	/*@ assignable \nothing; @*/
 	public int alterar(int id, Fornecedor fornecedor) {
 		for (Fornecedor f : this.fornecedores) {
 			if (f.getId() == id) {
@@ -60,6 +67,9 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	@Override
+	/*@ assignable \nothing; 
+	 	ensures f.getId() == id;
+	 * @*/
 	public Fornecedor procuraPeloId(int id) {
 		for (Fornecedor f : this.fornecedores) {
 			if (f.getId() == id) {
@@ -70,11 +80,15 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	@Override
+	/*@ assignable \nothing; @*/
 	public ArrayList<Fornecedor> procuraTodos(){
 		return this.fornecedores;
 	}
 	
 	@Override
+	/*@ assignable \nothing; 
+		ensure idAtual < this.idSerial;
+	@*/
 	public int pegaEIncremanetaId() {
 		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
 		int idAtual = this.idSerial;
