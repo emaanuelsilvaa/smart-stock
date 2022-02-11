@@ -8,30 +8,71 @@ import UTIL.BusinessRuleException;
 
 public final class ClienteService implements IClienteService {
 	
-	private static IClienteService instance;
-	protected IClienteDAO clienteDAO;
+	private static /*@ spec_public non_null @*/ IClienteService instance;
+	protected /*@ spec_public non_null @*/ IClienteDAO clienteDAO; //@ in clienteDAO;
+	
+	/*@ protected represents
+	@ clienteDAO <- (this.clienteDAO.procuraPeloId(id));
+	@*/
+	
+	//@ public invariant clienteDAO != null;
 	
 	// Construtores
+	/*@ 
+	 @ assignable this.clienteDAO;
+	 @ ensures this.clienteDAO != null && clienteDAO instanceof ClienteDAO;
+	 @*/
 	private ClienteService() {
 		this.clienteDAO = new ClienteDAO();
 	}
-
+	
+	/*@ 
+	 @ assignable instance;
+	 @ ensures \result == instance != null;
+	 @ ensures instance instanceof ClienteService;
+	 @*/
 	public static IClienteService getInstance() {
 		if (instance == null) {
 			instance = new ClienteService();
 		}  
 		return instance;
 	}
-
+	
+	
+  /*@ requires cliente != null;
+	@ assignable cliente, clienteDAO;
+	@ ensures clienteDAO.procuraTodos().size() == \old(clienteDAO.procuraTodos().size())+1;
+	@ also
+	@ public exceptional_behavior
+	@ 	requires this.clienteDAO.procuraPeloId(cliente.getId()) != null;
+	@ 	assignable clienteDAO;
+	@ 	signals_only BusinessRuleException;
+	@ 	signals (BusinessRuleException e)
+	@ 		this.clienteDAO.procuraPeloId(cliente.getId()) == null;
+	@*/
 	@Override
 	public int inserir(Cliente cliente) throws BusinessRuleException {
 		validarCadastro(cliente);
 		if (this.clienteDAO.procuraPeloId(cliente.getId()) != null) {
 			throw new BusinessRuleException("Tentou inserir um cliente já existente");
 		}
+		
 		return this.clienteDAO.inserir(cliente);
 	}
-
+	
+	
+  /*@ requires id != null ;
+    @ requires id <= 0;
+	@ assignable clienteDAO, id;
+	@ ensures clienteDAO.procuraTodos().size() == \old(clienteDAO.procuraTodos().size())-1;
+	@ also
+	@ public exceptional_behavior
+	@ 	requires this.clienteDAO.procuraPeloId(id) != null;
+	@ 	assignable clienteDAO;
+	@ 	signals_only BusinessRuleException;
+	@ 	signals (BusinessRuleException e)
+	@ 		this.clienteDAO.procuraPeloId(cliente.getId()) == null;
+	@*/
 	@Override
 	public int remover(int id) throws BusinessRuleException {
 		if (this.clienteDAO.procuraPeloId(id) == null) {
@@ -50,12 +91,12 @@ public final class ClienteService implements IClienteService {
 	}
 
 	@Override
-	public Cliente procuraPeloId(int id) {
+	public /*@ pure @*/ Cliente procuraPeloId(int id) {
 		return this.clienteDAO.procuraPeloId(id);
 	}
 
 	@Override
-	public ArrayList<Cliente> procuraTodos() {
+	public /*@ pure @*/ ArrayList<Cliente> procuraTodos() {
 		return this.clienteDAO.procuraTodos();
 	}
 
