@@ -49,12 +49,12 @@ public final class VendaService implements IVendaService {
 	}
 	
 	@Override
-	public ArrayList<Venda> procuraTodos(){
+	public /*@ pure @*/  ArrayList<Venda> procuraTodos(){
 		return vendaDAO.procuraTodos();
 	}
 	
 	@Override
-	public Venda procuraPeloId(int id) {
+	public /*@ pure @*/  Venda procuraPeloId(int id) {
 		return this.vendaDAO.procuraPeloId(id);
 	}
 	

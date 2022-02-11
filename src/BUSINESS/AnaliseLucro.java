@@ -6,32 +6,56 @@ import java.util.HashMap;
 import ENTITY.ProdutoFinalReal;
 import ENTITY.Venda;
 
+
 public class AnaliseLucro implements IAnaliseLucro {
-	private static IAnaliseLucro instance;
-	protected IVendaService vendaService;
-	protected IProdutoFinalRealService produtoFinalRealService;
-	protected IMateriaPrimaRealService materiaPrimaRealService;
+	
+	private static /*@ spec_public @*/ IAnaliseLucro instance;
+	protected /*@ spec_public @*/ IVendaService vendaService; 
+	protected /*@ spec_public @*/ IProdutoFinalRealService produtoFinalRealService;
+	protected /*@ spec_public @*/ IMateriaPrimaRealService materiaPrimaRealService;
 		
+	/*@ 
+	 @ assignable vendaService, produtoFinalRealService, materiaPrimaRealService;
+	 @ ensures vendaService != null;
+	 @ ensures produtoFinalRealService != null && produtoFinalRealService instanceof ProdutoFinalRealService ;
+	 @ ensures materiaPrimaRealService != null;
+	 @*/
 	private AnaliseLucro() {
 		this.vendaService = VendaService.getInstance();
 		this.produtoFinalRealService = ProdutoFinalRealService.getInstance();
 		this.materiaPrimaRealService = MateriaPrimaRealService.getInstance();
 	}
 	
+	
+	/*@ 
+	 @ assignable instance;
+	 @ ensures instance != null;
+	 @*/
 	public static IAnaliseLucro getInstance() {
 		if (instance == null) {
 			instance = new AnaliseLucro();
 		}
 		return instance;
 	}
-	
-	public float analisarLucro(Date dataInicio, Date dataFim) {
+
+	/** Calcula o lucro de vendas de um determinado periodo e Retorna o valor desse lucro  */
+	/*@ also
+	  @ requires dataInicio.compareTo(dataFim) > 0;	 
+	  @ ensures \result ==  ( \forall int i; i < this.vendaService.procuraTodos().size() ;
+	  @ 					this.vendaService.procuraTodos().get(i).getListaProdutosReais() != null ) &&
+	  @						( \forall Iterator produtosReaisVendidos ; produtosReaisVendidos.hasNext() ;
+	  @ 					produtoFinalRealService.procuraPeloId(produtosReaisVendidos.next()) != null ) &&
+	  @							( \forall Iterator receitaReal ; receitaReal.hasNext() ;
+	  @ 					(\sum materiaPrimaRealService.procuraPeloId(receitaReal.next).getPreco() ) );
+	  @*/
+	public float analisarLucro(/*@ non_null @*/ Date dataInicio, /*@ non_null @*/Date dataFim) {
 		float gastoMateriaPrima = 0;
 		float ganhoVenda = 0;
 		float precoMateriaInd = 0;
 		float quantidadeMateriaInd = 0;
 		
-		for (Venda v : this.vendaService.procuraTodos()) {
+		
+		for (Venda v : this.vendaService.procuraTodos() ) {
 			// Checagem se a venda está no range solicitado
 			if ((v.getData().after(dataInicio) && v.getData().before(dataFim)) || v.getData().equals(dataInicio) || v.getData().equals(dataFim)) {
 				
