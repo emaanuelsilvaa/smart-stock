@@ -8,11 +8,13 @@ import UTIL.BusinessRuleException;
 
 public interface IVendaService {
 	
+	//@ public model instance String gender;
+	
 	int remover(int id) throws BusinessRuleException;
 
-	ArrayList<Venda> procuraTodos();
+	/*@ pure @*/ ArrayList<Venda> procuraTodos();
 	
-	Venda procuraPeloId(int id);
+	/*@ pure @*/ Venda procuraPeloId(int id);
 	
 	int realizarVenda(HashMap<Integer, Integer> listaProdutos, int idCliente) throws BusinessRuleException;	
 	
