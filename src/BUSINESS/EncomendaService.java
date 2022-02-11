@@ -20,8 +20,17 @@ public final class EncomendaService implements IEncomendaService {
 	protected IClienteService clienteService;
 	private static IEncomendaService instance;
 
+	/*@ assginable encomendaDAO, vendaService, produtoFinalRealService, produtoFinalService,
+	 @ 		materiaPrimaService, clienteService;
+	 @ 
+	 @  ensures encomendaDAO != null;
+	 @  ensures vendaService != null;
+	 @  ensures produtoFinalRealService != null;
+	 @  ensures produtoFinalService != null;
+	 @  ensures materiaPrimaService != null;
+	 @  ensures clienteService != null;
+	@*/
 	private EncomendaService() {
-		// TODO Auto-generated constructor stub
 		this.encomendaDAO = new EncomendaDAO();
 		this.vendaService = VendaService.getInstance();
 		this.produtoFinalRealService = ProdutoFinalRealService.getInstance();
@@ -30,6 +39,14 @@ public final class EncomendaService implements IEncomendaService {
 		this.clienteService = ClienteService.getInstance();
 	}
 
+	/*@ requires instance == null; 
+	 @  assignable instance;
+	 @  ensures instance == \result;
+	 @  also
+	 @  requires instance != null;
+	 @  assignable instance;
+	 @  ensures instance == \old(instance);
+	@*/
 	public static IEncomendaService getInstance() {
 		if (instance == null) {
 			instance = new EncomendaService();
@@ -95,6 +112,15 @@ public final class EncomendaService implements IEncomendaService {
 	}
 	
 	@Override
+	/*@ also
+	 @  requires \same;
+	 @  ensures (\exists Cliente c; clienteService.procuraTodos().contains(c);
+	 @  			encomenda.getIdCliente() == c.getId()
+	 @  		);
+	 @  ensures (\exists MateriaPrima m; materiaPrimaService.procuraTodos().contains(m);
+	 @  			encomenda.getListaProdutos().keySet().contains( m.getId() )
+	 @  		);
+	@*/
 	public int validarCadastro(Encomenda encomenda) throws BusinessRuleException {
 		ArrayList<String> erros = new ArrayList<String>();
 		if(encomenda == null) {
