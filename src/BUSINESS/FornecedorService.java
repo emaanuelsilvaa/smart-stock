@@ -33,9 +33,10 @@ public final class FornecedorService implements IFornecedorService {
 		return instance;
 	}
 
-	
+
 	/*@ also
 	  @ requires fornecedor != null;
+	  @ assignable fornecedorDAO;
 	  @ ensures fornecedorDAO != null; 
 	  @*/
 	@Override
@@ -91,7 +92,7 @@ public final class FornecedorService implements IFornecedorService {
 	public ArrayList<Fornecedor>  procuraTodos() {
 		return this.fornecedorDAO.procuraTodos();
 	}
-	
+
 	/*@  also
 	  @ requires fornecedor != null;
 	  @ ensures \result == 0 ; @*/
