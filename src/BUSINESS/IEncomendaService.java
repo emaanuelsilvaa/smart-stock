@@ -12,7 +12,7 @@ public interface IEncomendaService {
 	//@ public model instance Encomenda enc;
 	
 	//@ ensures encomendas.equals(\result);
-	ArrayList<Encomenda> procuraTodos();
+	/*@ pure @*/ ArrayList<Encomenda> procuraTodos();
 
 	/*@ assignable enc;
 	 @  ensures enc != null;
@@ -21,7 +21,7 @@ public interface IEncomendaService {
 	 @  assignable enc;
 	 @  ensures enc == null;
 	@*/
-	Encomenda procuraPeloId (int id);
+	/*@ pure @*/ Encomenda procuraPeloId (int id);
 
 	/*@ requires encomenda == null;
 	 @  requires encomenda.getValor() <= 0;

@@ -55,12 +55,12 @@ public final class EncomendaService implements IEncomendaService {
 	}
 
 	@Override
-	public ArrayList<Encomenda> procuraTodos() {
+	public /*@ pure @*/ ArrayList<Encomenda> procuraTodos() {
 		return this.encomendaDAO.procuraTodos();
 	}
 
 	@Override
-	public Encomenda procuraPeloId(int id) {
+	public /*@ pure @*/ Encomenda procuraPeloId(int id) {
 		return this.encomendaDAO.procuraPeloId(id);
 	}
 
