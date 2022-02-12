@@ -34,8 +34,8 @@ public final class FornecedorService implements IFornecedorService {
 	
 	@Override
 	/*@
-	  @ assignable fornecedorDAO;
 	  @ requires fornecedor != null;
+	  @ assignable fornecedorDAO;
 	  @ ensures fornecedorDAO != null; 
 	  @*/
 	public int inserir(Fornecedor fornecedor) throws BusinessRuleException {
@@ -48,8 +48,8 @@ public final class FornecedorService implements IFornecedorService {
 
 	@Override
 	/*@  
+	  @ requires id != null;
 	  @ assignable fornecedorDAO;
-	  @ requires invariant id != null;
 	  @ ensures \result == id; 
 	  @*/
 	public int remover(int id) throws BusinessRuleException {
@@ -61,8 +61,8 @@ public final class FornecedorService implements IFornecedorService {
 
 	@Override
 	/*@ 
+	  @ requires id != null;
 	  @ assignable fornecedorDAO;
-	  @ requires invariant id != null;
 	  @ ensures \result == id; @*/
 	public int alterar(int id, Fornecedor fornecedor) throws BusinessRuleException {
 		validarCadastro(fornecedor);
@@ -74,8 +74,9 @@ public final class FornecedorService implements IFornecedorService {
 
 	@Override
 	/*@ 
-	  @ assignable \nothing; 
-	  @ ensure \result !=null;
+	  @ requires id != null;
+	  @ assignable \nothing;
+	  @ ensures \result !=null;
 	  @*/
 	public Fornecedor procuraPeloId(int id) {
 		return this.fornecedorDAO.procuraPeloId(id);
@@ -84,7 +85,7 @@ public final class FornecedorService implements IFornecedorService {
 	@Override
 	/*@ 
 	  @ assignable \nothing; 
-	  @ ensure \result !=null;
+	  @ ensures \result !=null;
 	  @*/
 	public ArrayList<Fornecedor> procuraTodos() {
 		return this.fornecedorDAO.procuraTodos();
@@ -92,9 +93,10 @@ public final class FornecedorService implements IFornecedorService {
 	
 	@Override
 	/*@ 
-	  @ assignable \nothing; 
 	  @ requires fornecedor != null;
-	  @ ensures \result == 0 ; @*/
+	  @ assignable \nothing; 
+	  @ ensures \result == 0 ; 
+	  @*/
 	public int validarCadastro(Fornecedor fornecedor) throws BusinessRuleException {
 		ArrayList<String> erros = new ArrayList<String>();
 		if(fornecedor == null) {

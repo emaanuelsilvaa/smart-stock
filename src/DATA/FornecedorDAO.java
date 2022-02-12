@@ -5,39 +5,45 @@ import java.util.ArrayList;
 import ENTITY.Fornecedor;
 
 public class FornecedorDAO implements IFornecedorDAO {
-	protected /*@ spec_public nullable @*/ArrayList<Fornecedor> fornecedores;
+	protected /*@ spec_public @*/ArrayList<Fornecedor> fornecedores;
 	protected /*@ spec_public @*/int idSerial;
 	
 	// Construtores
-	/*@ ensures fornecedores != null; 
-	  @ ensures idSerial > 0; @*/
+	/*@ 
+	  @ assignable fornecedores,idSerial;
+	  @ ensures fornecedores != null; 
+	  @ ensures idSerial != null; 
+	  @*/
 	public FornecedorDAO() {
 		this.fornecedores = new ArrayList<Fornecedor>();
 		this.idSerial = 1;
 	}
-	/*@ ensures fornecedores != null; 
+	/*@
+	  @ assignable fornecedores;
+	  @ ensures fornecedores != null; 
 	  @*/
-	public FornecedorDAO(ArrayList<Fornecedor> fornecedores) {
+	public FornecedorDAO(/*@ non_null @*/ArrayList<Fornecedor> fornecedores) {
 		super();
 		this.fornecedores = fornecedores;
 	}
 
 	@Override
-	/*@ ensures fornecedor != null; 
-	  ensures fornecedor.length == fornecedor.getId();
+	/*@ 
+	  @ assignable fornecerores,fornecedor;
+	  @ ensures fornecedor.length == fornecedor.getId();
 	  @*/
-	public int inserir(Fornecedor fornecedor) {
+	public int inserir(/*@ non_null @*/Fornecedor fornecedor) {
 		fornecedor.setId(this.pegaEIncremanetaId());
 		this.fornecedores.add(fornecedor);
 		return fornecedor.getId();
 	}
 
 	@Override
-	/*@ ensures 0 <= id; 
-	  assignable id, fornecedores;
-	  ensures \result == \old (fornecedores.getId())
+	/*@ requires 0 <= id; 
+	  @ assignable id, fornecedores;
+	  @ ensures \result ==  ( \forall int i; i < this.fornecedores.size() );
 	  @*/
-	public int remover(int id) {
+	public int remover(/*@ non_null @*/int id) {
 		Fornecedor aux = new Fornecedor();
 		for (Fornecedor f : this.fornecedores) {
 			if(f.getId() == id) {
@@ -50,8 +56,12 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	@Override
-	/*@ assignable \nothing; @*/
-	public int alterar(int id, Fornecedor fornecedor) {
+	/*@ 
+	  @ assignable f;
+	  @ ensures id != null; 
+	  @ ensures \result ==  ( \forall int i; i < this.fornecedores.size() );
+	  @*/
+	public int alterar(/*@ non_null @*/int id, /*@ non_null @*/Fornecedor fornecedor) {
 		for (Fornecedor f : this.fornecedores) {
 			if (f.getId() == id) {
 				f.setId(id);
@@ -68,10 +78,12 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	@Override
-	/*@ assignable \nothing; 
-	 	ensures f.getId() == id;
-	 * @*/
-	public Fornecedor procuraPeloId(int id) {
+	/*@
+	  @ assignable \nothing; 
+	  @ ensures f.getId() == id;
+	  @ ensures \result ==  ( \forall int i; i < this.fornecedores.size() );
+	  @*/
+	public Fornecedor procuraPeloId(/*@ non_null @*/int id) {
 		for (Fornecedor f : this.fornecedores) {
 			if (f.getId() == id) {
 				return f;
@@ -81,15 +93,20 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	@Override
-	/*@ assignable \nothing; @*/
+	/*@
+	  @ assignable \nothing; 
+	  @ ensures fornecedores !=null;
+	  @*/
 	public ArrayList<Fornecedor> procuraTodos(){
 		return this.fornecedores;
 	}
 	
 	@Override
-	/*@ assignable \nothing; 
-		ensure idAtual < this.idSerial;
-	@*/
+	/*@ 
+	  @ assignable idAtual, idSerial; 
+	  @ ensures idAtual !=null;
+	  @ ensures idSerial !=null;
+	  @*/
 	public int pegaEIncremanetaId() {
 		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
 		int idAtual = this.idSerial;
