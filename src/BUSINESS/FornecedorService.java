@@ -10,12 +10,22 @@ import UTIL.BusinessRuleException;
 
 public final class FornecedorService implements IFornecedorService {
 	
-	protected IFornecedorDAO fornecedorDAO;
-	private static IFornecedorService instance;
+
+	protected/*@ spec_public  @*/ IFornecedorDAO fornecedorDAO;
+	private/*@ spec_public  @*/ static IFornecedorService instance;
 	
+	/*@ 
+	  @assignable fornecedorDAO; 
+	  @ ensures fornecedorDAO != null; 
+	  @*/
 	public FornecedorService() {
 		this.fornecedorDAO = new FornecedorDAO();
 	}
+	
+	/*@ 
+	  @ assignable instance;
+	  @ ensures instance != null;
+	  @*/
 	public static IFornecedorService getInstance() {
 		if(instance == null) {
 			instance = new FornecedorService();
@@ -23,6 +33,12 @@ public final class FornecedorService implements IFornecedorService {
 		return instance;
 	}
 
+	
+	/*@
+	  @ assignable fornecedorDAO;
+	  @ requires fornecedor != null;
+	  @ ensures fornecedorDAO != null; 
+	  @*/
 	@Override
 	public int inserir(Fornecedor fornecedor) throws BusinessRuleException {
 		validarCadastro(fornecedor);
@@ -32,6 +48,12 @@ public final class FornecedorService implements IFornecedorService {
 		return this.fornecedorDAO.inserir(fornecedor);
 	}
 
+	
+	/*@  
+	  @ assignable fornecedorDAO;
+	  @ requires invariant id != null;
+	  @ ensures \result == id; 
+	  @*/
 	@Override
 	public int remover(int id) throws BusinessRuleException {
 		if (this.fornecedorDAO.procuraPeloId(id) == null) {
@@ -40,6 +62,10 @@ public final class FornecedorService implements IFornecedorService {
 		return this.fornecedorDAO.remover(id);
 	}
 
+	/*@ 
+	  @ assignable fornecedorDAO;
+	  @ requires invariant id != null;
+	  @ ensures \result == id; @*/
 	@Override
 	public int alterar(int id, Fornecedor fornecedor) throws BusinessRuleException {
 		validarCadastro(fornecedor);
@@ -49,16 +75,30 @@ public final class FornecedorService implements IFornecedorService {
 		return this.fornecedorDAO.alterar(id, fornecedor);
 	}
 
+	
+	/*@ 
+	  @ assignable \nothing; 
+	  @ ensure \result !=null;
+	  @*/
 	@Override
 	public Fornecedor procuraPeloId(int id) {
 		return this.fornecedorDAO.procuraPeloId(id);
 	}
 
+	
+	/*@ 
+	  @ assignable \nothing; 
+	  @ ensure \result !=null;
+	  @*/
 	@Override
 	public ArrayList<Fornecedor> procuraTodos() {
 		return this.fornecedorDAO.procuraTodos();
 	}
 	
+	/*@ 
+	  @ assignable \nothing; 
+	  @ requires fornecedor != null;
+	  @ ensures \result == 0 ; @*/
 	@Override
 	public int validarCadastro(Fornecedor fornecedor) throws BusinessRuleException {
 		ArrayList<String> erros = new ArrayList<String>();
