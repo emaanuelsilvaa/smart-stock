@@ -40,7 +40,7 @@ public class AnaliseLucro implements IAnaliseLucro {
 
 	/** Calcula o lucro de vendas de um determinado periodo e Retorna o valor desse lucro  */
 	/*@ also
-	  @ requires dataInicio.compareTo(dataFim) > 0;	 
+	  @ requires dataInicio.compareTo(dataFim) > 0;	
 	  @*/
 	public float analisarLucro(/*@ non_null @*/ Date dataInicio, /*@ non_null @*/Date dataFim) {
 		float gastoMateriaPrima = 0;

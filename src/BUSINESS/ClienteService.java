@@ -14,7 +14,7 @@ public final class ClienteService implements IClienteService {
 	
 	//@ public invariant clienteDAO != null;
 	
-	// Construtores
+	/* Construtores */
 	/*@ 
 	 @ assignable this.clienteDAO;
 	 @ ensures this.clienteDAO != null && clienteDAO instanceof ClienteDAO;
@@ -33,8 +33,7 @@ public final class ClienteService implements IClienteService {
 			instance = new ClienteService();
 		}  
 		return instance;
-	}
-	
+	}	
 	
   /*@ also 
     @ requires cliente != null;
@@ -69,6 +68,21 @@ public final class ClienteService implements IClienteService {
 		return this.clienteDAO.remover(id);
 	}
 	
+	/** Altera informações cadastrais de um cliente especifico  */
+  /*@ requires id != null && id >= 0;
+   	@ requires cliente != null;
+    @ requires id <= 0;
+	@ assignable clienteDAO;
+	@ ensures clienteDAO.procuraPeloId(id) == \old(clienteDAO.procuraTodos().size())-1;
+	@ also
+	@ public exceptional_behavior
+	@ 	requires this.clienteDAO.procuraPeloId(id) != null;
+	@   requires id == null || id < 0;
+	@ 	assignable clienteDAO;
+	@ 	signals_only BusinessRuleException;
+	@ 	signals (BusinessRuleException e)
+	@ 		this.clienteDAO.procuraPeloId(id) == null;
+	@*/
 	@Override
 	public int alterar(int id, Cliente cliente) throws BusinessRuleException {
 		validarCadastro(cliente);
@@ -78,16 +92,58 @@ public final class ClienteService implements IClienteService {
 		return this.clienteDAO.alterar(id, cliente);
 	}
 
+	/** Recupera informações de um cliente especifico */
+	/*@ requires id != null && id >= 0;
+   	@ requires cliente != null;
+    @ requires id <= 0;
+	@ assignable clienteDAO;
+	@ ensures clienteDAO.procuraPeloId(id) == \old(clienteDAO.procuraTodos().size())-1;
+	@ also
+	@ public exceptional_behavior
+	@ 	requires this.clienteDAO.procuraPeloId(id) != null;
+	@   requires id == null || id < 0;
+	@ 	assignable clienteDAO;
+	@ 	signals_only BusinessRuleException;
+	@ 	signals (BusinessRuleException e)
+	@ 		this.clienteDAO.procuraPeloId(id) == null;
+	@*/
 	@Override
 	public /*@ pure @*/ Cliente procuraPeloId(int id) {
 		return this.clienteDAO.procuraPeloId(id);
 	}
 
+	/** Recupera Uma lista de todos os clientes  */
 	@Override
 	public /*@ pure @*/ ArrayList<Cliente> procuraTodos() {
 		return this.clienteDAO.procuraTodos();
 	}
 
+	
+	/** Valida informações cadastrais de um cliente */ 
+  /*@ public normal_behavior
+    @ requires cliente != null;
+    @ requires id <= 0 && id != null;
+	@ assignable clienteDAO;
+	@ ensures \result == 0;
+	@ also
+	@ 	public exceptional_behavior
+	@ 		requires this.clienteDAO.procuraPeloId(id) != null;
+	@   	requires id == null || id < 0;
+	@ 		assignable clienteDAO;
+	@ 		signals_only BusinessRuleException;
+	@ also
+    @   public exceptional_behavior
+    @   	requires cliente.getCpf().length() != 11;
+    @   	signals_only BusinessRuleException;
+    @ also
+    @	public exceptional_behavior
+    @	  	requires cliente.getNome() == "" || cliente.getNome() == null;
+    @   	signals_only BusinessRuleException;
+    @ also
+    @   public exceptional_behavior
+    @   	requires cliente.getEndereco() == "" || cliente.getEndereco() == null;
+    @   	signals_only BusinessRuleException;
+	@*/
 	@Override
 	public int validarCadastro(Cliente cliente) throws BusinessRuleException {
 		ArrayList<String> erros = new ArrayList<String>();
