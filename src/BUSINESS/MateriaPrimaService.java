@@ -9,13 +9,33 @@ import UTIL.BusinessRuleException;
 
 public final class MateriaPrimaService implements IMateriaPrimaService {
 	
-	protected IMateriaPrimaDAO materiaPrimaDAO;
+	protected IMateriaPrimaDAO materiaPrimaDAO; //@ in materiaPrimaDAOModel;
 	private static IMateriaPrimaService instance;
-	// Construtores
+	
+	/*@ protected represents
+	@ materiaPrimaDAOModel <- new MateriaPrimaDAO();
+	@*/
+	
+	
+	/** Construtores */
+	
+	/*@ assginable materiaPrimaDAO;
+	 @ 
+	 @  ensures materiaPrimaDAO != null;
+	 @  ensures materiaPrimaDAO instanceof MateriaPrimaDAO;
+	@*/
 	private MateriaPrimaService() {
 		this.materiaPrimaDAO = new MateriaPrimaDAO();
 	}
 
+	/*@ requires this.instance == null; 
+	 @  assignable instance;
+	 @  ensures instance == \result;
+	 @  also
+	 @  requires instance != null;
+	 @  assignable instance;
+	 @  ensures instance == \old(instance);
+	@*/
 	public static IMateriaPrimaService getInstance() {
 		if(instance == null) {
 			instance = new MateriaPrimaService();
@@ -23,6 +43,18 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 		return instance;
 	}
 	
+	
+	/*@ requires materiaPrima != null;
+	@ assignable this.materiaPrimaDAO;
+	@ ensures materiaPrimaDAO.procuraTodos().size() == \old(materiaPrimaDAO.procuraTodos().size())+1;
+	@ also
+	@ public exceptional_behavior
+	@ 	requires this.materiaPrimaDAO.procuraPeloId(materiaPrima.getId()) != null;
+	@ 	assignable materiaPrimaDAO;
+	@ 	signals_only BusinessRuleException;
+	@ 	signals (BusinessRuleException e)
+	@ 		this.materiaPrimaDAO.procuraPeloId(cliente.materiaPrima()) == null;
+	@*/
 	@Override
 	public int inserir(MateriaPrima materiaPrima) throws BusinessRuleException {
 		validarCadastro(materiaPrima);
@@ -47,12 +79,12 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	}
 
 	@Override
-	public MateriaPrima procuraPeloId(int id) {
+	public /*@ pure @*/ MateriaPrima procuraPeloId(int id) {
 		return this.materiaPrimaDAO.procuraPeloId(id);
 	}
 
 	@Override
-	public ArrayList<MateriaPrima> procuraTodos() {
+	public /*@ pure @*/ ArrayList<MateriaPrima> procuraTodos() {
 		return this.materiaPrimaDAO.procuraTodos();
 	}
 	

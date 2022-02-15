@@ -2,16 +2,22 @@ package DATA;
 
 import java.util.ArrayList;
 
+import BUSINESS.ClienteService;
 import ENTITY.Cliente;
 
 public class ClienteDAO implements IClienteDAO {
 	protected ArrayList<Cliente> clientes;
 	protected int idSerial;
+	
+	//@ public invariant 0 < this.clientes.size();
+	
+	//@ public initially clientes.size() == 0;
 
 	// Construtores
 	public ClienteDAO() {
 		this.clientes = new ArrayList<Cliente>();
 		this.idSerial = 1;
+		
 	}
 	
 	public ClienteDAO(ArrayList<Cliente> clientes) {

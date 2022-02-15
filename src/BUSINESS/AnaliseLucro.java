@@ -44,9 +44,8 @@ public class AnaliseLucro implements IAnaliseLucro {
 	  @ ensures \result ==  ( \forall int i; i < this.vendaService.procuraTodos().size() ;
 	  @ 					this.vendaService.procuraTodos().get(i).getListaProdutosReais() != null ) &&
 	  @						( \forall Iterator produtosReaisVendidos ; produtosReaisVendidos.hasNext() ;
-	  @ 					produtoFinalRealService.procuraPeloId(produtosReaisVendidos.next()) != null ) &&
-	  @							( \forall Iterator receitaReal ; receitaReal.hasNext() ;
-	  @ 					(\sum materiaPrimaRealService.procuraPeloId(receitaReal.next).getPreco() ) );
+	  @ 					produtoFinalRealService.procuraPeloId(produtosReaisVendidos.next()) != null );  
+	  @ 
 	  @*/
 	public float analisarLucro(/*@ non_null @*/ Date dataInicio, /*@ non_null @*/Date dataFim) {
 		float gastoMateriaPrima = 0;
