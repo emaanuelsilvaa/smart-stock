@@ -58,7 +58,7 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 	}
 
 	@Override
-	public MateriaPrima procuraPeloId(int id) {
+	public /*@ pure @*/ MateriaPrima procuraPeloId(int id) {
 		for (MateriaPrima m : this.materiasPrimas) {
 			if (m.getId() == id) {
 				return m;
@@ -68,7 +68,7 @@ public class MateriaPrimaDAO implements IMateriaPrimaDAO {
 	}
 
 	@Override
-	public ArrayList<MateriaPrima> procuraTodos(){
+	public /*@ pure @*/ ArrayList<MateriaPrima> procuraTodos(){
 		return this.materiasPrimas;
 	}
 	

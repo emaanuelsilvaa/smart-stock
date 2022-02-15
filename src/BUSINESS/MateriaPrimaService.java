@@ -9,18 +9,14 @@ import UTIL.BusinessRuleException;
 
 public final class MateriaPrimaService implements IMateriaPrimaService {
 	
-	protected IMateriaPrimaDAO materiaPrimaDAO; //@ in materiaPrimaDAOModel;
-	private static IMateriaPrimaService instance;
+	protected /*@ spec_public @*/  IMateriaPrimaDAO materiaPrimaDAO;
+	private /*@ spec_public @*/ static IMateriaPrimaService instance;
 	
-	/*@ protected represents
-	@ materiaPrimaDAOModel <- new MateriaPrimaDAO();
-	@*/
 	
 	
 	/** Construtores */
 	
-	/*@ assginable materiaPrimaDAO;
-	 @ 
+	/*@ 
 	 @  ensures materiaPrimaDAO != null;
 	 @  ensures materiaPrimaDAO instanceof MateriaPrimaDAO;
 	@*/
@@ -28,14 +24,10 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 		this.materiaPrimaDAO = new MateriaPrimaDAO();
 	}
 
-	/*@ requires this.instance == null; 
-	 @  assignable instance;
-	 @  ensures instance == \result;
-	 @  also
-	 @  requires instance != null;
-	 @  assignable instance;
-	 @  ensures instance == \old(instance);
-	@*/
+	/*@ 
+	 @ assignable instance;
+	 @ ensures instance != null;
+	 @*/
 	public static IMateriaPrimaService getInstance() {
 		if(instance == null) {
 			instance = new MateriaPrimaService();
@@ -44,16 +36,13 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	}
 	
 	
-	/*@ requires materiaPrima != null;
+	/*@ also 
+	@ requires materiaPrima != null;
 	@ assignable this.materiaPrimaDAO;
 	@ ensures materiaPrimaDAO.procuraTodos().size() == \old(materiaPrimaDAO.procuraTodos().size())+1;
 	@ also
 	@ public exceptional_behavior
-	@ 	requires this.materiaPrimaDAO.procuraPeloId(materiaPrima.getId()) != null;
-	@ 	assignable materiaPrimaDAO;
 	@ 	signals_only BusinessRuleException;
-	@ 	signals (BusinessRuleException e)
-	@ 		this.materiaPrimaDAO.procuraPeloId(cliente.materiaPrima()) == null;
 	@*/
 	@Override
 	public int inserir(MateriaPrima materiaPrima) throws BusinessRuleException {

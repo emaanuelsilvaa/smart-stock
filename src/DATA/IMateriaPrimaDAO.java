@@ -12,9 +12,9 @@ public interface IMateriaPrimaDAO {
 
 	int alterar(int id, MateriaPrima materiaPrima);
 
-	MateriaPrima procuraPeloId(int id);
+	/*@ pure @*/ MateriaPrima procuraPeloId(int id);
 
-	ArrayList<MateriaPrima> procuraTodos();
+	/*@ pure @*/ ArrayList<MateriaPrima> procuraTodos();
 	
 	public int pegaEIncremanetaId();
 

@@ -6,12 +6,12 @@ import BUSINESS.ClienteService;
 import ENTITY.Cliente;
 
 public class ClienteDAO implements IClienteDAO {
-	protected ArrayList<Cliente> clientes;
-	protected int idSerial;
+	protected /*@ spec_public @*/ ArrayList<Cliente> clientes;
+	protected /*@ spec_public @*/ int idSerial;
 	
-	//@ public invariant 0 < this.clientes.size();
+	// public invariant 0 < this.clientes.size();
 	
-	//@ public initially clientes.size() == 0;
+	// public initially clientes.size() == 0;
 
 	// Construtores
 	public ClienteDAO() {

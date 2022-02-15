@@ -8,8 +8,12 @@ import UTIL.BusinessRuleException;
 
 public final class ClienteService implements IClienteService {
 	
-	private static /*@ spec_public non_null @*/ IClienteService instance;
-	protected /*@ spec_public non_null @*/ IClienteDAO clienteDAO; //@ in clienteDAO;
+	public static IClienteService instance;
+	protected /*@ spec_public non_null @*/ IClienteDAO clienteDAO; //@ in clienteBase;
+	
+	/*@ protected represents
+	@ clienteBase <- this.clienteDAO;
+	@*/
 	
 	
 	//@ public invariant clienteDAO != null;
@@ -37,7 +41,7 @@ public final class ClienteService implements IClienteService {
 	
   /*@ also 
     @ requires cliente != null;
-	@ ensures clienteDAO.procuraTodos().size() == \old(clienteDAO.procuraTodos().size())+1;
+    @ assignable clienteBase;
 	@ also
 	@ exceptional_behavior
 	@ 	signals_only BusinessRuleException;
@@ -51,7 +55,6 @@ public final class ClienteService implements IClienteService {
 		
 		return this.clienteDAO.inserir(cliente);
 	}
-	
 	
   /*@ also
     @ requires id > 0;
@@ -69,19 +72,12 @@ public final class ClienteService implements IClienteService {
 	}
 	
 	/** Altera informações cadastrais de um cliente especifico  */
-  /*@ requires id != null && id >= 0;
+  /*@ also 
+    @requires id > 0;
    	@ requires cliente != null;
-    @ requires id <= 0;
-	@ assignable clienteDAO;
-	@ ensures clienteDAO.procuraPeloId(id) == \old(clienteDAO.procuraTodos().size())-1;
 	@ also
 	@ public exceptional_behavior
-	@ 	requires this.clienteDAO.procuraPeloId(id) != null;
-	@   requires id == null || id < 0;
-	@ 	assignable clienteDAO;
 	@ 	signals_only BusinessRuleException;
-	@ 	signals (BusinessRuleException e)
-	@ 		this.clienteDAO.procuraPeloId(id) == null;
 	@*/
 	@Override
 	public int alterar(int id, Cliente cliente) throws BusinessRuleException {
@@ -93,19 +89,8 @@ public final class ClienteService implements IClienteService {
 	}
 
 	/** Recupera informações de um cliente especifico */
-	/*@ requires id != null && id >= 0;
-   	@ requires cliente != null;
-    @ requires id <= 0;
-	@ assignable clienteDAO;
-	@ ensures clienteDAO.procuraPeloId(id) == \old(clienteDAO.procuraTodos().size())-1;
-	@ also
-	@ public exceptional_behavior
-	@ 	requires this.clienteDAO.procuraPeloId(id) != null;
-	@   requires id == null || id < 0;
-	@ 	assignable clienteDAO;
-	@ 	signals_only BusinessRuleException;
-	@ 	signals (BusinessRuleException e)
-	@ 		this.clienteDAO.procuraPeloId(id) == null;
+	/*@ also 
+	@ requires id > 0;
 	@*/
 	@Override
 	public /*@ pure @*/ Cliente procuraPeloId(int id) {
@@ -120,29 +105,13 @@ public final class ClienteService implements IClienteService {
 
 	
 	/** Valida informações cadastrais de um cliente */ 
-  /*@ public normal_behavior
+  /*@ also 
+    @ public normal_behavior
     @ requires cliente != null;
-    @ requires id <= 0 && id != null;
 	@ assignable clienteDAO;
-	@ ensures \result == 0;
 	@ also
 	@ 	public exceptional_behavior
-	@ 		requires this.clienteDAO.procuraPeloId(id) != null;
-	@   	requires id == null || id < 0;
-	@ 		assignable clienteDAO;
 	@ 		signals_only BusinessRuleException;
-	@ also
-    @   public exceptional_behavior
-    @   	requires cliente.getCpf().length() != 11;
-    @   	signals_only BusinessRuleException;
-    @ also
-    @	public exceptional_behavior
-    @	  	requires cliente.getNome() == "" || cliente.getNome() == null;
-    @   	signals_only BusinessRuleException;
-    @ also
-    @   public exceptional_behavior
-    @   	requires cliente.getEndereco() == "" || cliente.getEndereco() == null;
-    @   	signals_only BusinessRuleException;
 	@*/
 	@Override
 	public int validarCadastro(Cliente cliente) throws BusinessRuleException {
