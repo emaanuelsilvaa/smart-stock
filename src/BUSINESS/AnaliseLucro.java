@@ -41,12 +41,6 @@ public class AnaliseLucro implements IAnaliseLucro {
 	/** Calcula o lucro de vendas de um determinado periodo e Retorna o valor desse lucro  */
 	/*@ also
 	  @ requires dataInicio.compareTo(dataFim) > 0;	 
-	  @ ensures \result ==  ( \forall int i; i < this.vendaService.procuraTodos().size() ;
-	  @ 					this.vendaService.procuraTodos().get(i).getListaProdutosReais() != null ) &&
-	  @						( \forall Iterator produtosReaisVendidos ; produtosReaisVendidos.hasNext() ;
-	  @ 					produtoFinalRealService.procuraPeloId(produtosReaisVendidos.next()) != null ) &&
-	  @							( \forall Iterator receitaReal ; receitaReal.hasNext() ;
-	  @ 					(\sum materiaPrimaRealService.procuraPeloId(receitaReal.next).getPreco() ) );
 	  @*/
 	public float analisarLucro(/*@ non_null @*/ Date dataInicio, /*@ non_null @*/Date dataFim) {
 		float gastoMateriaPrima = 0;
