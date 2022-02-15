@@ -44,7 +44,9 @@ public final class RelatorioService implements IRelatorioService {
 	  @ assignable qntProduto, qntProdutoFaltante, aux,qtdMinima,disponibilidade;
 	  @ ensures qntProduto !=null;
 	  @ ensures qntProdutoFaltante !=null;
-	  @ ensures qntProduto !=null; 					
+	  @ ensures qntProduto !=null;
+	  @ ensures  ( \forall int i; i < this.encomendaService.procuraTodos().size() ;	
+	  @				this.encomendaService.procuraTodos().get(i).getListaProdutos().keySet() != null );			
 	  @*/
 	@Override
 	public HashMap<Integer, Integer> listarReposicaoProduto(Date dataInicio, Date dataFim) throws BusinessRuleException {
