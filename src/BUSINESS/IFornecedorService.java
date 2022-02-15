@@ -13,9 +13,9 @@ public interface IFornecedorService {
 
 	int alterar(int id, Fornecedor fornecedor) throws BusinessRuleException;
 
-	Fornecedor procuraPeloId(int id);
+	/*@ pure @*/ Fornecedor procuraPeloId(int id);
 
-	ArrayList<Fornecedor> procuraTodos();
+	/*@ pure @*/ ArrayList<Fornecedor> procuraTodos();
 
 	int validarCadastro(Fornecedor fornecedor) throws BusinessRuleException;
 

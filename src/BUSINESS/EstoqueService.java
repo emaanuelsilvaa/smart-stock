@@ -8,13 +8,13 @@ import UTIL.BusinessRuleException;
 
 public final class EstoqueService implements IEstoqueService {
 	
-	IProdutoFinalService produtoFinalService;
-	IMateriaPrimaService materiaPrimaService;
-	IProdutoFinalRealService produtoFinalRealService;
-	IMateriaPrimaRealService materiaPrimaRealService;
-	private static IEstoqueService instance;
+	/*@ spec_public non_null @*/ IProdutoFinalService produtoFinalService;
+	/*@ spec_public non_null @*/ IMateriaPrimaService materiaPrimaService;
+	/*@ spec_public non_null @*/ IProdutoFinalRealService produtoFinalRealService;
+	/*@ spec_public non_null @*/ IMateriaPrimaRealService materiaPrimaRealService;
+	/*@ spec_public non_null @*/ private static IEstoqueService instance;
 	
-	/*@ assginable materiaPrimaRealService, MateriaPrimaService, ProdutoFinalRealService, produtoFinalService;
+	/*@ assignable materiaPrimaRealService, MateriaPrimaService, ProdutoFinalRealService, produtoFinalService;
 	 @ 
 	 @  ensures materiaPrimaRealService != null;
 	 @  ensures produtoFinalRealService != null;

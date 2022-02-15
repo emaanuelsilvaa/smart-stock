@@ -22,7 +22,7 @@ public class Encomenda extends Venda {
 		this.dataEntrega = dataEntrega;
 	}
 	
-	public Date getDataEntrega() {
+	public /*@ pure @*/ Date getDataEntrega() {
 		return dataEntrega;
 	}
 	

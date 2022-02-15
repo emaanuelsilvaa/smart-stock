@@ -33,7 +33,7 @@ public class Venda {
 		this.data = data;
 	}
 
-	public int getId() {
+	public /*@ pure @*/ int getId() {
 		return id;
 	}
 
@@ -41,7 +41,7 @@ public class Venda {
 		this.id = id;
 	}
 
-	public float getValor() {
+	public /*@ pure @*/ float getValor() {
 		return valor;
 	}
 
@@ -49,7 +49,7 @@ public class Venda {
 		this.valor = valor;
 	}
 
-	public int getIdCliente() {
+	public /*@ pure @*/ int getIdCliente() {
 		return idCliente;
 	}
 
@@ -57,7 +57,7 @@ public class Venda {
 		this.idCliente = idCliente;
 	}
 
-	public HashMap<Integer, Integer> getListaProdutos() {
+	public /*@ pure @*/ HashMap<Integer, Integer> getListaProdutos() {
 		return listaProdutos;
 	}
 
@@ -65,7 +65,7 @@ public class Venda {
 		this.listaProdutos = listaProdutos;
 	}
 	
-	public HashMap<Integer, Integer> getListaProdutosReais() {
+	public /*@ pure @*/ HashMap<Integer, Integer> getListaProdutosReais() {
 		return this.listaProdutosReais;
 	}
 
@@ -73,7 +73,7 @@ public class Venda {
 		this.listaProdutosReais = listaProdutosReais;
 	}
 
-	public Date getData() {
+	public /*@ pure @*/ Date getData() {
 		return data;
 	}
 

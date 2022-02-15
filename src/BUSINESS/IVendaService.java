@@ -8,7 +8,6 @@ import UTIL.BusinessRuleException;
 
 public interface IVendaService {
 	
-	//@ public model instance String gender;
 	
 	int remover(int id) throws BusinessRuleException;
 

@@ -9,11 +9,11 @@ import UTIL.BusinessRuleException;
 public final class ClienteService implements IClienteService {
 	
 	private static /*@ spec_public non_null @*/ IClienteService instance;
-	protected /*@ spec_public non_null @*/ IClienteDAO clienteDAO; //@ in clienteDAO;
+	protected /*@ spec_public non_null @*/ IClienteDAO clienteDAO;
 	
-	/*@ protected represents
-	@ clienteDAO <- (this.clienteDAO.procuraPeloId(id));
-	@*/
+
+
+
 	
 	//@ public invariant clienteDAO != null;
 	
@@ -28,7 +28,7 @@ public final class ClienteService implements IClienteService {
 	
 	/*@ 
 	 @ assignable instance;
-	 @ ensures \result == instance != null;
+	 @ ensures \result == instance;
 	 @ ensures instance instanceof ClienteService;
 	 @*/
 	public static IClienteService getInstance() {
@@ -39,7 +39,8 @@ public final class ClienteService implements IClienteService {
 	}
 	
 	/** Valida informações de cadastro e isere um cliente no sistema  */
-  /*@ requires cliente != null;
+  /*@ also
+    @ requires cliente != null;
 	@ assignable cliente, clienteDAO;
 	@ ensures clienteDAO.procuraTodos().size() == \old(clienteDAO.procuraTodos().size())+1;
 	@ also
@@ -61,8 +62,8 @@ public final class ClienteService implements IClienteService {
 	}
 	
 	/** Remove um cliente do sistema  */
-  /*@ requires id != null ;
-    @ requires id <= 0;
+  /*@ also 
+    @ requires id > 0;
 	@ assignable clienteDAO, id;
 	@ ensures clienteDAO.procuraTodos().size() == \old(clienteDAO.procuraTodos().size())-1;
 	@ also
@@ -71,7 +72,7 @@ public final class ClienteService implements IClienteService {
 	@ 	assignable clienteDAO;
 	@ 	signals_only BusinessRuleException;
 	@ 	signals (BusinessRuleException e)
-	@ 		this.clienteDAO.procuraPeloId(cliente.getId()) == null;
+	@ 		this.clienteDAO.procuraPeloId(id) == null;
 	@*/
 	@Override
 	public int remover(int id) throws BusinessRuleException {
@@ -82,15 +83,14 @@ public final class ClienteService implements IClienteService {
 	}
 	
 	/** Altera informações cadastrais de um cliente especifico  */
-  /*@ requires id != null && id >= 0;
-   	@ requires cliente != null;
-    @ requires id <= 0;
+  /*@ also 
+    @requires id  > 0;
 	@ assignable clienteDAO;
 	@ ensures clienteDAO.procuraPeloId(id) == \old(clienteDAO.procuraTodos().size())-1;
 	@ also
 	@ public exceptional_behavior
 	@ 	requires this.clienteDAO.procuraPeloId(id) != null;
-	@   requires id == null || id < 0;
+	@   requires id < 0;
 	@ 	assignable clienteDAO;
 	@ 	signals_only BusinessRuleException;
 	@ 	signals (BusinessRuleException e)
@@ -106,19 +106,9 @@ public final class ClienteService implements IClienteService {
 	}
 
 	/** Recupera informações de um cliente especifico */
-	/*@ requires id != null && id >= 0;
-   	@ requires cliente != null;
-    @ requires id <= 0;
-	@ assignable clienteDAO;
+	/*@ also 
+	@requires id > 0;
 	@ ensures clienteDAO.procuraPeloId(id) == \old(clienteDAO.procuraTodos().size())-1;
-	@ also
-	@ public exceptional_behavior
-	@ 	requires this.clienteDAO.procuraPeloId(id) != null;
-	@   requires id == null || id < 0;
-	@ 	assignable clienteDAO;
-	@ 	signals_only BusinessRuleException;
-	@ 	signals (BusinessRuleException e)
-	@ 		this.clienteDAO.procuraPeloId(id) == null;
 	@*/
 	@Override
 	public /*@ pure @*/ Cliente procuraPeloId(int id) {
@@ -133,16 +123,11 @@ public final class ClienteService implements IClienteService {
 
 	
 	/** Valida informações cadastrais de um cliente */ 
-  /*@ public normal_behavior
+  /*@ also
     @ requires cliente != null;
-    @ requires id <= 0 && id != null;
-	@ assignable clienteDAO;
-	@ ensures \result == 0;
 	@ also
 	@ 	public exceptional_behavior
-	@ 		requires this.clienteDAO.procuraPeloId(id) != null;
-	@   	requires id == null || id < 0;
-	@ 		assignable clienteDAO;
+	@ 		requires this.clienteDAO.procuraPeloId(cliente.getId()) != null;
 	@ 		signals_only BusinessRuleException;
 	@ also
     @   public exceptional_behavior

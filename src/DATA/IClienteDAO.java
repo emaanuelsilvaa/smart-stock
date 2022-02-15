@@ -12,9 +12,9 @@ public interface IClienteDAO {
 
 	int alterar(int id, Cliente cliente);
 
-	Cliente procuraPeloId(int id);
+	/*@ pure @*/Cliente procuraPeloId(int id);
 
-	ArrayList<Cliente> procuraTodos();
+	/*@ pure @*/ArrayList<Cliente> procuraTodos();
 
 	int pegaEIncremanetaId();
 

@@ -9,10 +9,10 @@ import UTIL.BusinessRuleException;
 
 public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 
-	protected IMateriaPrimaRealDAO materiaPrimaRealDAO;
-	protected IMateriaPrimaService materiaPrimaService;
-	protected IFornecedorService fornecedorService;
-	private static IMateriaPrimaRealService instance;
+	protected /*@ spec_public non_null @*/ IMateriaPrimaRealDAO materiaPrimaRealDAO;
+	protected /*@ spec_public non_null @*/ IMateriaPrimaService materiaPrimaService;
+	protected /*@ spec_public non_null @*/ IFornecedorService fornecedorService;
+	private /*@ spec_public non_null @*/ static IMateriaPrimaRealService instance;
 
 	/*@ assignable materiaPrimaRealDAO, materiaPrimaService, fornecedorService;
 	 @  ensures materiaPrimaRealDAO != null;
@@ -70,13 +70,14 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 		return this.materiaPrimaRealDAO.inserir(materiaPrimaReal);
 	}
 
-	@Override
-	/*@ requires materiaPrimaRealDAO.procuraPeloId(id) != null;
+	/*@ also 
+	 @ requires materiaPrimaRealDAO.procuraPeloId(id) != null;
 	 @  ensures \result == id;
 	 @  also
 	 @  requires materiaPrimaRealDAO.procuraPeloId(id) == null;
 	 @  signals_only BusinessRuleException;
 	@*/
+	@Override
 	public int remover(int id) throws BusinessRuleException{
 		if (this.materiaPrimaRealDAO.procuraPeloId(id) == null) {
 			throw new BusinessRuleException("Tentou excluir uma matéria-prima real inexistente");
@@ -84,7 +85,6 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 		return 	this.materiaPrimaRealDAO.remover(id);
 	}
 
-	@Override
 	/*@ also
 	 @  requires \same;
 	 @  requires fornecedorService.procuraPeloId(materiaPrimaReal.getFornecedor()) == null;
@@ -100,6 +100,7 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 	 @  requires materiaPrimaRealDAO.procuraPeloId(id) != null;
 	 @  ensures id == \result;
 	@*/
+	@Override
 	public int alterar(int id, MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException {
 		this.validarCadastro(materiaPrimaReal);
 		if (this.materiaPrimaRealDAO.procuraPeloId(id) == null) {
@@ -107,12 +108,13 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 		}
 		return this.materiaPrimaRealDAO.alterar(id, materiaPrimaReal);
 	}
-	@Override
+	
 	/*@ also
 	 @  requires quantidade >= 0;
 	 @  ensures materiaPrimaRealDAO.procuraPeloId(id).getQuantidade() ==
 	 @  	\old(materiaPrimaRealDAO.procuraPeloId(id).getQuantidade()) + quantidade;
 	@*/
+	@Override
 	public int alterarQuantidade(int id, float quantidade) throws BusinessRuleException {
 		if (quantidade < 0){
 			throw new BusinessRuleException("Quantidade negativa");
@@ -133,13 +135,14 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 		return this.materiaPrimaRealDAO.procuraTodos();
 	}
 
-	@Override
+	
 	/*@ also
 	 @  requires \same;
 	 @  requires fornecedorService.procuraPeloId(materiaPrimaReal.getFornecedor()) == null;
 	 @  requires materiaPrimaService.procuraPeloId(materiaPrimaReal.getIdExterno()) == null;
 	 @  signals_only BusinessRuleException;
 	@*/
+	@Override
 	public void validarCadastro(MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException {
 		ArrayList<String> erros = new ArrayList<String>();
 		if(materiaPrimaReal == null) {

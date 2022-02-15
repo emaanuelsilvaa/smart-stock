@@ -6,8 +6,8 @@ import BUSINESS.ClienteService;
 import ENTITY.Cliente;
 
 public class ClienteDAO implements IClienteDAO {
-	protected ArrayList<Cliente> clientes;
-	protected int idSerial;
+	protected /*@ spec_public non_null @*/ ArrayList<Cliente> clientes;
+	protected /*@ spec_public non_null @*/ int idSerial;
 	
 	//@ public invariant 0 < this.clientes.size();
 	
@@ -61,7 +61,7 @@ public class ClienteDAO implements IClienteDAO {
 	}
 
 	@Override
-	public Cliente procuraPeloId(int id) {
+	public /*@ pure @*/ Cliente procuraPeloId(int id) {
 		for (Cliente c : this.clientes) {
 			if (c.getId() == id) {
 				return c;
@@ -71,7 +71,7 @@ public class ClienteDAO implements IClienteDAO {
 	}
 
 	@Override
-	public ArrayList<Cliente> procuraTodos(){
+	public /*@ pure @*/ ArrayList<Cliente> procuraTodos(){
 		return this.clientes;
 	}
 	

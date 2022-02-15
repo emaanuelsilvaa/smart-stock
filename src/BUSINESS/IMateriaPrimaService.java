@@ -6,9 +6,9 @@ import ENTITY.MateriaPrima;
 import UTIL.BusinessRuleException;
 
 public interface IMateriaPrimaService {
-	//@ public model instance ArrayList<MateriaPrima> materiasPrima;
-	//@ public model instance MateriaPrima mat;
-	//@ public model instance IMateriaPrimaDAO materiaPrimaDAOModel;
+	// public model instance ArrayList<MateriaPrima> materiasPrima;
+	// public model instance MateriaPrima mat;
+	// public model instance IMateriaPrimaDAO materiaPrimaDAOModel;
 	
 	/*@
 	  @ requires  materiaPrima!=null;

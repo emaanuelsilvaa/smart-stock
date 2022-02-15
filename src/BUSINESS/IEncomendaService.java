@@ -14,11 +14,10 @@ public interface IEncomendaService {
 	//@ ensures encomendas.equals(\result);
 	/*@ pure @*/ ArrayList<Encomenda> procuraTodos();
 
-	/*@ assignable enc;
+	/*@ 
 	 @  ensures enc != null;
 	 @	ensures enc.getId() == id;
 	 @  also
-	 @  assignable enc;
 	 @  ensures enc == null;
 	@*/
 	/*@ pure @*/ Encomenda procuraPeloId (int id);

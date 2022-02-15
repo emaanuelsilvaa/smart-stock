@@ -66,7 +66,7 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 		return -1;
 	}
 	@Override
-	public MateriaPrimaReal procuraPeloId(int id) {
+	public /*@ pure @*/ MateriaPrimaReal procuraPeloId(int id) {
 		for (MateriaPrimaReal materiaPrima : this.materiasPrimas) {
 			if (materiaPrima.getId() == id) {
 				return materiaPrima;
@@ -75,7 +75,7 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 		return null;
 	}
 	@Override
-	public ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id){
+	public /*@ pure @*/ ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id){
 		// Retorna todos os produtos de um mesmo tipo de ProdutoFinal
 		ArrayList<MateriaPrimaReal> materiasAux = new ArrayList<MateriaPrimaReal>();
 		for (MateriaPrimaReal m : this.materiasPrimas) {
@@ -86,7 +86,7 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 		return materiasAux;
 	}
 	@Override
-	public ArrayList<MateriaPrimaReal> procuraTodos(){
+	public /*@ pure @*/ ArrayList<MateriaPrimaReal> procuraTodos(){
 		return this.materiasPrimas;
 	}	
 	

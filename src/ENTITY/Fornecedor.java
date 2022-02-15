@@ -20,10 +20,10 @@ public class Fornecedor {
 	}
 	/*@ 
 	 @ assignable id, nome, cnpj , endereco, telefone, email, listaProdutos;
-	 @ ensures id!=null && nome!=null && cnpj !=null && endereco !=null && telefone !=null && email!=null && listaProdutos != null;
+	 @ ensures id > 0 && nome!=null && cnpj !=null && endereco !=null && telefone !=null && email!=null && listaProdutos != null;
 	 @*/
-	public Fornecedor(/*@ non_null @*/int id, /*@ non_null @*/String nome, /*@ non_null @*/String cnpj, /*@ non_null @*/String endereco, /*@ non_null @*/String telefone, /*@ non_null @*/String email,
-			/*@ non_null @*/ArrayList<MateriaPrima> listaProdutos) {
+	public Fornecedor(int id, String nome, String cnpj, String endereco, String telefone, String email,
+			ArrayList<MateriaPrima> listaProdutos) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -38,8 +38,8 @@ public class Fornecedor {
 	 @ assignable  nome, cnpj , endereco, telefone, email, listaProdutos;
 	 @ ensures  nome!=null && cnpj !=null && endereco !=null && telefone !=null && email!=null && listaProdutos != null;
 	 @*/
-	public Fornecedor(/*@ non_null @*/String nome,/*@ non_null @*/ String cnpj, /*@ non_null @*/String endereco, /*@ non_null @*/String telefone,/*@ non_null @*/ String email,
-			/*@ non_null @*/ArrayList<MateriaPrima> listaProdutos) {
+	public Fornecedor(String nome, String cnpj, String endereco,String telefone, String email,
+			ArrayList<MateriaPrima> listaProdutos) {
 		super();
 		this.nome = nome;
 		this.cnpj = cnpj;
@@ -50,24 +50,19 @@ public class Fornecedor {
 	}
 
 	// Getters e Setters
-	/*@ 
-	 @ assignable \nothing;
-	 @*/
-	public int getId() {
+	public /*@ pure @*/ int getId() {
 		return id;
 	}
 
-	public void setId(/*@ non_null @*/int id) {
+	public void setId(int id) {
 		this.id= id;
 	}
-	/*@ 
-	 @ assignable \nothing;
-	 @*/
-	public String getNome() {
+	
+	public /*@ pure @*/ String getNome() {
 		return nome;
 	}
 
-	public void setNome(/*@ non_null @*/String nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 	/*@ 
@@ -80,7 +75,7 @@ public class Fornecedor {
 	 @ assignable cnpj;
 	 @ ensures cnpj !=null;
 	 @*/
-	public void setCnpj(/*@ non_null @*/String cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 	/*@ 
@@ -93,7 +88,7 @@ public class Fornecedor {
 	 @ assignable endereco;
 	 @ ensures endereco !=null;
 	 @*/
-	public void setEndereco(/*@ non_null @*/String endereco) {
+	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 	/*@ 
@@ -106,7 +101,7 @@ public class Fornecedor {
 	 @ assignable telefone;
 	 @ ensures telefone !=null;
 	 @*/
-	public void setTelefone(/*@ non_null @*/String telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 	/*@ 
@@ -119,7 +114,7 @@ public class Fornecedor {
 	 @ assignable email;
 	 @ ensures email !=null;
 	 @*/
-	public void setEmail(/*@ non_null @*/String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 	/*@ 
@@ -132,7 +127,7 @@ public class Fornecedor {
 	 @ assignable listaProdutos;
 	 @ ensures listaProdutos !=null;
 	 @*/
-	public void setListaProdutos(/*@ non_null @*/ArrayList<MateriaPrima> listaProdutos) {
+	public void setListaProdutos(ArrayList<MateriaPrima> listaProdutos) {
 		this.listaProdutos = listaProdutos;
 	}
 

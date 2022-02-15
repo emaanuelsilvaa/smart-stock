@@ -12,15 +12,15 @@ import UTIL.BusinessRuleException;
 
 public final class EncomendaService implements IEncomendaService {
 
-	protected IEncomendaDAO encomendaDAO;
-	protected IVendaService vendaService;
-	protected IProdutoFinalService produtoFinalService;
-	protected IProdutoFinalRealService produtoFinalRealService;
-	protected IMateriaPrimaService materiaPrimaService;
-	protected IClienteService clienteService;
-	private static IEncomendaService instance;
+	protected /*@ spec_public non_null @*/ IEncomendaDAO encomendaDAO;
+	protected /*@ spec_public non_null @*/ IVendaService vendaService;
+	protected /*@ spec_public non_null @*/ IProdutoFinalService produtoFinalService;
+	protected /*@ spec_public non_null @*/ IProdutoFinalRealService produtoFinalRealService;
+	protected /*@ spec_public non_null @*/ IMateriaPrimaService materiaPrimaService;
+	protected /*@ spec_public non_null @*/ IClienteService clienteService;
+	private /*@ spec_public non_null @*/ static IEncomendaService instance;
 
-	/*@ assginable encomendaDAO, vendaService, produtoFinalRealService, produtoFinalService,
+	/*@ assignable encomendaDAO, vendaService, produtoFinalRealService, produtoFinalService,
 	 @ 		materiaPrimaService, clienteService;
 	 @ 
 	 @  ensures encomendaDAO != null;

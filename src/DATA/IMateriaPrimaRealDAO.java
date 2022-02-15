@@ -14,10 +14,10 @@ public interface IMateriaPrimaRealDAO {
 
 	int alterarQuantidade(int id, float quantidade);
 
-	MateriaPrimaReal procuraPeloId(int id);
+	/*@ pure @*/MateriaPrimaReal procuraPeloId(int id);
 
-	ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id);
+	/*@ pure @*/ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id);
 
-	ArrayList<MateriaPrimaReal> procuraTodos();
+	/*@ pure @*/ArrayList<MateriaPrimaReal> procuraTodos();
 
 }
