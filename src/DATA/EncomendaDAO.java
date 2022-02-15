@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import ENTITY.Encomenda;
 
 public class EncomendaDAO implements IEncomendaDAO {
-	private ArrayList<Encomenda> encomendas;
-	protected int idSerial;
+	private /*@ spec_public @*/ ArrayList<Encomenda> encomendas;
+	protected /*@ spec_public @*/ int idSerial;
 	
+	/*@ assignable encomendas, idSerial;
+	 @  ensures encomendas != null;
+	 @  ensures idSerial == 1;
+	@*/
 	public EncomendaDAO() {
-		// TODO Auto-generated constructor stub
 		this.encomendas = new ArrayList<Encomenda>();
 		this.idSerial = 1;
 	}
