@@ -11,26 +11,41 @@ import UTIL.BusinessRuleException;
 import ENTITY.MateriaPrima;
 
 public final class RelatorioService implements IRelatorioService {
-	protected IEncomendaService encomendaService;
-	protected IEstoqueService estoqueService;
-	protected IProdutoFinalService produtoFinalService;
-	protected IMateriaPrimaService materiaPrimaService;
-	private static IRelatorioService instance;
-
+	protected /*@ spec_public non_null @*/ IEncomendaService encomendaService;
+	protected /*@ spec_public non_null @*/ IEstoqueService estoqueService;
+	protected /*@ spec_public non_null @*/ IProdutoFinalService produtoFinalService;
+	protected /*@ spec_public non_null @*/ IMateriaPrimaService materiaPrimaService;
+	private static /*@ spec_public  @*/ IRelatorioService instance;
+	
+	/*@ 
+	  @assignable encomendaService,estoqueService,produtoFinalService,materiaPrimaService; 
+	  @ ensures encomendaService != null; 
+	  @ ensures estoqueService != null; 
+	  @ ensures produtoFinalService != null; 
+	  @ ensures materiaPrimaService != null; 
+	  @*/
 	private RelatorioService() {
 		this.encomendaService = EncomendaService.getInstance();
 		this.estoqueService = EstoqueService.getInstance();
 		this.produtoFinalService = ProdutoFinalService.getInstance();
 		this.materiaPrimaService = MateriaPrimaService.getInstance();
 	}
-
+	/*@ 
+	  @assignable instance; 
+	  @ ensures instance != null; 
+	  @*/
 	public static IRelatorioService getInstance() {
 		if (instance == null) {
 			instance = new RelatorioService();
 		}
 		return instance;
 	}
-
+	/*@ 
+	  @ assignable qntProduto, qntProdutoFaltante, aux,qtdMinima,disponibilidade;
+	  @ ensures qntProduto !=null;
+	  @ ensures qntProdutoFaltante !=null;
+	  @ ensures qntProduto !=null; 					
+	  @*/
 	@Override
 	public HashMap<Integer, Integer> listarReposicaoProduto(Date dataInicio, Date dataFim) throws BusinessRuleException {
 		// Função que retorna a lista de produtos necessário para atender as encomendas
