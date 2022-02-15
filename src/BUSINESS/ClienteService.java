@@ -11,9 +11,6 @@ public final class ClienteService implements IClienteService {
 	private static /*@ spec_public non_null @*/ IClienteService instance;
 	protected /*@ spec_public non_null @*/ IClienteDAO clienteDAO; //@ in clienteDAO;
 	
-	/*@ protected represents
-	@ clienteDAO <- (this.clienteDAO.procuraPeloId(id));
-	@*/
 	
 	//@ public invariant clienteDAO != null;
 	
@@ -28,7 +25,7 @@ public final class ClienteService implements IClienteService {
 	
 	/*@ 
 	 @ assignable instance;
-	 @ ensures \result == instance != null;
+	 @ ensures instance != null;
 	 @ ensures instance instanceof ClienteService;
 	 @*/
 	public static IClienteService getInstance() {
@@ -39,16 +36,12 @@ public final class ClienteService implements IClienteService {
 	}
 	
 	
-  /*@ requires cliente != null;
-	@ assignable cliente, clienteDAO;
+  /*@ also 
+    @ requires cliente != null;
 	@ ensures clienteDAO.procuraTodos().size() == \old(clienteDAO.procuraTodos().size())+1;
 	@ also
-	@ public exceptional_behavior
-	@ 	requires this.clienteDAO.procuraPeloId(cliente.getId()) != null;
-	@ 	assignable clienteDAO;
+	@ exceptional_behavior
 	@ 	signals_only BusinessRuleException;
-	@ 	signals (BusinessRuleException e)
-	@ 		this.clienteDAO.procuraPeloId(cliente.getId()) == null;
 	@*/
 	@Override
 	public int inserir(Cliente cliente) throws BusinessRuleException {
@@ -61,17 +54,12 @@ public final class ClienteService implements IClienteService {
 	}
 	
 	
-  /*@ requires id != null ;
-    @ requires id <= 0;
-	@ assignable clienteDAO, id;
+  /*@ also
+    @ requires id > 0;
 	@ ensures clienteDAO.procuraTodos().size() == \old(clienteDAO.procuraTodos().size())-1;
 	@ also
-	@ public exceptional_behavior
-	@ 	requires this.clienteDAO.procuraPeloId(id) != null;
-	@ 	assignable clienteDAO;
+	@ exceptional_behavior
 	@ 	signals_only BusinessRuleException;
-	@ 	signals (BusinessRuleException e)
-	@ 		this.clienteDAO.procuraPeloId(cliente.getId()) == null;
 	@*/
 	@Override
 	public int remover(int id) throws BusinessRuleException {

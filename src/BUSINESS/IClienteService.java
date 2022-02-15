@@ -10,11 +10,11 @@ public interface IClienteService {
 
 	int inserir(Cliente cliente) throws BusinessRuleException;
 
-	int remover(int id) throws BusinessRuleException;
+	public int remover(int id) throws BusinessRuleException;
 
 	int alterar(int id, Cliente cliente) throws BusinessRuleException;
 	
-	//@ ensures \result == clienteDAO.procuraPeloId(id);
+	//@ ensures id > 0;
 	/*@ pure @*/ Cliente procuraPeloId(int id);
 
 	/*@ pure @*/ ArrayList<Cliente> procuraTodos();

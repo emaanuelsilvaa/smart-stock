@@ -55,7 +55,7 @@ public class ClienteDAO implements IClienteDAO {
 	}
 
 	@Override
-	public Cliente procuraPeloId(int id) {
+	public /*@ pure @*/ Cliente procuraPeloId(int id) {
 		for (Cliente c : this.clientes) {
 			if (c.getId() == id) {
 				return c;
@@ -65,7 +65,7 @@ public class ClienteDAO implements IClienteDAO {
 	}
 
 	@Override
-	public ArrayList<Cliente> procuraTodos(){
+	public /*@ pure @*/ ArrayList<Cliente> procuraTodos(){
 		return this.clientes;
 	}
 	
