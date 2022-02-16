@@ -13,9 +13,9 @@ public interface IMateriaPrimaService {
 
 	int alterar(int id, MateriaPrima materiaPrima) throws BusinessRuleException;
 
-	MateriaPrima procuraPeloId(int id);
+	/*@ pure @*/ MateriaPrima procuraPeloId(int id);
 
-	ArrayList<MateriaPrima> procuraTodos();
+	/*@ pure @*/ ArrayList<MateriaPrima> procuraTodos();
 
 	void validarCadastro(MateriaPrima materiaPrimaid) throws BusinessRuleException;
 

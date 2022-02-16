@@ -36,7 +36,7 @@ public class MateriaPrima {
 	}
 
 	// Getters e Setters
-	public int getId() {
+	public /*@ pure @*/ int getId() {
 		return id;
 	}
 
@@ -44,7 +44,7 @@ public class MateriaPrima {
 		this.id = id;
 	}
 
-	public String getNome() {
+	public /*@ pure @*/ String getNome() {
 		return nome;
 	}
 
@@ -52,7 +52,7 @@ public class MateriaPrima {
 		this.nome = nome;
 	}
 
-	public String getTipo() {
+	public /*@ pure @*/ String getTipo() {
 		return tipo;
 	}
 
@@ -61,7 +61,7 @@ public class MateriaPrima {
 	}
 
 
-	public boolean getPerecivel() {
+	public /*@ pure @*/ boolean getPerecivel() {
 		return perecivel;
 	}
 
@@ -69,7 +69,7 @@ public class MateriaPrima {
 		this.perecivel = perecivel;
 	}
 
-	public String getUnMedida() {
+	public /*@ pure @*/ String getUnMedida() {
 		return unMedida;
 	}
 
@@ -77,7 +77,7 @@ public class MateriaPrima {
 		this.unMedida = unMedida;
 	}
 
-	public float getQntMinima() {
+	public /*@ pure @*/ float getQntMinima() {
 		return qntMinima;
 	}
 

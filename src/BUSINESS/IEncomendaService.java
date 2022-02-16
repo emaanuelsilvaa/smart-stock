@@ -8,20 +8,10 @@ import ENTITY.Encomenda;
 import UTIL.BusinessRuleException;
 
 public interface IEncomendaService {
-	//@ public model instance ArrayList<Encomenda> encomendas;
-	//@ public model instance Encomenda encomenda;
 	
-	//@ ensures encomendas.equals(\result);
-	ArrayList<Encomenda> procuraTodos();
+	/*@ pure @*/ ArrayList<Encomenda> procuraTodos();
 
-	/*@ assignable encomenda;
-	 @  ensures encomenda != null;
-	 @	ensures encomenda.getId() == id;
-	 @  also
-	 @  assignable encomenda;
-	 @  ensures encomenda == null;
-	@*/
-	Encomenda procuraPeloId (int id);
+	/*@ pure @*/ Encomenda procuraPeloId (int id);
 
 	int inserir(Encomenda encomenda) throws BusinessRuleException;
 
@@ -31,11 +21,6 @@ public interface IEncomendaService {
 
 	int alterar(int id, Encomenda encomenda) throws BusinessRuleException;
 
-	// /*@ ensures encomenda.getId() == \result;
-	//  @  ensures encomenda.getIdCliente() == idCliente;
-	//  @  ensures encomenda.getListaProdutos().equals(listaProdutos);
-	//  @  ensures encomenda.getDataEntrega().compareTo(dataEntrega) == 0;
-	// @*/
 	int realizarEncomenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Date dataEntrega);
 
 	/*@ requires encomenda != null;

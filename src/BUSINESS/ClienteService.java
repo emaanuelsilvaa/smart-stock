@@ -50,12 +50,12 @@ public final class ClienteService implements IClienteService {
 	}
 
 	@Override
-	public Cliente procuraPeloId(int id) {
+	public /*@ pure @*/ Cliente procuraPeloId(int id) {
 		return this.clienteDAO.procuraPeloId(id);
 	}
 
 	@Override
-	public ArrayList<Cliente> procuraTodos() {
+	public /*@ pure @*/ ArrayList<Cliente> procuraTodos() {
 		return this.clienteDAO.procuraTodos();
 	}
 

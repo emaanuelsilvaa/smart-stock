@@ -30,7 +30,7 @@ public class Cliente {
 	}
 
 	// Getters e Setters
-	public int getId() {
+	public /*@ pure @*/ int getId() {
 		return id;
 	}
 
@@ -38,7 +38,7 @@ public class Cliente {
 		this.id = id;
 	}
 
-	public String getNome() {
+	public /*@ pure @*/ String getNome() {
 		return nome;
 	}
 
@@ -46,7 +46,7 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public String getCpf() {
+	public /*@ pure @*/ String getCpf() {
 		return cpf;
 	}
 
@@ -54,7 +54,7 @@ public class Cliente {
 		this.cpf = cpf;
 	}
 
-	public String getEndereco() {
+	public /*@ pure @*/ String getEndereco() {
 		return endereco;
 	}
 
@@ -62,7 +62,7 @@ public class Cliente {
 		this.endereco = endereco;
 	}
 
-	public String getTelefone() {
+	public /*@ pure @*/ String getTelefone() {
 		return telefone;
 	}
 

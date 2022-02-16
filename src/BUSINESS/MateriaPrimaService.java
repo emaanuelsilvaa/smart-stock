@@ -47,12 +47,12 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	}
 
 	@Override
-	public MateriaPrima procuraPeloId(int id) {
+	public /*@ pure @*/ MateriaPrima procuraPeloId(int id) {
 		return this.materiaPrimaDAO.procuraPeloId(id);
 	}
 
 	@Override
-	public ArrayList<MateriaPrima> procuraTodos() {
+	public /*@ pure @*/ ArrayList<MateriaPrima> procuraTodos() {
 		return this.materiaPrimaDAO.procuraTodos();
 	}
 	

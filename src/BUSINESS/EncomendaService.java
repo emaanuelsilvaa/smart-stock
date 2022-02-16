@@ -8,19 +8,20 @@ import DATA.EncomendaDAO;
 import DATA.IEncomendaDAO;
 import ENTITY.Cliente;
 import ENTITY.Encomenda;
+import ENTITY.MateriaPrima;
 import UTIL.BusinessRuleException;
 
 public final class EncomendaService implements IEncomendaService {
 
-	protected IEncomendaDAO encomendaDAO;
-	protected IVendaService vendaService;
-	protected IProdutoFinalService produtoFinalService;
-	protected IProdutoFinalRealService produtoFinalRealService;
-	protected IMateriaPrimaService materiaPrimaService;
-	protected IClienteService clienteService;
-	private static IEncomendaService instance;
+	protected /*@ spec_public @*/ IEncomendaDAO encomendaDAO;
+	protected /*@ spec_public @*/ IVendaService vendaService;
+	protected /*@ spec_public @*/ IProdutoFinalService produtoFinalService;
+	protected /*@ spec_public @*/ IProdutoFinalRealService produtoFinalRealService;
+	protected /*@ spec_public @*/ IMateriaPrimaService materiaPrimaService;
+	protected /*@ spec_public @*/ IClienteService clienteService;
+	private /*@ spec_public @*/ static IEncomendaService instance;
 
-	/*@ assginable encomendaDAO, vendaService, produtoFinalRealService, produtoFinalService,
+	/*@ assignable encomendaDAO, vendaService, produtoFinalRealService, produtoFinalService,
 	 @ 		materiaPrimaService, clienteService;
 	 @ 
 	 @  ensures encomendaDAO != null;
@@ -55,12 +56,12 @@ public final class EncomendaService implements IEncomendaService {
 	}
 
 	@Override
-	public ArrayList<Encomenda> procuraTodos() {
+	public /*@ pure @*/ ArrayList<Encomenda> procuraTodos() {
 		return this.encomendaDAO.procuraTodos();
 	}
 
 	@Override
-	public Encomenda procuraPeloId(int id) {
+	public /*@ pure @*/ Encomenda procuraPeloId(int id) {
 		return this.encomendaDAO.procuraPeloId(id);
 	}
 
