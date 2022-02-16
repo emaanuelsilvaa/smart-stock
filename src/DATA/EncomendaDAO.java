@@ -5,9 +5,15 @@ import java.util.ArrayList;
 import ENTITY.Encomenda;
 
 public class EncomendaDAO implements IEncomendaDAO {
-	private ArrayList<Encomenda> encomendas;
-	protected int idSerial;
+	private /*@ spec_public @*/ ArrayList<Encomenda> encomendas;
+	protected /*@ spec_public @*/ int idSerial;
 	
+	//@ public invariant idSerial > 0;
+	
+	/*@ assignable encomendas, idSerial;
+	 @  ensures encomendas != null;
+	 @  ensures idSerial == 1; 
+	@*/
 	public EncomendaDAO() {
 		// TODO Auto-generated constructor stub
 		this.encomendas = new ArrayList<Encomenda>();
@@ -15,6 +21,11 @@ public class EncomendaDAO implements IEncomendaDAO {
 	}
 	
 	@Override
+	/*@ also
+	 @  requires \same;
+	 @  ensures encomenda.getId() == \old(idSerial)+1;
+	 @  ensures encomendas.contains(encomenda);
+	@*/
 	public int inserir(Encomenda encomenda) {
 		encomenda.setId(this.pegaEIncremanetaId());
 		this.encomendas.add(encomenda);
@@ -22,6 +33,10 @@ public class EncomendaDAO implements IEncomendaDAO {
 	}
 	
 	@Override
+	/*@ also
+	 @  requires encomendas.get(id) != null;
+	 @  ensures (encomendas.get(id) == null) || (encomendas.get(id) == \old(encomendas.get(id+1)));
+	@*/
 	public int remover(int id) {
 		Encomenda aux = new Encomenda();
 		for (Encomenda e : encomendas) {
@@ -35,12 +50,21 @@ public class EncomendaDAO implements IEncomendaDAO {
 	}
 	
 	@Override
-	public ArrayList<Encomenda> procuraTodos(){
+	//@ also ensures \result.equals(encomendas);
+	public /*@ pure @*/ ArrayList<Encomenda> procuraTodos(){
 		return this.encomendas;
 	}
 	
 	@Override
-	public Encomenda procuraPeloId(int id) {
+	/*@ also
+	 @  requires id > 0;
+	 @  requires encomendas.get(id) != null;
+	 @  ensures encomendas.get(id) == \result;
+	 @  also
+	 @  requires encomendas.get(id) == null;
+	 @  ensures \result == null;
+	@*/
+	public /*@ pure @*/ Encomenda procuraPeloId(int id) {
 		for(Encomenda e : this.encomendas) {
 			if(e.getId() == id) {
 				return e;
@@ -50,6 +74,10 @@ public class EncomendaDAO implements IEncomendaDAO {
 	}
 	
 	@Override
+	/*@ also
+	 @  requires encomendas.get(id) != null;
+	 @  ensures encomendas.contains(encomenda);
+	@*/
 	public int alterar(int id, Encomenda encomenda) {
 		for (Encomenda e : this.encomendas) {
 			if(e.getId() == id) {
@@ -66,6 +94,7 @@ public class EncomendaDAO implements IEncomendaDAO {
 	}
 	
 	@Override
+	//@ also ensures idSerial == \old(idSerial) + 1;
 	public int pegaEIncremanetaId() {
 		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
 		int idAtual = this.idSerial;
