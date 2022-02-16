@@ -11,42 +11,39 @@ public class FornecedorDAO implements IFornecedorDAO {
 	
 	// Construtores
 	/*@ 
-	  @ assignable fornecedores,idSerial;
 	  @ ensures fornecedores != null; 
-	  @ ensures idSerial != null; 
+	  @ ensures idSerial > 0; 
 	  @*/
 	public FornecedorDAO() {
 		this.fornecedores = new ArrayList<Fornecedor>();
 		this.idSerial = 1;
 	}
 	/*@
-	  @ assignable fornecedores;
 	  @ ensures fornecedores != null; 
 	  @*/
-	public FornecedorDAO(/*@ non_null @*/ArrayList<Fornecedor> fornecedores) {
+	public FornecedorDAO(ArrayList<Fornecedor> fornecedores) {
 		super();
 		this.fornecedores = fornecedores;
 	}
 
 	
-	/*@ 
-	  @ assignable fornecerores,fornecedor;
-	  @ ensures fornecedor.length == fornecedor.getId();
+	/*@ also
+	  @ assignable this.fornecedores,fornecedor;
 	  @*/
 	@Override
-	public int inserir(/*@ non_null @*/Fornecedor fornecedor) {
+	public int inserir(Fornecedor fornecedor) {
 		fornecedor.setId(this.pegaEIncremanetaId());
 		this.fornecedores.add(fornecedor);
 		return fornecedor.getId();
 	}
 
 	
-	/*@ requires 0 < id; 
+	/*@ also
+	  @ requires 0 < id; 
 	  @ assignable id, fornecedores;
-	  @ ensures \result ==  ( \forall int i; i < this.fornecedores.size() );
 	  @*/
 	@Override
-	public int remover(/*@ non_null @*/int id) {
+	public int remover(int id) {
 		Fornecedor aux = new Fornecedor();
 		for (Fornecedor f : this.fornecedores) {
 			if(f.getId() == id) {
@@ -59,13 +56,11 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	
-	/*@ 
-	  @ assignable f;
-	  @ ensures id != null; 
-	  @ ensures \result ==  ( \forall int i; i < this.fornecedores.size() );
+	/*@ also
+	  @ ensures id > 0; 
 	  @*/
 	@Override
-	public int alterar(/*@ non_null @*/int id, /*@ non_null @*/Fornecedor fornecedor) {
+	public int alterar(int id, Fornecedor fornecedor) {
 		for (Fornecedor f : this.fornecedores) {
 			if (f.getId() == id) {
 				f.setId(id);
@@ -82,13 +77,12 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	
-	/*@
+	/*@ also
 	  @ assignable \nothing; 
-	  @ ensures f.getId() == id;
-	  @ ensures \result ==  ( \forall int i; i < this.fornecedores.size() );
+	  @ ensures  0 < id;
 	  @*/
 	@Override
-	public Fornecedor procuraPeloId(/*@ non_null @*/int id) {
+	public Fornecedor procuraPeloId(int id) {
 		for (Fornecedor f : this.fornecedores) {
 			if (f.getId() == id) {
 				return f;
@@ -98,7 +92,7 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	
-	/*@
+	/*@ also
 	  @ assignable \nothing; 
 	  @ ensures fornecedores !=null;
 	  @*/
@@ -109,10 +103,9 @@ public class FornecedorDAO implements IFornecedorDAO {
 	
 	
 
-	/*@ 
-	  @ assignable idAtual, idSerial; 
-	  @ ensures idAtual !=null;
-	  @ ensures idSerial !=null;
+	/*@ also
+	  @ assignable idSerial; 
+	  @ ensures idSerial > 0;
 	  @*/
 	@Override
 	public int pegaEIncremanetaId() {
