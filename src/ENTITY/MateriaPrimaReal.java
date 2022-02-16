@@ -10,12 +10,6 @@ public class MateriaPrimaReal{
     protected /*@ spec_public @*/ float quantidade;
 	protected /*@ spec_public @*/ int idFornecedor;
 	
-	//@ public invariant id > 0;
-	//@ public invariant idExterno > 0;
-	//@ public invariant preco >= 0;
-	//@ public invariant validade.compareTo(new Date()) > 0;
-	//@ public invariant quantidade >= 0;
-	//@ public invariant idFornecedor > 0;
 	
 	public MateriaPrimaReal() {
 		super();
@@ -61,7 +55,7 @@ public class MateriaPrimaReal{
 		return id;
 	}
 
-	/*@ assignable this.id;
+	/*@
 	 @  ensures this.id == id;
 	@*/
 	public void setId(int id) {

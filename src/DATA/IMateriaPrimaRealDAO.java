@@ -6,9 +6,6 @@ import ENTITY.MateriaPrimaReal;
 
 public interface IMateriaPrimaRealDAO {
 
-	/*@ requires materiaPrima != null;
-	 @  ensures materiaPrima.getId() == \result;
-	@*/
 	int inserir(MateriaPrimaReal materiaPrima);
 
 	/*@ requires id > 0;

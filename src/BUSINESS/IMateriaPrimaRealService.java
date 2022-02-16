@@ -7,11 +7,7 @@ import UTIL.BusinessRuleException;
 
 public interface IMateriaPrimaRealService {
 	
-	/*@ requires materiaPrimaReal == null;
-	 @  requires materiaPrimaReal.getPreco() < 0;
-	 @  requires materiaPrimaReal.getQuantidade() < 0; 
-	 @  signals_only BusinessRuleException;
-	@*/
+
 	int inserir(MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException;
 
 	int remover(int id) throws BusinessRuleException;
@@ -34,11 +30,6 @@ public interface IMateriaPrimaRealService {
 
 	/*@ pure @*/ ArrayList<MateriaPrimaReal> procuraTodos();
 
-	/*@ requires materiaPrimaReal == null;
-	 @  requires materiaPrimaReal.getPreco() < 0;
-	 @  requires materiaPrimaReal.getQuantidade() < 0; 
-	 @  signals_only BusinessRuleException;
-	@*/
 	void validarCadastro(MateriaPrimaReal materiaPrimaReal) throws BusinessRuleException;
 
 }
