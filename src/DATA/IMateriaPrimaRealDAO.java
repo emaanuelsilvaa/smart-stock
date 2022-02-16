@@ -6,18 +6,28 @@ import ENTITY.MateriaPrimaReal;
 
 public interface IMateriaPrimaRealDAO {
 
+	/*@ requires materiaPrima != null;
+	 @  ensures materiaPrima.getId() == \result;
+	@*/
 	int inserir(MateriaPrimaReal materiaPrima);
 
+	/*@ requires id > 0;
+	 @  ensures \result == id;
+	@*/
 	int remover(int id);
 
+	/*@ requires id > 0;
+	 @  requires materiaPrima != null;
+	 @  ensures \result == id;
+	@*/
 	int alterar(int id, MateriaPrimaReal materiaPrima);
 
 	int alterarQuantidade(int id, float quantidade);
 
-	MateriaPrimaReal procuraPeloId(int id);
+	/*@ pure @*/ MateriaPrimaReal procuraPeloId(int id);
 
-	ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id);
+	/*@ pure @*/ ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id);
 
-	ArrayList<MateriaPrimaReal> procuraTodos();
+	/*@ pure @*/ ArrayList<MateriaPrimaReal> procuraTodos();
 
 }

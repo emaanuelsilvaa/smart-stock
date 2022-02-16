@@ -9,24 +9,41 @@ import ENTITY.ProdutoFinalReal;
 
 public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 	
-	protected ArrayList<MateriaPrimaReal> materiasPrimas;
-	protected int idSerial;
+	protected /*@ spec_public @*/ ArrayList<MateriaPrimaReal> materiasPrimas;
+	protected /*@ spec_public @*/ int idSerial;
 	
+	//@ public invariant idSerial > 0;
+	
+	/*@ assignable \everything;
+	 @  ensures this.materiasPrimas != null;
+	 @  ensures this.idSerial == 1;
+	@*/
 	public MateriaPrimaRealDAO() {
 		// TODO Auto-generated constructor stub
 		this.materiasPrimas = new ArrayList<MateriaPrimaReal>();
 		this.idSerial = 1;
 	}
+	
+	//@ ensures this.materiasPrimas.equals(materiasPrimas);
 	public MateriaPrimaRealDAO(ArrayList<MateriaPrimaReal> materiasPrimas) {
 		this.materiasPrimas = materiasPrimas;
 	}
 	@Override
+	/*@ also
+	 @  requires \same;
+	 @  ensures materiaPrima.getId() == \old(idSerial)+1;
+	 @  ensures materiasPrimas.contains(materiaPrima);
+	@*/
 	public int inserir(MateriaPrimaReal materiaPrima) {
 		materiaPrima.setId(this.pegaEIncremanetaId());
 		this.materiasPrimas.add(materiaPrima);
 		return materiaPrima.getId();
 	}
 	@Override
+	/*@ also
+	 @  requires materiasPrimas.get(id) != null;
+	 @  ensures (materiasPrimas.get(id) == null) || (materiasPrimas.get(id) == \old(materiasPrimas.get(id+1)));
+	@*/
 	public int remover(int id) {
 		MateriaPrimaReal aux = new MateriaPrimaReal();
 		for (MateriaPrimaReal m: this.materiasPrimas) {
@@ -39,6 +56,10 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 		return aux.getId();
 	}
 	@Override
+	/*@ also
+	 @  requires materiasPrimas.get(id) != null;
+	 @  ensures materiasPrimas.contains(materiaPrima);
+	@*/
 	public int alterar(int id, MateriaPrimaReal materiaPrima) {
 		for (MateriaPrimaReal m : this.materiasPrimas) {
 			if (m.getId() == id) {
@@ -66,7 +87,15 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 		return -1;
 	}
 	@Override
-	public MateriaPrimaReal procuraPeloId(int id) {
+	/*@ also
+	 @  requires id > 0;
+	 @  requires materiasPrimas.get(id) != null;
+	 @  ensures materiasPrimas.get(id) == \result;
+	 @  also
+	 @  requires materiasPrimas.get(id) == null;
+	 @  ensures \result == null;
+	@*/
+	public /*@ pure @*/ MateriaPrimaReal procuraPeloId(int id) {
 		for (MateriaPrimaReal materiaPrima : this.materiasPrimas) {
 			if (materiaPrima.getId() == id) {
 				return materiaPrima;
@@ -75,7 +104,10 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 		return null;
 	}
 	@Override
-	public ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id){
+	/*@ also
+	 @  requires id > 0;
+	@*/
+	public /*@ pure @*/ ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id){
 		// Retorna todos os produtos de um mesmo tipo de ProdutoFinal
 		ArrayList<MateriaPrimaReal> materiasAux = new ArrayList<MateriaPrimaReal>();
 		for (MateriaPrimaReal m : this.materiasPrimas) {
@@ -86,10 +118,12 @@ public class MateriaPrimaRealDAO implements IMateriaPrimaRealDAO {
 		return materiasAux;
 	}
 	@Override
-	public ArrayList<MateriaPrimaReal> procuraTodos(){
+	//@ also ensures \result.equals(materiasPrimas);
+	public /*@ pure @*/ ArrayList<MateriaPrimaReal> procuraTodos(){
 		return this.materiasPrimas;
 	}	
 	
+	//@ ensures idSerial == \old(idSerial) + 1;
 	public int pegaEIncremanetaId() {
 		// Função com o objetivo de usar as IDs de maneira sequencial e sem repetição
 		int idAtual = this.idSerial;
