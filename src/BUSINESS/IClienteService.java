@@ -26,6 +26,7 @@ public interface IClienteService {
 	//@ ensures id > 0;
 	/*@ pure @*/ Cliente procuraPeloId(int id);
 
+	
 	/*@ pure @*/ ArrayList<Cliente> procuraTodos();
 
 	int validarCadastro(Cliente cliente) throws BusinessRuleException;

@@ -91,6 +91,7 @@ public class Venda {
 		this.listaProdutos = listaProdutos;
 	}
 	
+
 	/*@
 	 @ ensures \result == this.listaProdutosReais;
 	 @*/
@@ -101,6 +102,7 @@ public class Venda {
 	public void setListaProdutosReais(HashMap<Integer, Integer> listaProdutosReais) {
 		this.listaProdutosReais = listaProdutosReais;
 	}
+
 
 	/*@
 	 @ ensures \result == this.data;

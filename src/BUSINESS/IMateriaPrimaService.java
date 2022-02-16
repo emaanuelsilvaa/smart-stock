@@ -26,6 +26,7 @@ public interface IMateriaPrimaService {
 	  */
 	int alterar(int id, MateriaPrima materiaPrima) throws BusinessRuleException;
 
+
 	/*@ 
 	  @ requires id >0 ;
 	  */

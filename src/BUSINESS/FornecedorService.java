@@ -50,12 +50,12 @@ public final class FornecedorService implements IFornecedorService {
 	}
 
 	@Override
-	public Fornecedor procuraPeloId(int id) {
+	public /*@ pure @*/ Fornecedor procuraPeloId(int id) {
 		return this.fornecedorDAO.procuraPeloId(id);
 	}
 
 	@Override
-	public ArrayList<Fornecedor> procuraTodos() {
+	public /*@ pure @*/ ArrayList<Fornecedor> procuraTodos() {
 		return this.fornecedorDAO.procuraTodos();
 	}
 	

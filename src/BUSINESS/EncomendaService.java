@@ -8,20 +8,30 @@ import DATA.EncomendaDAO;
 import DATA.IEncomendaDAO;
 import ENTITY.Cliente;
 import ENTITY.Encomenda;
+import ENTITY.MateriaPrima;
 import UTIL.BusinessRuleException;
 
 public final class EncomendaService implements IEncomendaService {
 
-	protected IEncomendaDAO encomendaDAO;
-	protected IVendaService vendaService;
-	protected IProdutoFinalService produtoFinalService;
-	protected IProdutoFinalRealService produtoFinalRealService;
-	protected IMateriaPrimaService materiaPrimaService;
-	protected IClienteService clienteService;
-	private static IEncomendaService instance;
+	protected /*@ spec_public @*/ IEncomendaDAO encomendaDAO;
+	protected /*@ spec_public @*/ IVendaService vendaService;
+	protected /*@ spec_public @*/ IProdutoFinalService produtoFinalService;
+	protected /*@ spec_public @*/ IProdutoFinalRealService produtoFinalRealService;
+	protected /*@ spec_public @*/ IMateriaPrimaService materiaPrimaService;
+	protected /*@ spec_public @*/ IClienteService clienteService;
+	private /*@ spec_public @*/ static IEncomendaService instance;
 
+	/*@ assignable encomendaDAO, vendaService, produtoFinalRealService, produtoFinalService,
+	 @ 		materiaPrimaService, clienteService;
+	 @ 
+	 @  ensures encomendaDAO != null;
+	 @  ensures vendaService != null;
+	 @  ensures produtoFinalRealService != null;
+	 @  ensures produtoFinalService != null;
+	 @  ensures materiaPrimaService != null;
+	 @  ensures clienteService != null;
+	@*/
 	private EncomendaService() {
-		// TODO Auto-generated constructor stub
 		this.encomendaDAO = new EncomendaDAO();
 		this.vendaService = VendaService.getInstance();
 		this.produtoFinalRealService = ProdutoFinalRealService.getInstance();
@@ -30,6 +40,14 @@ public final class EncomendaService implements IEncomendaService {
 		this.clienteService = ClienteService.getInstance();
 	}
 
+	/*@ requires instance == null; 
+	 @  assignable instance;
+	 @  ensures instance == \result;
+	 @  also
+	 @  requires instance != null;
+	 @  assignable instance;
+	 @  ensures instance == \old(instance);
+	@*/
 	public static IEncomendaService getInstance() {
 		if (instance == null) {
 			instance = new EncomendaService();
@@ -38,16 +56,30 @@ public final class EncomendaService implements IEncomendaService {
 	}
 
 	@Override
-	public ArrayList<Encomenda> procuraTodos() {
+	//@ also ensures \result.equals(encomendaDAO.procuraTodos());
+	public /*@ pure @*/ ArrayList<Encomenda> procuraTodos() {
 		return this.encomendaDAO.procuraTodos();
 	}
 
 	@Override
-	public Encomenda procuraPeloId(int id) {
+	/*@ also
+	 @ 	requires id > 0;
+	 @  ensures \result.getId() == id;
+	@*/
+	public /*@ pure @*/ Encomenda procuraPeloId(int id) {
 		return this.encomendaDAO.procuraPeloId(id);
 	}
 
 	@Override
+	/*@ also
+	 @ 	requires !listaProdutos.isEmpty();
+	 @  requires idCliente > 0;
+	 @  requires dataEntrega.compareTo(new Date()) > 0;
+	 @  ensures (encomendaDAO.procuraTodos().size()-1) == \result;
+	 @  ensures encomendaDAO.procuraPeloId(\result).getListaProdutos().equals(listaProdutos);
+	 @  ensures encomendaDAO.procuraPeloId(\result).getIdCliente() == idCliente;
+	 @  ensures encomendaDAO.procuraPeloId(\result).getDataEntrega().compareTo(dataEntrega) == 0;
+	@*/
 	public int realizarEncomenda(HashMap<Integer, Integer> listaProdutos, int idCliente, Date dataEntrega) {
 		Date data = new Date();
 		float valorDaEncomenda = 0;
@@ -62,6 +94,10 @@ public final class EncomendaService implements IEncomendaService {
 	}
 
 	@Override
+	/*@ also
+	 @  requires encomendaDAO.procuraPeloId(id) == null;
+	 @  signals_only BusinessRuleException;
+	@*/
 	public int remover(int id) throws BusinessRuleException {
 		if (this.encomendaDAO.procuraPeloId(id) == null) {
 			throw new BusinessRuleException("Tentou excluir uma encomenda inexistente");
@@ -70,12 +106,31 @@ public final class EncomendaService implements IEncomendaService {
 	}
 	
 	@Override
+	/*@ also
+	 @  requires encomendaDAO.procuraPeloId(id) != null;
+	 @  ensures !encomendaDAO.procuraTodos().contains(\old(encomendaDAO.procuraPeloId(id)));
+	 @  also
+	 @  requires encomendaDAO.procuraPeloId(id) == null;
+	 @  signals_only BusinessRuleException;
+	@*/
 	public int consumarEncomenda(int id) throws BusinessRuleException {
 		this.vendaService.realizarVenda(encomendaDAO.procuraPeloId(id).getListaProdutos(), encomendaDAO.procuraPeloId(id).getIdCliente());
 		remover(id);
 		return id;
 	}
 	@Override
+	/*@ also
+	 @  requires encomendaDAO.procuraPeloId(id) != null;
+	 @  ensures (\exists Cliente c; clienteService.procuraTodos().contains(c);
+	 @  			encomenda.getIdCliente() == c.getId()
+	 @  		);
+	 @  ensures (\exists MateriaPrima m; materiaPrimaService.procuraTodos().contains(m);
+	 @  			encomenda.getListaProdutos().keySet().contains( m.getId() )
+	 @  		);
+	 @  also
+	 @  requires encomendaDAO.procuraPeloId(id) == null;
+	 @  signals_only BusinessRuleException;
+	@*/
 	public int alterar(int id, Encomenda encomenda) throws BusinessRuleException {
 		validarCadastro(encomenda);
 		if (this.encomendaDAO.procuraPeloId(id) == null) {
@@ -86,6 +141,18 @@ public final class EncomendaService implements IEncomendaService {
 	}
 
 	@Override
+	/*@ also
+	 @  requires encomendaDAO.procuraPeloId(encomenda.getId()) == null;
+	 @  ensures (\exists Cliente c; clienteService.procuraTodos().contains(c);
+	 @  			encomenda.getIdCliente() == c.getId()
+	 @  		);
+	 @  ensures (\exists MateriaPrima m; materiaPrimaService.procuraTodos().contains(m);
+	 @  			encomenda.getListaProdutos().keySet().contains( m.getId() )
+	 @  		);
+	 @  also
+	 @  requires encomendaDAO.procuraPeloId(encomenda.getId()) != null;
+	 @  signals_only BusinessRuleException;
+	@*/
 	public int inserir(Encomenda encomenda) throws BusinessRuleException {
 		validarCadastro(encomenda);
 		if (this.encomendaDAO.procuraPeloId(encomenda.getId()) != null) {
@@ -95,6 +162,15 @@ public final class EncomendaService implements IEncomendaService {
 	}
 	
 	@Override
+	/*@ also
+	 @  requires \same;
+	 @  ensures (\exists Cliente c; clienteService.procuraTodos().contains(c);
+	 @  			encomenda.getIdCliente() == c.getId()
+	 @  		);
+	 @  ensures (\exists MateriaPrima m; materiaPrimaService.procuraTodos().contains(m);
+	 @  			encomenda.getListaProdutos().keySet().contains( m.getId() )
+	 @  		);
+	@*/
 	public int validarCadastro(Encomenda encomenda) throws BusinessRuleException {
 		ArrayList<String> erros = new ArrayList<String>();
 		if(encomenda == null) {
