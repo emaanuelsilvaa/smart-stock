@@ -63,16 +63,16 @@ public final class MateriaPrimaRealService implements IMateriaPrimaRealService {
 		return this.materiaPrimaRealDAO.alterarQuantidade(id, quantidade);
 	}
 	@Override
-	public MateriaPrimaReal procuraPeloId(int id) {
+	public /*@ pure @*/ MateriaPrimaReal procuraPeloId(int id) {
 		return this.materiaPrimaRealDAO.procuraPeloId(id);
 	}
 	@Override
-	public ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id){
+	public /*@ pure @*/ ArrayList<MateriaPrimaReal> procuraPeloIdExterno(int id){
 		return this.materiaPrimaRealDAO.procuraPeloIdExterno(id);
 	}
 
 	@Override
-	public ArrayList<MateriaPrimaReal> procuraTodos() {
+	public /*@ pure @*/ ArrayList<MateriaPrimaReal> procuraTodos() {
 		return this.materiaPrimaRealDAO.procuraTodos();
 	}
 

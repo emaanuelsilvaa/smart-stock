@@ -59,17 +59,17 @@ public final class ProdutoFinalRealService implements IProdutoFinalRealService {
 	}
 
 	@Override
-	public ProdutoFinalReal procuraPeloId(int id) {
+	public /*@ pure @*/ ProdutoFinalReal procuraPeloId(int id) {
 		return produtoFinalRealDAO.procuraPeloId(id);
 	}
 
 	@Override
-	public ArrayList<ProdutoFinalReal> procuraPeloIdExterno(int id) {
+	public /*@ pure @*/ ArrayList<ProdutoFinalReal> procuraPeloIdExterno(int id) {
 		return produtoFinalRealDAO.procuraPeloIdExterno(id);
 	}
 
 	@Override
-	public ArrayList<ProdutoFinalReal> procuraTodos() {
+	public /*@ pure @*/  ArrayList<ProdutoFinalReal> procuraTodos() {
 		return produtoFinalRealDAO.procuraTodos();
 	}
 

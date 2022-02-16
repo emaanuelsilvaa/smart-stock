@@ -35,7 +35,7 @@ public class MateriaPrimaReal{
 		this.idFornecedor = idFornecedor;
 	}
 
-	public int getId() {
+	public /*@ pure @*/ int getId() {
 		return id;
 	}
 
@@ -43,7 +43,7 @@ public class MateriaPrimaReal{
 		this.id = id;
 	}
 
-	public int getIdExterno() {
+	public /*@ pure @*/ int getIdExterno() {
 		return idExterno;
 	}
 
@@ -51,7 +51,7 @@ public class MateriaPrimaReal{
 		this.idExterno = idExterno;
 	}
 
-	public float getPreco() {
+	public /*@ pure @*/ float getPreco() {
 		return preco;
 	}
 
@@ -59,7 +59,7 @@ public class MateriaPrimaReal{
 		this.preco = preco;
 	}
 
-	public Date getValidade() {
+	public /*@ pure @*/ Date getValidade() {
 		return validade;
 	}
 
@@ -67,7 +67,7 @@ public class MateriaPrimaReal{
 		this.validade = validade;
 	}
 
-	public float getQuantidade() {
+	public /*@ pure @*/ float getQuantidade() {
 		return quantidade;
 	}
 
@@ -75,7 +75,7 @@ public class MateriaPrimaReal{
 		this.quantidade = quantidade;
 	}
 
-	public int getFornecedor() {
+	public /*@ pure @*/ int getFornecedor() {
 		return idFornecedor;
 	}
 

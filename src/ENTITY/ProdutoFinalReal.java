@@ -31,7 +31,7 @@ public class ProdutoFinalReal implements Comparable<ProdutoFinalReal>{
 		this.receitaReal= receitaReal;
 	}
 
-	public int getId() {
+	public /*@ pure @*/ int getId() {
 		return id;
 	}
 
@@ -39,7 +39,7 @@ public class ProdutoFinalReal implements Comparable<ProdutoFinalReal>{
 		this.id = id;
 	}
 
-	public int getIdExterno() {
+	public /*@ pure @*/ int getIdExterno() {
 		return idExterno;
 	}
 
@@ -47,7 +47,7 @@ public class ProdutoFinalReal implements Comparable<ProdutoFinalReal>{
 		this.idExterno = idExterno;
 	}
 
-	public Date getValidade() {
+	public /*@ pure @*/ Date getValidade() {
 		return validade;
 	}
 
@@ -55,7 +55,7 @@ public class ProdutoFinalReal implements Comparable<ProdutoFinalReal>{
 		this.validade = validade;
 	}
 
-	public int getQuantidade() {
+	public /*@ pure @*/ int getQuantidade() {
 		return quantidade;
 	}
 
@@ -63,7 +63,7 @@ public class ProdutoFinalReal implements Comparable<ProdutoFinalReal>{
 		this.quantidade = quantidade;
 	}
 
-	public HashMap<Integer, Float> getReceitaReal() {
+	public /*@ pure @*/ HashMap<Integer, Float> getReceitaReal() {
 		return receitaReal;
 	}
 
@@ -72,7 +72,7 @@ public class ProdutoFinalReal implements Comparable<ProdutoFinalReal>{
 	}
 
 	@Override
-	public int compareTo(ProdutoFinalReal o) {
+	public /*@ pure @*/ int compareTo(ProdutoFinalReal o) {
 		// TODO Auto-generated method stub
 		if (this.getValidade() == null || o.getValidade() == null) {
 			return 0;

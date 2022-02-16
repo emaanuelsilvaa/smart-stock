@@ -15,11 +15,11 @@ public interface IProdutoFinalRealService {
 
 	int alterarQuantidade(int id, int unidades);
 
-	ProdutoFinalReal procuraPeloId(int id);
+	/*@ pure @*/ ProdutoFinalReal procuraPeloId(int id);
 
-	ArrayList<ProdutoFinalReal> procuraPeloIdExterno(int id);
+	/*@ pure @*/ ArrayList<ProdutoFinalReal> procuraPeloIdExterno(int id);
 
-	ArrayList<ProdutoFinalReal> procuraTodos();
+	/*@ pure @*/ ArrayList<ProdutoFinalReal> procuraTodos();
 
 	void validarCadastro(ProdutoFinalReal produtoFinalReal) throws BusinessRuleException;
 
