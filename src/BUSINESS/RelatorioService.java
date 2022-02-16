@@ -17,7 +17,7 @@ public final class RelatorioService implements IRelatorioService {
 	protected /*@ spec_public non_null @*/ IMateriaPrimaService materiaPrimaService;
 	private static /*@ spec_public  @*/ IRelatorioService instance;
 	
-	/*@ 
+	/*@ also
 	  @assignable encomendaService,estoqueService,produtoFinalService,materiaPrimaService; 
 	  @ ensures encomendaService != null; 
 	  @ ensures estoqueService != null; 
@@ -40,13 +40,15 @@ public final class RelatorioService implements IRelatorioService {
 		}
 		return instance;
 	}
-	/*@ 
+	/*@ also
 	  @ assignable qntProduto, qntProdutoFaltante, aux,qtdMinima,disponibilidade;
 	  @ ensures qntProduto !=null;
 	  @ ensures qntProdutoFaltante !=null;
 	  @ ensures qntProduto !=null;
-	  @ ensures  ( \forall int i; i < this.encomendaService.procuraTodos().size() ;	
-	  @				this.encomendaService.procuraTodos().get(i).getListaProdutos().keySet() != null );			
+	  @ ensures 	( \forall int i; i < this.encomendaService.procuraTodos().size() ;	
+	  @				this.encomendaService.procuraTodos().get(i).getListaProdutos().keySet() != null )&& 
+	  @				(\forall int i; i < this.qntProduto.keySet().size();
+	  @				this.produtoFinalService.procuraPeloId(id).getQntMinima() != null );
 	  @*/
 	@Override
 	public HashMap<Integer, Integer> listarReposicaoProduto(Date dataInicio, Date dataFim) throws BusinessRuleException {
@@ -78,7 +80,15 @@ public final class RelatorioService implements IRelatorioService {
 		}
 		return qntProdutoFaltante;
 	}
-	
+	/*@ also
+	  @ assignable listaDeProdutosFaltantes, listaDeMateriaPrimaFaltanteTotal, listaDeMateriaPrimaFaltante,produtoFinalASerReposto,receita ,valor_residual, valor_de_reposicao, valor_final, diferenca_de_estoque,quantidade_de_produtos;
+	  @ ensures qntProduto !=null;
+	  @ ensures qntProdutoFaltante !=null;
+	  @ ensures qntProduto !=null;
+	  @ ensures 	( \forall int i; i < this.listaDeProdutosFaltantes.keySet().size() ;	
+	  @				this.listaDeProdutosFaltantes.keySet().get(i).receita.keySet() != null ) && 
+	  @				(\forall int i; i < this.listaDeMateriaPrimaFaltanteTotal.keySet().size();
+	  @*/
 	@Override
 	public HashMap <Integer, Float> listarReposicaoMateriaPrima(Date dataInicio, Date dataFim) throws BusinessRuleException{
 		HashMap <Integer, Integer> listaDeProdutosFaltantes = this.listarReposicaoProduto(dataInicio, dataFim);
