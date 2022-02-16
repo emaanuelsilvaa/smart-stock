@@ -15,7 +15,7 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	
 	
 	/** Construtores */
-	/*@ 
+	/*@ assignable this.materiaPrimaDAO;
 	 @  ensures materiaPrimaDAO != null;
 	 @  ensures materiaPrimaDAO instanceof MateriaPrimaDAO;
 	@*/
@@ -38,6 +38,7 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	/*@ also 
 	@ requires materiaPrima != null;
 	@ ensures materiaPrimaDAO.procuraTodos().size() == \old(materiaPrimaDAO.procuraTodos().size())+1;
+	@ ensures (\forall MateriaPrima i; i != materiaPrima ;materiaPrimaDAO.procuraTodos().contains(i)<==>\old( materiaPrimaDAO.procuraTodos().contains(i) ));
 	@*/
 	@Override
 	public int inserir(MateriaPrima materiaPrima) throws BusinessRuleException {
@@ -46,7 +47,12 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	}
 
 	/*@ also 
+	@ requires id > 0;
 	@ ensures materiaPrimaDAO.procuraTodos().size() == \old(materiaPrimaDAO.procuraTodos().size())-1;
+	@ also
+	@ public exceptional_behavior
+	@ requires this.materiaPrimaDAO.procuraPeloId(id).equals(null);
+	@ 	signals_only BusinessRuleException;
 	@*/
 	@Override
 	public void remover(int id) throws BusinessRuleException {
@@ -57,7 +63,10 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	}
 	
 	/*@ also
+	@ requires id > 0;
+	@ requires materiaPrima != null;
 	@ ensures materiaPrimaDAO.procuraTodos().size() == \old(materiaPrimaDAO.procuraTodos().size())-1;
+   	@ ensures (\exists int i; i<=0 && i < materiaPrimaDAO.procuraTodos().size() ; materiaPrimaDAO.procuraTodos().get(i).equals(materiaPrima)); 
 	@ also
 	@ public exceptional_behavior
 	@ requires this.materiaPrimaDAO.procuraPeloId(id).equals(null);

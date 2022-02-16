@@ -14,6 +14,10 @@ public class ClienteDAO implements IClienteDAO {
 	// public initially clientes.size() == 0;
 
 	// Construtores
+	
+	/*@ assignable this.clientes, this.idSerial;
+	 @  ensures clientes != null;
+	@*/
 	public ClienteDAO() {
 		this.clientes = new ArrayList<Cliente>();
 		this.idSerial = 1;
@@ -25,6 +29,10 @@ public class ClienteDAO implements IClienteDAO {
 		this.clientes = clientes;
 	}
 
+	/*@ also
+	 @  ensures clientes != null;
+	 @ ensures (\forall Cliente i; i != cliente ;clientes.contains(i)<==>\old( clientes.contains(i) ));
+	@*/
 	@Override
 	public int inserir(Cliente cliente) {
 		cliente.setId(this.pegaEIncremanetaId());
@@ -45,6 +53,12 @@ public class ClienteDAO implements IClienteDAO {
 		return aux.getId();
 	}
 
+	/*@ also
+	 @ requires id > 0 && cliente != null;
+	 @  ensures clientes != null;
+	 @ ensures clientes.size() == \old(clientes.size())-1;
+   	 @ ensures (\exists int i; i<=0 && i < clientes.size() ; clientes.get(i).equals(cliente));
+	@*/
 	@Override
 	public int alterar(int id, Cliente cliente) {
 		for (Cliente c : this.clientes) {
@@ -57,6 +71,7 @@ public class ClienteDAO implements IClienteDAO {
 				break;
 			}
 		}
+
 		return id;
 	}
 

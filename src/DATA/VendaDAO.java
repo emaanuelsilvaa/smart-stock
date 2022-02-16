@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import ENTITY.Venda;
 
 public class VendaDAO implements IVendaDAO {
-	private ArrayList <Venda> vendas;
-	protected int idSerial;
+	private /*@ spec_public @*/ ArrayList <Venda> vendas;
+	protected /*@ spec_public @*/ int idSerial;
 	
+	/*@ assignable this.vendas;
+	 @ assignable this.idSerial;
+	 @  ensures vendas != null;
+	@*/
 	public VendaDAO () {
 		this.vendas = new ArrayList<Venda>();
 		this.idSerial = 1;

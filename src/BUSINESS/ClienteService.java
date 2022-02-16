@@ -42,6 +42,8 @@ public final class ClienteService implements IClienteService {
   /*@ also 
     @ requires cliente != null;
     @ ensures \result > 0;
+    @ ensures clienteDAO.procuraTodos().size() == \old(clienteDAO.procuraTodos().size())+1;
+    @ ensures (\forall Cliente i; i != cliente ;clienteDAO.procuraTodos().contains(i)<==>\old( clienteDAO.procuraTodos().contains(i) ));
 	@ also
 	@ 	signals_only BusinessRuleException;
 	@*/
@@ -59,7 +61,7 @@ public final class ClienteService implements IClienteService {
     @ requires id > 0;
 	@ ensures clienteDAO.procuraTodos().size() == \old(clienteDAO.procuraTodos().size())-1;
 	@ also
-	@ exceptional_behavior
+	@ public exceptional_behavior
 	@ 	signals_only BusinessRuleException;
 	@*/
 	@Override
@@ -74,6 +76,7 @@ public final class ClienteService implements IClienteService {
   /*@ also 
     @requires id > 0;
    	@ requires cliente != null;
+   	@ ensures (\exists int i; i<=0 && i < clienteDAO.procuraTodos().size() ; clienteDAO.procuraTodos().get(i).equals(cliente)); 
 	@ also
 	@ public exceptional_behavior
 	@ requires this.clienteDAO.procuraPeloId(id).equals(null);
@@ -91,6 +94,7 @@ public final class ClienteService implements IClienteService {
 	/** Recupera informações de um cliente especifico */
 	/*@ also 
 	@ requires id > 0;
+	@ ensures (\exists int i; i<=0 && i < clienteDAO.procuraTodos().size() ; clienteDAO.procuraTodos().get(i).equals(this.clienteDAO.procuraPeloId(id)));
 	@*/
 	@Override
 	public /*@ pure @*/ Cliente procuraPeloId(int id) {
