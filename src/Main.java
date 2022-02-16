@@ -170,7 +170,8 @@ public class Main {
 
 
 
-		Date data = new Date("04/21/2021");
+		@SuppressWarnings("deprecation")
+		Date data = new Date("04/21/2023");
 
 		HashMap<Integer, Float> receitaReal1 = new HashMap<Integer, Float>();
 		receitaReal1.put(1, 0.05f);

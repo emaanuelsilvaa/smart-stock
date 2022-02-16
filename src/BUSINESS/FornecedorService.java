@@ -49,7 +49,7 @@ public final class FornecedorService implements IFornecedorService {
 
 	
 	/*@ also
-	  @ requires  id != null;
+	  @ requires  id > 0;
 	  @ ensures \result == id; 
 	  @*/
 	@Override
@@ -61,7 +61,7 @@ public final class FornecedorService implements IFornecedorService {
 	}
 
 	/*@ also
-	  @ requires  id != null;
+	  @ requires  id > 0;
 	  @ requires fornecedor != null;
 	  @ ensures \result == id; 
 	  @*/
@@ -75,7 +75,7 @@ public final class FornecedorService implements IFornecedorService {
 	}
 
 	
-	/*@ 
+	/*@ also
 	  @ ensures \result !=null;
 	  @*/
 	@Override
@@ -84,7 +84,7 @@ public final class FornecedorService implements IFornecedorService {
 	}
 
 	
-	/*@ 
+	/*@ also
 	  @ ensures \result !=null;
 	  @*/
 	@Override
@@ -92,7 +92,7 @@ public final class FornecedorService implements IFornecedorService {
 		return this.fornecedorDAO.procuraTodos();
 	}
 	
-	/*@  
+	/*@  also
 	  @ requires fornecedor != null;
 	  @ ensures \result == 0 ; @*/
 	@Override
