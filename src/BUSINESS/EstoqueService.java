@@ -43,35 +43,54 @@ public final class EstoqueService implements IEstoqueService {
 	}
 	
 	@Override
+	/*@ also
+	 @  requires \same;
+	 @  requires produtoFinalRealService.procuraPeloId(id) != null;
+	 @  ensures produtoFinalRealService.procuraPeloId(id).getQuantidade() ==
+	 @  	\old(produtoFinalRealService.procuraPeloId(id).getQuantidade()) - quantidade;
+	@*/
 	public int baixaProdutoFinal(int id, int quantidade) {
 		produtoFinalRealService.alterarQuantidade(id, -1 * quantidade);
 		return 0;
 	}
 	
 	@Override
+	/*@ also
+	 @  requires \same;
+	 @  requires produtoFinalRealService.procuraPeloId(id) != null;
+	 @  ensures produtoFinalRealService.procuraPeloId(id).getQuantidade() ==
+	 @  	\old(produtoFinalRealService.procuraPeloId(id).getQuantidade()) + quantidade;
+	@*/
 	public int reporProdutoFinal(int id, int quantidade) {
 		this.produtoFinalRealService.alterarQuantidade(id, quantidade);
 		return 0;
 	}
 
 	@Override
+	/*@ also
+	 @  requires materiaPrimaRealService.procuraPeloId(id) != null;
+	 @  ensures materiaPrimaRealService.procuraPeloId(id).getQuantidade() ==
+	 @  	\old(materiaPrimaRealService.procuraPeloId(id).getQuantidade()) - quantidade;
+	@*/
 	public int baixaMateriaPrima(int id, float quantidade) throws BusinessRuleException {
 		materiaPrimaRealService.alterarQuantidade(id, -1 * quantidade);
 		return 0;
 	}
 	
 	@Override
+	//@ also ensures \result.equals(produtoFinalRealService.procuraTodos());
 	public /*@ pure @*/ ArrayList<ProdutoFinalReal> procuraTodosProdutos(){
 		return this.produtoFinalRealService.procuraTodos();
 	}
 	
 	@Override
+	//@ also ensures \result.equals(materiaPrimaRealService.procuraTodos());
 	public /*@ pure @*/ ArrayList<MateriaPrimaReal> procuraTodasMaterias(){
 		return this.materiaPrimaRealService.procuraTodos();
 	}
 
 	@Override
-	public int verificaDisponibilidadeProduto(int id, int quantidade) {
+	public /*@ pure @*/ int verificaDisponibilidadeProduto(int id, int quantidade) {
 		int sum = 0;
 		for (ProdutoFinalReal p: this.produtoFinalRealService.procuraPeloIdExterno(id)) {
 			sum += p.getQuantidade();
@@ -80,7 +99,7 @@ public final class EstoqueService implements IEstoqueService {
 	}
 
 	@Override
-	public float verificaDisponibilidadeMateriaPrima(int id, float quantidade) {
+	public /*@ pure @*/ float verificaDisponibilidadeMateriaPrima(int id, float quantidade) {
 		float sum = 0;
 		for(MateriaPrimaReal m: this.materiaPrimaRealService.procuraPeloIdExterno(id)) {
 			sum += m.getQuantidade();

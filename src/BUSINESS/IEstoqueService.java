@@ -8,11 +8,23 @@ import UTIL.BusinessRuleException;
 
 public interface IEstoqueService {
 	
+	/*@ requires id > 0;
+	 @  requires quantidade > 0;
+	 @  ensures \result == 0; 
+	@*/
 	int baixaProdutoFinal(int id, int quantidade);
 	
+	/*@ requires id > 0;
+	 @  requires quantidade > 0;
+	 @  ensures \result == 0; 
+	@*/
 	int reporProdutoFinal(int id, int quantidade);
 
-	/*@ requires quantidade < 0;
+	/*@ requires id > 0;
+	 @  requires quantidade > 0;
+	 @  ensures \result == 0;
+	 @  also
+	 @  requires quantidade < 0;
 	 @  signals_only BusinessRuleException;
 	@*/
 	int baixaMateriaPrima(int id, float quantidade) throws BusinessRuleException;
@@ -21,8 +33,8 @@ public interface IEstoqueService {
 
 	/*@ pure @*/ ArrayList<MateriaPrimaReal> procuraTodasMaterias();
 
-	int verificaDisponibilidadeProduto(int id, int quantidade);
+	/*@ pure @*/ int verificaDisponibilidadeProduto(int id, int quantidade);
 
-	float verificaDisponibilidadeMateriaPrima(int id, float quantidade);
+	/*@ pure @*/ float verificaDisponibilidadeMateriaPrima(int id, float quantidade);
 
 }
