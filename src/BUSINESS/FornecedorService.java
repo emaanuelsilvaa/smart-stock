@@ -10,12 +10,22 @@ import UTIL.BusinessRuleException;
 
 public final class FornecedorService implements IFornecedorService {
 	
-	protected IFornecedorDAO fornecedorDAO;
-	private static IFornecedorService instance;
+
+	protected/*@ spec_public  @*/ IFornecedorDAO fornecedorDAO;
+	private/*@ spec_public  @*/ static IFornecedorService instance;
 	
+	/*@ 
+	  @ assignable fornecedorDAO; 
+	  @ ensures fornecedorDAO != null; 
+	  @*/
 	public FornecedorService() {
 		this.fornecedorDAO = new FornecedorDAO();
 	}
+	
+	/*@ 
+	  @ assignable instance;
+	  @ ensures instance != null;
+	  @*/
 	public static IFornecedorService getInstance() {
 		if(instance == null) {
 			instance = new FornecedorService();
@@ -23,8 +33,13 @@ public final class FornecedorService implements IFornecedorService {
 		return instance;
 	}
 
+
+	/*@ also
+	  @ requires fornecedor != null;
+	  @ ensures fornecedorDAO != null; 
+	  @*/
 	@Override
-	public int inserir(Fornecedor fornecedor) throws BusinessRuleException {
+	public int  inserir(Fornecedor fornecedor) throws BusinessRuleException {
 		validarCadastro(fornecedor);
 		if (this.fornecedorDAO.procuraPeloId(fornecedor.getId()) != null) {
 			throw new BusinessRuleException("Tentou inserir um fornecedor já existente");
@@ -32,16 +47,26 @@ public final class FornecedorService implements IFornecedorService {
 		return this.fornecedorDAO.inserir(fornecedor);
 	}
 
+	
+	/*@ also
+	  @ requires  id > 0;
+	  @ ensures \result == id; 
+	  @*/
 	@Override
-	public int remover(int id) throws BusinessRuleException {
+	public int  remover(int id) throws BusinessRuleException {
 		if (this.fornecedorDAO.procuraPeloId(id) == null) {
 			throw new BusinessRuleException("Tentou excluir um fornecedor inexistente");
 		}
 		return this.fornecedorDAO.remover(id);
 	}
 
+	/*@ also
+	  @ requires  id > 0;
+	  @ requires fornecedor != null;
+	  @ ensures \result == id; 
+	  @*/
 	@Override
-	public int alterar(int id, Fornecedor fornecedor) throws BusinessRuleException {
+	public int   alterar(int id, Fornecedor fornecedor) throws BusinessRuleException {
 		validarCadastro(fornecedor);
 		if (this.fornecedorDAO.procuraPeloId(id) == null) {
 			throw new BusinessRuleException("ID inexistente");
@@ -49,18 +74,29 @@ public final class FornecedorService implements IFornecedorService {
 		return this.fornecedorDAO.alterar(id, fornecedor);
 	}
 
+	
+	/*@ also
+	  @ ensures \result !=null;
+	  @*/
 	@Override
 	public /*@ pure @*/ Fornecedor procuraPeloId(int id) {
 		return this.fornecedorDAO.procuraPeloId(id);
 	}
 
+	
+	/*@ also
+	  @ ensures \result !=null;
+	  @*/
 	@Override
 	public /*@ pure @*/ ArrayList<Fornecedor> procuraTodos() {
 		return this.fornecedorDAO.procuraTodos();
 	}
-	
+
+	/*@  also
+	  @ requires fornecedor != null;
+	  @ ensures \result == 0 ; @*/
 	@Override
-	public int validarCadastro(Fornecedor fornecedor) throws BusinessRuleException {
+	public int  validarCadastro(Fornecedor fornecedor) throws BusinessRuleException {
 		ArrayList<String> erros = new ArrayList<String>();
 		if(fornecedor == null) {
 			erros.add("Tentou inserir um Fornecedor nulo");
