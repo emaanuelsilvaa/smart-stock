@@ -5,12 +5,12 @@ import java.util.HashMap;
 
 public class Venda {
 
-	protected int id;
-	protected float valor;
-	protected int idCliente;
-	protected HashMap<Integer, Integer> listaProdutos;
-	protected HashMap<Integer, Integer> listaProdutosReais;
-	protected Date data;
+	protected /*@ spec_public @*/ int id;
+	protected /*@ spec_public @*/ float valor;
+	protected /*@ spec_public @*/ int idCliente;
+	protected /*@ spec_public @*/ HashMap<Integer, Integer> listaProdutos;
+	protected /*@ spec_public @*/ HashMap<Integer, Integer> listaProdutosReais;
+	protected /*@ spec_public @*/ Date data;
 
 	public Venda() {
 
