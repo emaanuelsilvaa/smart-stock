@@ -77,10 +77,6 @@ public class FornecedorDAO implements IFornecedorDAO {
 	}
 
 	
-	/*@ also
-	  @ assignable \nothing; 
-	  @ ensures  0 < id;
-	  @*/
 	@Override
 	public Fornecedor procuraPeloId(int id) {
 		for (Fornecedor f : this.fornecedores) {

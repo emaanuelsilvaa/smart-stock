@@ -36,7 +36,6 @@ public final class FornecedorService implements IFornecedorService {
 
 	/*@ also
 	  @ requires fornecedor != null;
-	  @ assignable fornecedorDAO;
 	  @ ensures fornecedorDAO != null; 
 	  @*/
 	@Override

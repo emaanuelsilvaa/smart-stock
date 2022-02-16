@@ -40,11 +40,7 @@ public final class RelatorioService implements IRelatorioService {
 		}
 		return instance;
 	}
-	/*@ 
-	  @ assignable qntProduto, qntProdutoFaltante, aux,qtdMinima,disponibilidade;
-	  @ ensures qntProduto !=null;
-	  @ ensures qntProdutoFaltante !=null;
-	  @ ensures qntProduto !=null; 					
+	/*@ 					
 	  @*/
 	@Override
 	public HashMap<Integer, Integer> listarReposicaoProduto(Date dataInicio, Date dataFim) throws BusinessRuleException {
