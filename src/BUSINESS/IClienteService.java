@@ -8,9 +8,8 @@ import UTIL.BusinessRuleException;
 public interface IClienteService {
 	//@ public model instance IClienteDAO clienteBase;
 	
-	/*@ public normal_behavior
+	/*@
 	  @ requires  cliente!=null;
-	  @ requires clienteBase != null;
 	  */
 	int inserir(Cliente cliente) throws BusinessRuleException;
 	

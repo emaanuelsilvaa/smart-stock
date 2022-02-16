@@ -41,9 +41,8 @@ public final class ClienteService implements IClienteService {
 	
   /*@ also 
     @ requires cliente != null;
-    @ assignable clienteBase;
+    @ ensures \result > 0;
 	@ also
-	@ exceptional_behavior
 	@ 	signals_only BusinessRuleException;
 	@*/
 	@Override
@@ -77,6 +76,7 @@ public final class ClienteService implements IClienteService {
    	@ requires cliente != null;
 	@ also
 	@ public exceptional_behavior
+	@ requires this.clienteDAO.procuraPeloId(id).equals(null);
 	@ 	signals_only BusinessRuleException;
 	@*/
 	@Override
@@ -105,13 +105,16 @@ public final class ClienteService implements IClienteService {
 
 	
 	/** Valida informações cadastrais de um cliente */ 
-  /*@ also 
+  /*@ 
     @ public normal_behavior
     @ requires cliente != null;
 	@ assignable clienteDAO;
 	@ also
-	@ 	public exceptional_behavior
-	@ 		signals_only BusinessRuleException;
+	@ public exceptional_behavior
+	@ requires cliente.equals(null);
+	@ requires cliente.getNome().equals("");
+	@ requires cliente.getCpf().length() != 11;
+	@ 	signals_only BusinessRuleException;
 	@*/
 	@Override
 	public int validarCadastro(Cliente cliente) throws BusinessRuleException {
@@ -135,11 +138,11 @@ public final class ClienteService implements IClienteService {
 				cliente.getTelefone().toCharArray()[2] != '-') {
 			erros.add("Telefone deve ter o padrÃ£o DDD-8nÃºmeros ou DDD-9nÃºmeros. Exemplo: 89-33332222");
 		}
-		if (erros.size() > 0) {
-			throw new BusinessRuleException(erros);
+		if (! (erros.size() > 0)) {
+			return 0;
 		}
+		throw new BusinessRuleException(erros);
 		
-		return 0;
 	}
 	
 }

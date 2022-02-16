@@ -15,7 +15,6 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	
 	
 	/** Construtores */
-	
 	/*@ 
 	 @  ensures materiaPrimaDAO != null;
 	 @  ensures materiaPrimaDAO instanceof MateriaPrimaDAO;
@@ -38,11 +37,7 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 	
 	/*@ also 
 	@ requires materiaPrima != null;
-	@ assignable this.materiaPrimaDAO;
 	@ ensures materiaPrimaDAO.procuraTodos().size() == \old(materiaPrimaDAO.procuraTodos().size())+1;
-	@ also
-	@ public exceptional_behavior
-	@ 	signals_only BusinessRuleException;
 	@*/
 	@Override
 	public int inserir(MateriaPrima materiaPrima) throws BusinessRuleException {
@@ -50,6 +45,9 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 		return this.materiaPrimaDAO.inserir(materiaPrima);
 	}
 
+	/*@ also 
+	@ ensures materiaPrimaDAO.procuraTodos().size() == \old(materiaPrimaDAO.procuraTodos().size())-1;
+	@*/
 	@Override
 	public void remover(int id) throws BusinessRuleException {
 		if(this.materiaPrimaDAO.procuraPeloId(id) == null) {
@@ -58,6 +56,13 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 		this.materiaPrimaDAO.remover(id);	
 	}
 	
+	/*@ also
+	@ ensures materiaPrimaDAO.procuraTodos().size() == \old(materiaPrimaDAO.procuraTodos().size())-1;
+	@ also
+	@ public exceptional_behavior
+	@ requires this.materiaPrimaDAO.procuraPeloId(id).equals(null);
+	@ 	signals_only BusinessRuleException;
+	@*/
 	@Override
 	public int alterar(int id, MateriaPrima materiaPrima) throws BusinessRuleException {
 		validarCadastro(materiaPrima);
@@ -77,6 +82,14 @@ public final class MateriaPrimaService implements IMateriaPrimaService {
 		return this.materiaPrimaDAO.procuraTodos();
 	}
 	
+	/*@ also
+    @ public normal_behavior
+    @ requires materiaPrima != null;
+	@ also
+	@ public exceptional_behavior
+	@ requires materiaPrima.equals(null);
+	@ 	signals_only BusinessRuleException;
+	@*/
 	@Override
 	public void validarCadastro(MateriaPrima materiaPrima) throws BusinessRuleException{
 		ArrayList<String> erros = new ArrayList<String>();

@@ -68,14 +68,14 @@ public class Main {
 		
 
 		Cliente cliente1 = new Cliente("Maria", "12356271892", "Rua Palmares, 180", "84-33332222");
-		Cliente cliente2 = new Cliente("Jõao", "12356271892", "Rua Palmares, 180", "84-33332222");
+		Cliente cliente2 = new Cliente("Joao", "12356271892", "Rua Palmares, 180", "84-33332222");
 		Cliente cliente3 = new Cliente("Mario", "12356271892", "Rua Palmares, 180", "84-33332222");
 		Cliente cliente4 = new Cliente("Ana", "12356271892", "Rua Palmares, 180", "84-33332222");
 		Cliente cliente5 = new Cliente("Cleber", "12356271892", "Rua Palmares, 180", "84-33332222");
 
 
 
-		clienteService.inserir(cliente1);
+		int i = clienteService.inserir(cliente1);
 		clienteService.inserir(cliente2);
 		clienteService.inserir(cliente3);
 		clienteService.inserir(cliente4);
@@ -84,7 +84,7 @@ public class Main {
 		MateriaPrima mp1 = new MateriaPrima("Farinha de Trigo", "alimento", true, "kilos", (float) 4.5);
 		MateriaPrima mp2 = new MateriaPrima("Carne de Sol", "alimento", true, "kilos", (float) 4.5);
 		MateriaPrima mp3 = new MateriaPrima("Frango", "alimento", true, "kilos", (float) 4.5);
-		MateriaPrima mp4 = new MateriaPrima("Óleo", "alimento", true, "litros", (float) 4.5);
+		MateriaPrima mp4 = new MateriaPrima("oleo", "alimento", true, "litros", (float) 4.5);
 		MateriaPrima mp5 = new MateriaPrima("Fermento", "alimento", true, "kilos", (float) 2.5);
 		MateriaPrima mp6 = new MateriaPrima("Margarina", "alimento", true, "kilos", (float) 4.5);
 		MateriaPrima mp7 = new MateriaPrima("Manteiga", "alimento", true, "kilos", (float) 4.5);
@@ -109,13 +109,13 @@ public class Main {
 		materias.add(mp5);
 
 		
-		Fornecedor f1 = new Fornecedor("Nordestão", "12345678912345", "Rua Teste, 12", "88-922221111",
+		Fornecedor f1 = new Fornecedor("Nordestao", "12345678912345", "Rua Teste, 12", "88-922221111",
 				"email@email.com", materias);
-		Fornecedor f2 = new Fornecedor("Distribuidora Goró", "12345678912345", "Rua Teste, 12", "88-922221111",
+		Fornecedor f2 = new Fornecedor("Distribuidora Gor", "12345678912345", "Rua Teste, 12", "88-922221111",
 				"email@email.com", materias);
 		Fornecedor f3 = new Fornecedor("Alambique LTDA", "12345678912345", "Rua Teste, 12", "88-922221111",
 				"emal@email.com", materias);
-		Fornecedor f4 = new Fornecedor("Granja Fernão", "12345678912345", "Rua Teste, 12", "88-922221111",
+		Fornecedor f4 = new Fornecedor("Granja Fern", "12345678912345", "Rua Teste, 12", "88-922221111",
 				"email@email.com", materias);
 		Fornecedor f5 = new Fornecedor("Mario Distribuidora", "12345678912345", "Rua Teste, 12", "88-922221111",
 				"email@email.com", materias);
@@ -214,8 +214,8 @@ public class Main {
 //		encomendaService.realizarEncomenda(listProdutos3, 1, data3);
 //		encomendaService.realizarEncomenda(listProdutos4, 2, data4);
 		
-		vendaService.realizarVenda(listProdutos3, 1);
-		vendaService.realizarVenda(listProdutos4, 2);
+		//vendaService.realizarVenda(listProdutos3, 1);
+		//vendaService.realizarVenda(listProdutos4, 2);
 		
 		HashMap<Integer, Integer> listProdutos1 = new HashMap<Integer, Integer>();
 		listProdutos1.put(1, 10);

@@ -5,12 +5,12 @@ import java.util.HashMap;
 
 public class Venda {
 
-	protected int id;
-	protected float valor;
-	protected int idCliente;
-	protected HashMap<Integer, Integer> listaProdutos;
-	protected HashMap<Integer, Integer> listaProdutosReais;
-	protected Date data;
+	protected /*@ spec_public @*/ int id;
+	protected /*@ spec_public @*/ float valor;
+	protected /*@ spec_public @*/ int idCliente;
+	protected /*@ spec_public @*/ HashMap<Integer, Integer> listaProdutos;
+	protected /*@ spec_public @*/ HashMap<Integer, Integer> listaProdutosReais;
+	protected /*@ spec_public @*/ Date data;
 
 	public Venda() {
 
@@ -33,39 +33,68 @@ public class Venda {
 		this.data = data;
 	}
 
-	public int getId() {
+	/*@
+	 @ ensures \result == id;
+	 */
+	public /*@ pure @*/ int getId() {
 		return id;
 	}
-
+	
+	/*@ requires id > 0;
+	 @ assignable this.id;
+	 @ ensures this.id == id;
+	 @*/
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public float getValor() {
+	/*@
+	 @ ensures \result == this.valor;
+	 @*/
+	public /*@ pure @*/ float getValor() {
 		return valor;
 	}
 
+	/*@ requires valor > 0;
+	 @ assignable this.valor;
+	 @ ensures this.valor == valor;
+	 @*/
 	public void setValor(float valor) {
 		this.valor = valor;
 	}
 
-	public int getIdCliente() {
+	/*@
+	 @ ensures \result == this.idCliente;
+	 @*/
+	public /*@ pure @*/ int getIdCliente() {
 		return idCliente;
 	}
 
+	/*@ requires idCliente > 0;
+	 @ assignable this.idCliente;
+	 @ ensures this.idCliente == idCliente;
+	 @*/
 	public void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
 	}
 
-	public HashMap<Integer, Integer> getListaProdutos() {
+
+	/*@
+	 @ ensures \result == this.listaProdutos;
+	 @*/
+	public /*@ pure @*/ HashMap<Integer, Integer> getListaProdutos() {
 		return listaProdutos;
 	}
+
 
 	public void setListaProdutos(HashMap<Integer, Integer> listaProdutos) {
 		this.listaProdutos = listaProdutos;
 	}
 	
-	public HashMap<Integer, Integer> getListaProdutosReais() {
+	/*@
+	 @ ensures \result == this.listaProdutosReais;
+	 @*/
+	public /*@ pure @*/ HashMap<Integer, Integer> getListaProdutosReais() {
 		return this.listaProdutosReais;
 	}
 
@@ -73,7 +102,10 @@ public class Venda {
 		this.listaProdutosReais = listaProdutosReais;
 	}
 
-	public Date getData() {
+	/*@
+	 @ ensures \result == this.data;
+	 @*/
+	public /*@ pure @*/ Date getData() {
 		return data;
 	}
 

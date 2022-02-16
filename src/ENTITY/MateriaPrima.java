@@ -1,12 +1,12 @@
 package ENTITY;
 
 public class MateriaPrima {
-	protected int id;
-	protected String nome;
-	protected String tipo;
-	protected boolean perecivel;
-	protected String unMedida;
-	protected float qntMinima;
+	protected /*@ spec_public @*/ int id;
+	protected /*@ spec_public @*/ String nome;
+	protected /*@ spec_public @*/ String tipo;
+	protected /*@ spec_public @*/ boolean perecivel;
+	protected /*@ spec_public @*/ String unMedida;
+	protected /*@ spec_public @*/ float qntMinima;
 	
 
 	// Construtores
@@ -36,32 +36,56 @@ public class MateriaPrima {
 	}
 
 	// Getters e Setters
-	public int getId() {
+	/*@ 
+	 @ ensures \result == id;
+	 */
+	public /*@ pure */ int getId() {
 		return id;
 	}
 
+	/*@ requires id > 0;
+	 @ assignable this.id;
+	 @ ensures this.id == id;
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getNome() {
+	/*@ 
+	 @ ensures \result == nome;
+	 */
+	public /*@ pure */ String getNome() {
 		return nome;
 	}
 
+	/*@ requires nome != null;
+	 @ assignable this.nome;
+	 @ ensures this.nome == nome;
+	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public String getTipo() {
+	/*@ 
+	 @ ensures \result == tipo;
+	 */
+	public /*@ pure */ String getTipo() {
 		return tipo;
 	}
 
+	/*@ requires tipo != null;
+	 @ assignable this.tipo;
+	 @ ensures this.tipo == tipo;
+	 */
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
 
-	public boolean getPerecivel() {
+	/*@ 
+	 @ ensures \result == perecivel;
+	 */
+	public /*@ pure */ boolean getPerecivel() {
 		return perecivel;
 	}
 
@@ -69,18 +93,34 @@ public class MateriaPrima {
 		this.perecivel = perecivel;
 	}
 
-	public String getUnMedida() {
+	
+	/*@ 
+	 @ ensures \result == unMedida;
+	 */
+	public /*@ pure */ String getUnMedida() {
 		return unMedida;
 	}
 
+	/*@ requires unMedida != null;
+	 @ assignable this.unMedida;
+	 @ ensures this.unMedida == unMedida;
+	 */
 	public void setUnMedida(String unMedida) {
 		this.unMedida = unMedida;
 	}
 
-	public float getQntMinima() {
+	/*@ 
+	 @ ensures \result == qntMinima;
+	 */
+	public /*@ pure */ float getQntMinima() {
 		return qntMinima;
 	}
+	
 
+	/*@ requires qntMinima > 0;
+	 @ assignable this.qntMinima;
+	 @ ensures this.qntMinima == qntMinima;
+	 */
 	public void setQntMinima(float qntMinima) {
 		this.qntMinima = qntMinima;
 	}
